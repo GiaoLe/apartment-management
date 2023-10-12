@@ -10,4 +10,6 @@ public interface GenericRepository<T, ID> {
     List<T> findAll();
 
     T findById(ID id);
+
+    void merge(T entity);
 }

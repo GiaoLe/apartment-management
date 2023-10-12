@@ -12,5 +12,6 @@
         <!-- DB schema will be updated if needed -->
         <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="com.example.demo.Resident"/>
+        <mapping class="com.example.demo.Apartment"/>
     </session-factory>
 </hibernate-configuration>

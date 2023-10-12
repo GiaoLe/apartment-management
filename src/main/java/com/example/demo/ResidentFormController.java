@@ -12,16 +12,21 @@ public class ResidentFormController {
     public Button submitButton;
 
     private ResidentService residentService;
+    private ApartmentService apartmentService;
 
     @FXML
     public void initialize() {
         residentService = new ResidentService(new ResidentRepository());
+        apartmentService = new ApartmentService(new ApartmentRepository());
     }
 
     public void submitButtonOnAction() {
-        residentService.save(new Resident(
+        Apartment apartment = new Apartment(apartmentTextField.getText());
+        apartmentService.merge(apartment);
+        residentService.persist(new Resident(
                 firstNameTextField.getText(),
-                lastNameTextField.getText()
+                lastNameTextField.getText(),
+                apartment
         ));
         SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
     }
