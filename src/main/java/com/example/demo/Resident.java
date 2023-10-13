@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class Resident {
     }
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
     private Apartment apartment;
 
 }

@@ -45,6 +45,7 @@ public abstract class Repository<T, ID> implements GenericRepository<T, ID> {
     public void merge(T entity) {
         HibernateUtility.getSessionFactory().inTransaction(session -> {
             session.merge(entity);
+            session.flush();
         });
     }
 }
