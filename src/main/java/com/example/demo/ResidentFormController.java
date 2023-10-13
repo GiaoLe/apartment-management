@@ -13,6 +13,8 @@ public class ResidentFormController {
     public TextField apartmentTextField;
     public Button submitButton;
     public Label apartmentTextFieldErrorLabel;
+    public Label firstNameErrorLabel;
+    public Label lastNameErrorLabel;
 
     private ResidentService residentService;
     private ApartmentService apartmentService;
@@ -25,26 +27,46 @@ public class ResidentFormController {
     }
 
     public void submitButtonOnAction() {
-        if (!apartmentTextField.getText().isEmpty()) {
-            Apartment savedApartment;
-            Integer apartmentNumber = Integer.parseInt(apartmentTextField.getText());
-            try (Session session = HibernateUtility.getSessionFactory().openSession()) {
-                savedApartment = session.createQuery("from Apartment where number = :number", Apartment.class)
-                        .setParameter("number", apartmentNumber)
-                        .uniqueResult();
+        while (firstNameErrorLabel.getText().isEmpty()
+                && lastNameErrorLabel.getText().isEmpty()
+                && apartmentTextFieldErrorLabel.getText().isEmpty()) {
+
+            if (firstNameTextField.getText().isEmpty()) {
+                firstNameErrorLabel.setText("First name is required");
+            } else {
+                firstNameErrorLabel.setText("");
             }
-            if (savedApartment == null) {
-                savedApartment = new Apartment(apartmentNumber);
-                apartmentService.persist(savedApartment);
+
+            if (lastNameTextField.getText().isEmpty()) {
+                lastNameErrorLabel.setText("Last name is required");
+            } else {
+                lastNameErrorLabel.setText("");
             }
+
+            if (apartmentTextField.getText().isEmpty()) {
+                apartmentTextFieldErrorLabel.setText("Apartment number is required");
+            } else {
+                apartmentTextFieldErrorLabel.setText("");
+            }
+        }
+        Apartment savedApartment;
+        Integer apartmentNumber = Integer.parseInt(apartmentTextField.getText());
+        try (Session session = HibernateUtility.getSessionFactory().openSession()) {
+            savedApartment = session.createQuery("from Apartment where number = :number", Apartment.class)
+                    .setParameter("number", apartmentNumber)
+                    .uniqueResult();
+        }
+        if (savedApartment == null) {
+            savedApartment = new Apartment(apartmentNumber);
+            apartmentService.persist(savedApartment);
+        }
+        if (!firstNameTextField.getText().isEmpty() && !lastNameTextField.getText().isEmpty()) {
             residentService.persist(new Resident(
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
                     savedApartment)
             );
             SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
-        } else {
-            apartmentTextFieldErrorLabel.setText("Apartment number is required");
         }
     }
 }
