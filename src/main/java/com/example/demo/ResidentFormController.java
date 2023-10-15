@@ -29,7 +29,8 @@ public class ResidentFormController {
         textFieldWrappers = new ArrayList<>(List.of(
                 new TextFieldWrapper(firstNameTextField, firstNameErrorLabel),
                 new TextFieldWrapper(lastNameTextField, lastNameErrorLabel),
-                new TextFieldWrapper(apartmentTextField, apartmentTextFieldErrorLabel)));
+                new TextFieldWrapper(apartmentTextField, apartmentTextFieldErrorLabel)
+        ));
         residentService = new ResidentService(new ResidentRepository());
         apartmentService = new ApartmentService(new ApartmentRepository());
     }
@@ -47,7 +48,7 @@ public class ResidentFormController {
 
     private void persistResident() {
         Apartment savedApartment;
-        Integer apartmentNumber = Integer.parseInt(apartmentTextField.getText());
+        String apartmentNumber = apartmentTextField.getText();
         try (Session session = HibernateUtility.getSessionFactory().openSession()) {
             savedApartment = session.createQuery("from Apartment where number = :number", Apartment.class)
                     .setParameter("number", apartmentNumber)

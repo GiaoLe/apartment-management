@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,13 @@ import jakarta.validation.constraints.NotNull;
 public class Apartment {
     @Id
     @GeneratedValue
+    @NotNull
     private Integer id;
 
-    @NotNull
-    private Integer number;
+    @NotEmpty
+    private String number;
 
-    public Apartment(Integer number) {
+    public Apartment(String number) {
         this.number = number;
     }
 }
