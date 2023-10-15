@@ -40,23 +40,27 @@ public class ResidentFormController {
         }
         boolean allFieldsAreFilled = textFieldWrappers.stream().noneMatch(TextFieldWrapper::isEmpty);
         if (allFieldsAreFilled) {
-            Apartment savedApartment;
-            Integer apartmentNumber = Integer.parseInt(apartmentTextField.getText());
-            try (Session session = HibernateUtility.getSessionFactory().openSession()) {
-                savedApartment = session.createQuery("from Apartment where number = :number", Apartment.class)
-                        .setParameter("number", apartmentNumber)
-                        .uniqueResult();
-            }
-            if (savedApartment == null) {
-                savedApartment = new Apartment(apartmentNumber);
-                apartmentService.persist(savedApartment);
-            }
-            residentService.persist(new Resident(
-                    firstNameTextField.getText(),
-                    lastNameTextField.getText(),
-                    savedApartment));
+            persistResident();
             SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
         }
+    }
+
+    private void persistResident() {
+        Apartment savedApartment;
+        Integer apartmentNumber = Integer.parseInt(apartmentTextField.getText());
+        try (Session session = HibernateUtility.getSessionFactory().openSession()) {
+            savedApartment = session.createQuery("from Apartment where number = :number", Apartment.class)
+                    .setParameter("number", apartmentNumber)
+                    .uniqueResult();
+        }
+        if (savedApartment == null) {
+            savedApartment = new Apartment(apartmentNumber);
+            apartmentService.persist(savedApartment);
+        }
+        residentService.persist(new Resident(
+                firstNameTextField.getText(),
+                lastNameTextField.getText(),
+                savedApartment));
     }
 }
 
