@@ -13,13 +13,12 @@ public class TextFieldWrapper {
         this.errorLabel = errorLabel;
     }
 
-    public boolean checkEmpty() {
+    public void checkEmpty() {
         if (textField.getText().isEmpty()) {
             setEmptyError();
         } else {
             errorLabel.setText("");
         }
-        return isEmpty();
     }
 
     public boolean isEmpty() {
@@ -33,9 +32,5 @@ public class TextFieldWrapper {
     public void setEmptyError(String message) {
         errorLabel.setTextFill(Color.RED);
         errorLabel.setText(message);
-    }
-
-    public String getText() {
-        return textField.getText();
     }
 }
