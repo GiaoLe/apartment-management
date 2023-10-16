@@ -3,6 +3,8 @@ package com.example.demo;
 
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class ApartmentService {
     private final ApartmentRepository apartmentRepository;
@@ -17,6 +19,10 @@ public class ApartmentService {
 
     public void persist(Apartment apartment) {
         apartmentRepository.persist(apartment);
+    }
+
+    public List<Apartment> getAll() {
+        return apartmentRepository.findAll();
     }
 
 }

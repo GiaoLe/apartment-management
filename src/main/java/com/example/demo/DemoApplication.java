@@ -9,7 +9,7 @@ public class DemoApplication extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         SceneManager.setStage(stage);
         SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
     }

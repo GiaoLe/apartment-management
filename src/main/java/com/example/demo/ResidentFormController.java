@@ -1,10 +1,7 @@
 package com.example.demo;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import org.hibernate.Session;
+import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +19,6 @@ public class ResidentFormController {
     private ArrayList<TextFieldWrapper> textFieldWrappers;
 
     private ResidentService residentService;
-    private ApartmentService apartmentService;
 
     @FXML
     public void initialize() {
@@ -32,7 +28,6 @@ public class ResidentFormController {
                 new TextFieldWrapper(apartmentTextField, apartmentTextFieldErrorLabel)
         ));
         residentService = new ResidentService(new ResidentRepository());
-        apartmentService = new ApartmentService(new ApartmentRepository());
     }
 
     public void submitButtonOnAction() {
@@ -42,26 +37,26 @@ public class ResidentFormController {
         boolean allFieldsAreFilled = textFieldWrappers.stream().noneMatch(TextFieldWrapper::isEmpty);
         if (allFieldsAreFilled) {
             persistResident();
-            SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
         }
     }
 
     private void persistResident() {
-        Apartment savedApartment;
-        String apartmentNumber = apartmentTextField.getText();
-        try (Session session = HibernateUtility.getSessionFactory().openSession()) {
-            savedApartment = session.createQuery("from Apartment where number = :number", Apartment.class)
-                    .setParameter("number", apartmentNumber)
-                    .uniqueResult();
+        Apartment apartment = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment where number = :number", Apartment.class)
+                .setParameter("number", apartmentTextField.getText())
+                .uniqueResult());
+        if (apartment == null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Apartment with number " + apartmentTextField.getText() + " does not exist. Please create it first.");
+            alert.showAndWait()
+                    .filter(response -> response == ButtonType.OK)
+                    .ifPresent(response -> SceneManager.switchScene(Scene.APARTMENT_FORM.getFileName()));
+        } else {
+            residentService.persist(new Resident(
+                    firstNameTextField.getText(),
+                    lastNameTextField.getText(),
+                    apartment));
+            SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
         }
-        if (savedApartment == null) {
-            savedApartment = new Apartment(apartmentNumber);
-            apartmentService.persist(savedApartment);
-        }
-        residentService.persist(new Resident(
-                firstNameTextField.getText(),
-                lastNameTextField.getText(),
-                savedApartment));
     }
 }
 

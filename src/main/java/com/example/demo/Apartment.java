@@ -23,7 +23,11 @@ public class Apartment {
     @NotEmpty
     private String number;
 
-    public Apartment(String number) {
+    @NotNull
+    private double area;
+
+    public Apartment(String number, double area) {
         this.number = number;
+        this.area = area;
     }
 }
