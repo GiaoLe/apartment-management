@@ -1,11 +1,7 @@
 package com.example.demo;
 
-import jakarta.persistence.Entity;
-import org.hibernate.Session;
-
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Repository<T, ID> implements GenericRepository<T, ID> {
 
@@ -23,22 +19,13 @@ public abstract class Repository<T, ID> implements GenericRepository<T, ID> {
     }
 
     @Override
-    public void delete(T entity) {
-
-    }
-
-    @Override
     public List<T> findAll() {
-        try (Session session = HibernateUtility.getSessionFactory().openSession()) {
-            return session.createQuery("from " + entityClass.getName(), entityClass).list();
-        }
+        return HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from " + entityClass.getName(), entityClass).list());
     }
 
     @Override
     public T findById(ID id) {
-        try (Session session = HibernateUtility.getSessionFactory().openSession()) {
-            return session.find(entityClass, id);
-        }
+        return HibernateUtility.getSessionFactory().fromTransaction(session -> session.find(entityClass, id));
     }
 
     @Override
@@ -46,6 +33,14 @@ public abstract class Repository<T, ID> implements GenericRepository<T, ID> {
         HibernateUtility.getSessionFactory().inTransaction(session -> {
             session.merge(entity);
             session.flush();
+        });
+    }
+
+    @Override
+    public void deleteById(ID id) {
+        HibernateUtility.getSessionFactory().inTransaction(session -> {
+            T entity = session.find(entityClass, id);
+            session.remove(entity);
         });
     }
 }

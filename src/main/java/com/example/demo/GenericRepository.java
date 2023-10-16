@@ -5,7 +5,7 @@ import java.util.List;
 public interface GenericRepository<T, ID> {
     void persist(T entity);
 
-    void delete(T entity);
+    void deleteById(ID id);
 
     List<T> findAll();
 

@@ -10,15 +10,13 @@ public class ResidentListController {
     public ListView<Resident> residentListView;
     public Button newResidentButton;
 
-    private ResidentService residentService;
-
     @FXML
     public void initialize() {
-        residentService = new ResidentService(new ResidentRepository());
+        ResidentService residentService = new ResidentService(new ResidentRepository());
         residentListView.getItems().addAll(residentService.findAll());
     }
 
-    public void newResidentButtonOnAction(ActionEvent actionEvent) {
+    public void newResidentButtonOnAction() {
         SceneManager.switchScene(Scene.RESIDENT_FORM.getFileName());
     }
 }
