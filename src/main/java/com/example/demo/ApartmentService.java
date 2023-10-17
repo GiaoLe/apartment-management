@@ -21,7 +21,7 @@ public class ApartmentService {
         apartmentRepository.persist(apartment);
     }
 
-    public List<Apartment> getAll() {
+    public List<Apartment> findAll() {
         return apartmentRepository.findAll();
     }
 

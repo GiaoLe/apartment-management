@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ResidentFormController">
@@ -19,7 +20,12 @@
                 <Label layoutX="10.0" layoutY="52.0" text="Apartment" />
                 <TextField fx:id="apartmentTextField" layoutX="10.0" layoutY="69.0" />
             <Label fx:id="apartmentTextFieldErrorLabel" />
-                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" text="Back" />
+               </children>
+            </HBox>
             </children>
         </VBox>
     </children>

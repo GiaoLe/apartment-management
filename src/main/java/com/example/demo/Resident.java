@@ -1,10 +1,12 @@
 package com.example.demo;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -28,5 +30,4 @@ public class Resident {
     @ManyToOne
     @JoinColumn(name = "apartment_id", referencedColumnName = "id")
     private Apartment apartment;
-
 }

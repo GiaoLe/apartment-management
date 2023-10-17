@@ -1,29 +1,28 @@
 package com.example.demo;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
+import java.util.stream.Collectors;
+
 public class ApartmentListController {
 
-    public ListView<Apartment> apartmentListView;
+    public ListView<String> apartmentListView;
     public Button menuButton;
     public Button newButton;
 
-    private ApartmentService apartmentService;
-
     @FXML
     public void initialize() {
-        apartmentService = new ApartmentService(new ApartmentRepository());
-        apartmentListView.getItems().addAll(apartmentService.getAll());
+        ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
+        apartmentListView.getItems().addAll(apartmentService.findAll().stream().map(apartment -> "ID: " + apartment.getId() + "\n" + "Number: " + apartment.getNumber() + "\n" + "Area: " + apartment.getArea() + "\n").collect(Collectors.toList()));
     }
 
-    public void menuButtonOnAction(ActionEvent actionEvent) {
+    public void menuButtonOnAction() {
         SceneManager.switchScene(Scene.MENU.getFileName());
     }
 
-    public void newButtonOnAction(ActionEvent actionEvent) {
+    public void newButtonOnAction() {
         SceneManager.switchScene(Scene.APARTMENT_FORM.getFileName());
     }
 }

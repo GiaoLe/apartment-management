@@ -6,15 +6,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ResidentListController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CollectionListController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox>
          <children>
-            <ListView fx:id="residentListView" prefHeight="400.0" prefWidth="600.0" />
+            <ListView fx:id="collectionListView" prefHeight="209.0" prefWidth="533.0" />
             <HBox>
                <children>
                   <Button fx:id="menuButton" mnemonicParsing="false" onAction="#menuButtonOnAction" text="Menu" />
-                  <Button fx:id="newResidentButton" mnemonicParsing="false" onAction="#newResidentButtonOnAction" text="New" />
+                  <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" text="New" />
                </children>
             </HBox>
          </children>

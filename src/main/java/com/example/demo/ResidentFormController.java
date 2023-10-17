@@ -15,6 +15,7 @@ public class ResidentFormController {
     public Label apartmentTextFieldErrorLabel;
     public Label firstNameErrorLabel;
     public Label lastNameErrorLabel;
+    public Button backButton;
 
     private ArrayList<TextFieldWrapper> textFieldWrappers;
 
@@ -57,6 +58,10 @@ public class ResidentFormController {
                     apartment));
             SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
         }
+    }
+
+    public void backButtonOnAction() {
+        SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
     }
 }
 
