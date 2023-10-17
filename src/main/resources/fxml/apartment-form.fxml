@@ -8,25 +8,19 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ApartmentFormController">
-   <children>
-      <VBox prefHeight="217.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label text="Create a new apartment" />
-            <HBox>
-               <children>
-                  <Label text="Name" />
-                  <TextField fx:id="nameTextField" />
-               </children>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="27.0">
-               <children>
-                  <Label text="Area" />
-                  <TextField fx:id="areaTextField" />
-               </children>
-            </HBox>
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
-         </children>
-      </VBox>
-   </children>
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.ApartmentFormController">
+   <VBox prefHeight="217.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label text="Create a new apartment"/>
+      <HBox>
+         <Label text="Name"/>
+         <TextField fx:id="nameTextField"/>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="27.0">
+         <Label text="Area"/>
+         <TextField fx:id="areaTextField"/>
+      </HBox>
+      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit"/>
+   </VBox>
 </AnchorPane>

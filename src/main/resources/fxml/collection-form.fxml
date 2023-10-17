@@ -8,25 +8,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CollectionFormController">
-   <children>
-      <VBox>
-         <children>
-            <HBox>
-               <children>
-                  <Label text="Amount" />
-                  <TextField fx:id="amountTextField" />
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <Label text="Label" />
-                  <ChoiceBox fx:id="collectionTypeChoiceBox" prefWidth="150.0" />
-               </children>
-            </HBox>
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
-         </children>
-      </VBox>
-   </children>
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.CollectionFormController">
+   <VBox>
+      <HBox>
+         <Label text="Amount"/>
+         <TextField fx:id="amountTextField"/>
+      </HBox>
+      <HBox>
+         <Label text="Label"/>
+         <ChoiceBox fx:id="collectionTypeChoiceBox" prefWidth="150.0"/>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit"/>
+         <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" text="Back"/>
+      </HBox>
+   </VBox>
 </AnchorPane>

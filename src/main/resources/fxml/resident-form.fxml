@@ -7,26 +7,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ResidentFormController">
-    <children>
-        <VBox prefHeight="168.0" prefWidth="170.0">
-            <children>
-                <Label text="First Name" />
-                <TextField fx:id="firstNameTextField" />
-            <Label fx:id="firstNameErrorLabel" />
-                <Label layoutX="10.0" layoutY="10.0" text="Last Name" />
-                <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0" />
-            <Label fx:id="lastNameErrorLabel" layoutX="10.0" layoutY="52.0" />
-                <Label layoutX="10.0" layoutY="52.0" text="Apartment" />
-                <TextField fx:id="apartmentTextField" layoutX="10.0" layoutY="69.0" />
-            <Label fx:id="apartmentTextFieldErrorLabel" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" text="Back" />
-               </children>
-            </HBox>
-            </children>
-        </VBox>
-    </children>
+<AnchorPane prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.ResidentFormController">
+    <VBox prefHeight="168.0" prefWidth="170.0">
+        <Label text="First Name"/>
+        <TextField fx:id="firstNameTextField"/>
+        <Label fx:id="firstNameErrorLabel"/>
+        <Label layoutX="10.0" layoutY="10.0" text="Last Name"/>
+        <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0"/>
+        <Label fx:id="lastNameErrorLabel" layoutX="10.0" layoutY="52.0"/>
+        <Label layoutX="10.0" layoutY="52.0" text="Apartment"/>
+        <TextField fx:id="apartmentTextField" layoutX="10.0" layoutY="69.0"/>
+        <Label fx:id="apartmentTextFieldErrorLabel"/>
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction"
+                    text="Submit"/>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" text="Back"/>
+        </HBox>
+    </VBox>
 </AnchorPane>

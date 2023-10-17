@@ -9,7 +9,7 @@ public enum Scene {
 
     MENU("menu.fxml"),
     APARTMENT_FORM("apartment-form.fxml"),
-    REPORT_LIST("collection-list.fxml"),
+    COLLECTION_LIST("collection-list.fxml"),
     COLLECTION_FORM("collection-form.fxml");
 
     private static final String FXML_PATH = "/fxml/";

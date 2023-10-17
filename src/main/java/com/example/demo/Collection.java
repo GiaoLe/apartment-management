@@ -31,11 +31,6 @@ public class Collection {
 //    private String description;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "collection_resident",
-            joinColumns = @JoinColumn(name = "collection_id"),
-            inverseJoinColumns = @JoinColumn(name = "resident_id")
-    )
     @NotNull
     private Set<Resident> residents = new HashSet<>();
 

@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -17,15 +16,17 @@ public class CollectionListController {
         CollectionService collectionService = new CollectionService(new CollectionRepository());
         collectionListView.getItems().addAll(collectionService.findAll()
                 .stream()
-                .map(collection -> collection.getType().toString() + " " + collection.getAmount())
+                .map(collection ->
+                        "ID: " + collection.getId() + "\n" +
+                        "Amount: " + collection.getAmount() + "\n")
                 .collect(Collectors.toList()));
     }
 
-    public void menuButtonOnAction(ActionEvent actionEvent) {
+    public void menuButtonOnAction() {
         SceneManager.switchScene(Scene.MENU.getFileName());
     }
 
-    public void newButtonOnAction(ActionEvent actionEvent) {
+    public void newButtonOnAction() {
         SceneManager.switchScene(Scene.COLLECTION_FORM.getFileName());
     }
 }

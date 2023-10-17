@@ -11,6 +11,7 @@ public class CollectionFormController {
     public TextField amountTextField;
     public ChoiceBox<CollectionType> collectionTypeChoiceBox;
     public Button submitButton;
+    public Button backButton;
 
     @FXML
     public void initialize() {
@@ -33,7 +34,11 @@ public class CollectionFormController {
                     .build();
             CollectionService collectionService = new CollectionService(new CollectionRepository());
             collectionService.persist(collection);
-            SceneManager.switchScene(Scene.REPORT_LIST.getFileName());
+            SceneManager.switchScene(Scene.COLLECTION_LIST.getFileName());
         }
+    }
+
+    public void backButtonOnAction() {
+        SceneManager.switchScene(Scene.MENU.getFileName());
     }
 }
