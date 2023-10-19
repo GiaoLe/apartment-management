@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Resident;
+import com.example.demo.dao.Resident;
 import com.example.demo.repository.ResidentRepository;
 import lombok.AllArgsConstructor;
 

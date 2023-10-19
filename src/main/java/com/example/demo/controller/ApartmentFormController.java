@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.*;
-import com.example.demo.model.Apartment;
+import com.example.demo.dao.Apartment;
 import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.service.ApartmentService;
 import javafx.fxml.FXML;

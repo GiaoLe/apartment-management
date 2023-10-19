@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 
-import com.example.demo.model.Apartment;
+import com.example.demo.dao.Apartment;
 import com.example.demo.repository.ApartmentRepository;
 import lombok.AllArgsConstructor;
 

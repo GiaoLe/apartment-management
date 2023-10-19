@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.*;
-import com.example.demo.model.Collection;
-import com.example.demo.model.Resident;
+import com.example.demo.dao.Collection;
+import com.example.demo.dao.Resident;
 import com.example.demo.repository.CollectionRepository;
 import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.CollectionService;

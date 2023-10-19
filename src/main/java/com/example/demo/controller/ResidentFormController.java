@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.*;
-import com.example.demo.model.Apartment;
-import com.example.demo.model.Resident;
+import com.example.demo.dao.Apartment;
+import com.example.demo.dao.Resident;
 import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ResidentService;
 import javafx.fxml.FXML;
