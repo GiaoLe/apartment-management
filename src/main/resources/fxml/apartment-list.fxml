@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.ApartmentListController">
+            fx:controller="com.example.demo.controller.ApartmentListController">
    <BorderPane prefHeight="200.0" prefWidth="542.0">
       <center>
          <ListView fx:id="apartmentListView" prefHeight="175.0" prefWidth="382.0" BorderPane.alignment="CENTER"/>

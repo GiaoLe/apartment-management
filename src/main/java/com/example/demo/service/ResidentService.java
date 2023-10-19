@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.service;
 
+import com.example.demo.model.Resident;
+import com.example.demo.repository.ResidentRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.List;

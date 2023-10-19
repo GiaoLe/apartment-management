@@ -11,4 +11,12 @@ module com.example.demo {
 
     opens com.example.demo to javafx.fxml, org.hibernate.orm.core, jakarta.persistence, org.hibernate.validator;
     exports com.example.demo;
+    exports com.example.demo.model;
+    opens com.example.demo.model to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
+    exports com.example.demo.controller;
+    opens com.example.demo.controller to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
+    exports com.example.demo.repository;
+    opens com.example.demo.repository to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
+    exports com.example.demo.service;
+    opens com.example.demo.service to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
 }

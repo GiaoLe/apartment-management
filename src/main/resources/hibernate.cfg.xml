@@ -12,8 +12,8 @@
         <!-- DB schema will be updated if needed -->
         <property name="hibernate.hbm2ddl.auto">update</property>
         <!--        <property name="hibernate.jta.UserTransaction"></property>-->
-        <mapping class="com.example.demo.Resident"/>
-        <mapping class="com.example.demo.Apartment"/>
-        <mapping class="com.example.demo.Collection"/>
+        <mapping class="com.example.demo.model.Resident"/>
+        <mapping class="com.example.demo.model.Apartment"/>
+        <mapping class="com.example.demo.model.Collection"/>
     </session-factory>
 </hibernate-configuration>

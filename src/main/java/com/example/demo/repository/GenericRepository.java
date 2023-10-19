@@ -1,8 +1,9 @@
-package com.example.demo;
+package com.example.demo.repository;
 
 import java.util.List;
 
 public interface GenericRepository<T, ID> {
+    //save
     void persist(T entity);
 
     void deleteById(ID id);
@@ -11,5 +12,6 @@ public interface GenericRepository<T, ID> {
 
     T findById(ID id);
 
+    //save or update
     void merge(T entity);
 }

@@ -1,4 +1,7 @@
-package com.example.demo;
+package com.example.demo.service;
+
+import com.example.demo.model.Collection;
+import com.example.demo.repository.CollectionRepository;
 
 import java.util.List;
 

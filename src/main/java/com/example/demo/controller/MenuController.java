@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.Scene;
+import com.example.demo.SceneManager;
 import javafx.scene.control.Button;
 
 public class MenuController {

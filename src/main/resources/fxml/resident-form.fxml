@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.ResidentFormController">
+            fx:controller="com.example.demo.controller.ResidentFormController">
     <VBox prefHeight="168.0" prefWidth="170.0">
         <Label text="First Name"/>
         <TextField fx:id="firstNameTextField"/>

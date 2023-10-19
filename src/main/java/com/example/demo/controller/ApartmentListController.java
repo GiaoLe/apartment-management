@@ -1,5 +1,9 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.repository.ApartmentRepository;
+import com.example.demo.service.ApartmentService;
+import com.example.demo.Scene;
+import com.example.demo.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;

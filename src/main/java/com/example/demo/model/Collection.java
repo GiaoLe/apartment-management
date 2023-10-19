@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.model;
 
+import com.example.demo.CollectionType;
+import com.example.demo.model.Resident;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
