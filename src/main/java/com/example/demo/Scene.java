@@ -6,7 +6,7 @@ public enum Scene {
     RESIDENT_FORM("resident-form.fxml"),
 
     APARTMENT_LIST("apartment-list.fxml"),
-
+    LOGIN_FORM("login.fxml"),
     MENU("menu.fxml"),
     APARTMENT_FORM("apartment-form.fxml"),
     COLLECTION_LIST("collection-list.fxml"),
