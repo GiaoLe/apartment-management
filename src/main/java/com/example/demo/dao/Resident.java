@@ -25,6 +25,5 @@ public class Resident {
     }
 
     @ManyToOne
-    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
     private Apartment apartment;
 }
