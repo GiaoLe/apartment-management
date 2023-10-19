@@ -15,5 +15,6 @@
         <mapping class="com.example.demo.dao.Resident"/>
         <mapping class="com.example.demo.dao.Apartment"/>
         <mapping class="com.example.demo.dao.Collection"/>
+        <mapping class="com.example.demo.dao.ResidentCollection"/>
     </session-factory>
 </hibernate-configuration>

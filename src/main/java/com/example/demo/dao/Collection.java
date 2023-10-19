@@ -1,6 +1,5 @@
 package com.example.demo.dao;
 
-import com.example.demo.CollectionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,15 +23,4 @@ public class Collection {
     private CollectionType type;
 
     private double amount;
-
-//    private Date startDate;
-//
-//    private Date endDate;
-//
-//    private String description;
-
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @NotNull
-    private Set<Resident> residents = new HashSet<>();
-
 }
