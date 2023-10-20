@@ -21,11 +21,11 @@ public class MenuController {
     public TableColumn<?, ?> totalRooms;
 
     public void clickNavigation(ActionEvent actionEvent) {
-        String btnID = ((Button) actionEvent.getSource()).getId();
-        if (btnID.contains("btnDashboard")) {
+        String buttonID = ((Button) actionEvent.getSource()).getId();
+        if (buttonID.contains("dashboardButton")) {
             dashboardButton.setStyle("-fx-text-fill: #ffa600;" + "-fx-underline: true");
             apartmentButton.setStyle("-fx-text-fill: #979191;" + "-fx-underline: false");
-        } else if (btnID.contains("btnApartment")) {
+        } else if (buttonID.contains("apartmentButton")) {
             apartmentButton.setStyle("-fx-text-fill: #ffa600;" + "-fx-underline: true");
             dashboardButton.setStyle("-fx-text-fill: #979191;" + "-fx-underline: false");
         }
