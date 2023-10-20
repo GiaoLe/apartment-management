@@ -30,7 +30,10 @@ public class Apartment {
     @Transient
     private int floor;
 
-    public Apartment(String number, double area) {
+    @NotNull
+    private int roomCount;
+
+    public Apartment(String number, double area, int roomCount) {
         this.number = number;
         this.area = area;
         floor = Integer.parseInt(number.substring(0, 1));

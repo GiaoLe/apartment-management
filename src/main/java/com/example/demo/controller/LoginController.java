@@ -4,54 +4,42 @@ import com.example.demo.HibernateUtility;
 import com.example.demo.Scene;
 import com.example.demo.SceneManager;
 import com.example.demo.dao.Admin;
-import com.example.demo.service.AdminService;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class LoginController {
+    public Button loginButton;
 
-public class LoginController implements Initializable {
-    @javafx.fxml.FXML
-    private Button loginBtn;
+    public PasswordField passwordField;
 
-    @javafx.fxml.FXML
-    private PasswordField passwordText;
+    public TextField userTextField;
 
-    @javafx.fxml.FXML
-    private TextField userText;
-    private AdminService adminService;
-    private Alert alert;
     public void handleLogin() {
-        String user = userText.getText();
-        String password = passwordText.getText();
-        if(user.isEmpty() || password.isEmpty()){
+        String user = userTextField.getText();
+        String password = passwordField.getText();
+        Alert alert;
+        if (user.isEmpty() || password.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR MESSAGE!");
             alert.setHeaderText(null);
             alert.setContentText("Please fill all the blank fields");
             alert.showAndWait();
-        }else{
+        } else {
             Admin admin = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Admin where userName = :userName and password = :password", Admin.class)
-                    .setParameter("userName", userText.getText())
-                    .setParameter("password", passwordText.getText())
+                    .setParameter("userName", userTextField.getText())
+                    .setParameter("password", passwordField.getText())
                     .uniqueResult());
-            if(admin == null){
+            if (admin == null) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERROR MESSAGE!");
                 alert.setHeaderText(null);
                 alert.setContentText("Wrong username/password");
                 alert.showAndWait();
-            }else{
+            } else {
                 SceneManager.switchScene(Scene.MENU.getFileName());
             }
         }
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 }

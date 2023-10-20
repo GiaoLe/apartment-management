@@ -11,8 +11,9 @@ import javafx.scene.control.TextField;
 public class ApartmentFormController {
     public TextField nameTextField;
     public TextField areaTextField;
-
     public Button submitButton;
+    public TextField roomCountTextField;
+
     private ApartmentService apartmentService;
 
     @FXML
@@ -22,7 +23,8 @@ public class ApartmentFormController {
 
     public void submitButtonOnAction() {
         Apartment apartment = new Apartment(nameTextField.getText(),
-                Double.parseDouble(areaTextField.getText()));
+                Double.parseDouble(areaTextField.getText()),
+                Integer.parseInt(roomCountTextField.getText()));
         apartmentService.persist(apartment);
         SceneManager.switchScene(Scene.APARTMENT_LIST.getFileName());
     }
