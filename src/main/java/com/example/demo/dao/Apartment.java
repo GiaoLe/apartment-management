@@ -25,7 +25,6 @@ public class Apartment {
 
     @NotNull
     private double area;
-
     public Apartment(String number, double area) {
         this.number = number;
         this.area = area;

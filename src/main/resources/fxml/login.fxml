@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.demo.controller.LoginController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <AnchorPane layoutX="59.0" layoutY="198.0" prefHeight="671.0" prefWidth="398.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="406.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane layoutX="110.0" layoutY="136.0" prefHeight="671.0" prefWidth="398.0" styleClass="left-container" stylesheets="@../styles/LoginForm.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="238.0" prefHeight="48.0" prefWidth="350.0" text="Hệ thống quản lý chưng cư Blue Moon" textFill="WHITE">
+                            <font>
+                                <Font name="Tahoma" size="20.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="119.0" layoutY="318.0" prefHeight="35.0" prefWidth="161.0" text="Văn Phú, Hà Đông, Hà Nội" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="396.0" layoutY="5.0" prefHeight="666.0" prefWidth="408.0">
+            <children>
+                <Separator layoutY="-4.0" orientation="VERTICAL" prefHeight="666.0" prefWidth="0.0" />
+                <TextField fx:id="userText" layoutX="82.0" layoutY="262.0" prefHeight="35.0" prefWidth="245.0" promptText="Username...." styleClass="text-design" stylesheets="@../styles/LoginForm.css" />
+                <Button fx:id="loginBtn" layoutX="142.0" layoutY="404.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="48.0" prefWidth="124.0" styleClass="button-design" stylesheets="@../styles/LoginForm.css" text="Login" textFill="WHITE">
+                    <font>
+                        <Font name="Arial" size="21.0" />
+                    </font></Button>
+                <PasswordField fx:id="passwordText" layoutX="84.0" layoutY="333.0" prefHeight="35.0" prefWidth="245.0" promptText="Password..." styleClass="text-design" stylesheets="@../styles/LoginForm.css" />
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="111.0" layoutY="141.0" prefHeight="90.0" prefWidth="191.0" text="Sign In" textFill="#662d60">
+                    <font>
+                        <Font name="Segoe UI Black" size="38.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

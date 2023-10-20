@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,6 @@ public class Resident {
     private String firstName;
 
     private String lastName;
-
     public Resident(String firstName, String lastName, Apartment apartment) {
         this.firstName = firstName;
         this.lastName = lastName;
