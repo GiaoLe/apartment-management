@@ -3,6 +3,7 @@ package com.example.demo.dao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,8 +27,12 @@ public class Apartment {
     @NotNull
     private double area;
 
+    @Transient
+    private int floor;
+
     public Apartment(String number, double area) {
         this.number = number;
         this.area = area;
+        floor = Integer.parseInt(number.substring(0, 1));
     }
 }
