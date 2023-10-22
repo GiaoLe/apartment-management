@@ -27,12 +27,13 @@ public class Apartment {
     @NotNull
     private double area;
 
-    @Transient
+    @NotNull
     private int floor;
 
     @NotNull
     private int roomCount;
-
+    @NotNull
+    private String type;
     public Apartment(String number, double area, int roomCount) {
         this.number = number;
         this.area = area;

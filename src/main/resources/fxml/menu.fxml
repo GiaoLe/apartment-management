@@ -12,13 +12,13 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="744.0" prefWidth="1473.0" stylesheets="@../styles/Dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.MenuController">
    <BorderPane layoutX="537.0" layoutY="187.0" prefHeight="744.0" prefWidth="1473.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
-         <AnchorPane opacity="0.76" styleClass="sidebar" BorderPane.alignment="CENTER">
-            <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" layoutX="-3.0" layoutY="217.0" mnemonicParsing="false" styleClass="navigation-design" stylesheets="@../styles/Dashboard.css" text="Dashboard" textFill="RED">
+         <AnchorPane opacity="0.76" prefHeight="647.0" prefWidth="176.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+            <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" layoutX="-3.0" layoutY="217.0" mnemonicParsing="false" onAction="#clickNavigation" styleClass="navigation-design" stylesheets="@../styles/Dashboard.css" text="Dashboard" textFill="RED">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="apartmentButton" alignment="BASELINE_LEFT" layoutX="-3.0" layoutY="262.0" mnemonicParsing="false" styleClass="navigation-design" stylesheets="@../styles/Dashboard.css" text="Apartment" textFill="#979191">
+            <Button fx:id="apartmentButton" alignment="BASELINE_LEFT" layoutX="-3.0" layoutY="262.0" mnemonicParsing="false" onAction="#clickNavigation" styleClass="navigation-design" stylesheets="@../styles/Dashboard.css" text="Apartment" textFill="#979191">
                <font>
                   <Font size="21.0" />
                </font>
@@ -40,7 +40,7 @@
          </AnchorPane>
       </top>
       <center>
-         <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <StackPane prefHeight="647.0" prefWidth="1319.0" BorderPane.alignment="CENTER">
             <AnchorPane prefHeight="647.0" prefWidth="1196.0">
                <Label layoutX="43.0" layoutY="14.0" text="Apartment Details">
                   <font>
