@@ -34,9 +34,12 @@ public class Apartment {
     private int roomCount;
     @NotNull
     private String type;
-    public Apartment(String number, double area, int roomCount) {
+    public Apartment(String number, double area) {
         this.number = number;
         this.area = area;
         floor = Integer.parseInt(number.substring(0, 1));
+    }
+    public void setRoomCount(Integer number){
+        this.roomCount+=number;
     }
 }

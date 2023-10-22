@@ -13,7 +13,9 @@ public class ApartmentFormController {
     public TextField areaTextField;
     public Button submitButton;
     public TextField roomCountTextField;
-
+    public Button backButton;
+    public TextField idTextField;
+    public TextField numberTextField;
     private ApartmentService apartmentService;
 
     @FXML
@@ -22,10 +24,13 @@ public class ApartmentFormController {
     }
 
     public void submitButtonOnAction() {
-        Apartment apartment = new Apartment(nameTextField.getText(),
-                Double.parseDouble(areaTextField.getText()),
-                Integer.parseInt(roomCountTextField.getText()));
+        Apartment apartment = new Apartment(
+                numberTextField.getText(),
+                Double.parseDouble(areaTextField.getText()));
         apartmentService.persist(apartment);
         SceneManager.switchScene(Scene.APARTMENT_LIST.getFileName());
+    }
+    public void handleBackAction() {
+        SceneManager.switchScene(Scene.MENU.getFileName());
     }
 }

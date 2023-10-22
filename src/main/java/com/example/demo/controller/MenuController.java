@@ -36,15 +36,15 @@ public class MenuController {
             dashboardButton.setStyle("-fx-background-color: transparent;" + "-fx-text-fill: #979191;");
         }
     }
-    public void dataList(){
-        List<Apartment> floorList = HibernateUtility.getSessionFactory().fromSession(session -> session.createQuery("from Apartment", Apartment.class)
+    public List<Apartment> dataList(){
+        List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment ", Apartment.class)
                 .getResultList());
-        for (Apartment index : floorList){
-            System.out.println(index);
-        }
+        return apartments;
     }
     @FXML
     public void initialize() {
-        dataList();
+        for(Apartment apartment : dataList()){
+            System.out.println(apartment);
+        }
     }
 }

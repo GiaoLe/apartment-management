@@ -11,8 +11,8 @@
    <VBox prefHeight="217.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <Label text="Create a new apartment" />
       <HBox>
-         <Label layoutX="10.0" layoutY="10.0" text="Name" />
-         <TextField fx:id="nameTextField" layoutX="42.0" layoutY="10.0" />
+         <Label layoutX="10.0" layoutY="10.0" text="number" />
+         <TextField fx:id="numberTextField" layoutX="42.0" layoutY="10.0" />
       </HBox>
       <HBox layoutX="10.0" layoutY="27.0">
          <Label text="Area" />
@@ -24,6 +24,11 @@
             <TextField fx:id="idTextField" />
          </children>
       </HBox>
-      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
+      <HBox prefHeight="32.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
+            <Button fx:id="backButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackAction" text="Back" />
+         </children>
+      </HBox>
    </VBox>
 </AnchorPane>
