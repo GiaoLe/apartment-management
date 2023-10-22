@@ -4,25 +4,45 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.controller.ResidentFormController">
-    <VBox prefHeight="168.0" prefWidth="170.0">
-        <Label text="First Name"/>
-        <TextField fx:id="firstNameTextField"/>
-        <Label fx:id="firstNameErrorLabel"/>
-        <Label layoutX="10.0" layoutY="10.0" text="Last Name"/>
-        <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0"/>
-        <Label fx:id="lastNameErrorLabel" layoutX="10.0" layoutY="52.0"/>
-        <Label layoutX="10.0" layoutY="52.0" text="Apartment"/>
-        <TextField fx:id="apartmentTextField" layoutX="10.0" layoutY="69.0"/>
-        <Label fx:id="apartmentTextFieldErrorLabel"/>
-        <HBox prefHeight="100.0" prefWidth="200.0">
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction"
-                    text="Submit"/>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" text="Back"/>
-        </HBox>
-    </VBox>
+<AnchorPane prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ResidentFormController">
+   <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <top>
+         <Label text="Create Resident" BorderPane.alignment="CENTER">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+      </top>
+      <center>
+          <VBox prefHeight="168.0" prefWidth="170.0" BorderPane.alignment="CENTER">
+              <Label text="First Name" />
+              <TextField fx:id="firstNameTextField" />
+              <Label fx:id="firstNameErrorLabel" />
+              <Label layoutX="10.0" layoutY="10.0" text="Last Name" />
+              <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0" />
+              <Label fx:id="lastNameErrorLabel" layoutX="10.0" layoutY="52.0" />
+              <Label layoutX="10.0" layoutY="52.0" text="Apartment" />
+              <TextField fx:id="apartmentTextField" layoutX="10.0" layoutY="69.0" />
+              <Label fx:id="apartmentTextFieldErrorLabel" />
+            <Label layoutX="10.0" layoutY="128.0" text="National ID" />
+            <TextField fx:id="nationalIDTextField" layoutX="10.0" layoutY="145.0" />
+            <Label fx:id="nationalIDErrorLabel" layoutX="10.0" layoutY="170.0" />
+            <Label layoutX="10.0" layoutY="212.0" text="Phone number" />
+            <TextField fx:id="phoneNumberTextField" layoutX="10.0" layoutY="229.0" />
+            <Label fx:id="phoneNumberErrorLabel" layoutX="10.0" layoutY="254.0" />
+            <Label layoutX="10.0" layoutY="271.0" text="Email" />
+            <TextField fx:id="emailTextField" layoutX="10.0" layoutY="288.0" />
+            <Label fx:id="emailErrorLabel" layoutX="10.0" layoutY="313.0" />
+              <HBox prefHeight="100.0" prefWidth="200.0">
+                  <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" text="Back" />
+              </HBox>
+          </VBox>
+      </center>
+   </BorderPane>
 </AnchorPane>

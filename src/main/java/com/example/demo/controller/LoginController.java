@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.HibernateUtility;
-import com.example.demo.Scene;
-import com.example.demo.SceneManager;
+import com.example.demo.gui.Scene;
+import com.example.demo.gui.SceneManager;
 import com.example.demo.dao.Admin;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

@@ -36,6 +36,7 @@ public class Apartment {
     public Apartment(String number, double area, int roomCount) {
         this.number = number;
         this.area = area;
+        this.roomCount = roomCount;
         floor = Integer.parseInt(number.substring(0, 1));
     }
 }

@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.Scene;
-import com.example.demo.SceneManager;
+import com.example.demo.gui.Scene;
+import com.example.demo.gui.SceneManager;
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
 import com.example.demo.dao.Resident;
