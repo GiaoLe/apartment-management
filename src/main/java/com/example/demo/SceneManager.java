@@ -2,6 +2,7 @@ package com.example.demo;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.Setter;
 
@@ -20,7 +21,8 @@ public class SceneManager {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(DemoApplication.class.getResource(fxml)))));
             stage.setTitle("Apartment Manager");
-            stage.centerOnScreen();
+            stage.getIcons().add(new Image(String.valueOf(DemoApplication.class.getResource("/media/apartment-icon.png"))));
+            stage.setMaximized(true);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
