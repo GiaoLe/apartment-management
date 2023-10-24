@@ -1,25 +1,16 @@
 package com.example.demo.controller;
 
-import com.example.demo.gui.SceneManager;
 import com.example.demo.gui.Scene;
-import com.example.demo.dao.Apartment;
+import com.example.demo.gui.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
 import javafx.scene.layout.BorderPane;
 
 public class MenuController {
 
-    public Button dashboardButton;
-    public TableColumn<Apartment, Integer> availableRooms;
-    public TableColumn<?, ?> description;
-    public TableColumn<?, ?> flatNumber;
-    public TableColumn<?, ?> notAvailableRooms;
-    public TableColumn<?, ?> occupiedRooms;
-    public TableColumn<?, ?> totalResidents;
-    public TableColumn<?, ?> totalRooms;
-    public Button residentsButton;
     public BorderPane borderPane;
+    public Button dashboardButton;
+    public Button residentsButton;
     public Button apartmentsButton;
 
     @FXML
