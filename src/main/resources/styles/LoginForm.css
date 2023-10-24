@@ -1,17 +1,19 @@
-.left-container{
-    -fx-background-color: linear-gradient(to bottom right, #2f466b, #662d60);
-}
+
 .text-design{
-    -fx-background-color: transparent;
     -fx-border-radius: 10px;
-    -fx-border-color: linear-gradient(to bottom right, #2f466b, #662d60);
+    -fx-border-color: linear-gradient(to right, #f87000, #fd0026);
     -fx-background-radius: 10px;
 }
 .button-design{
-    -fx-background-color: linear-gradient(to bottom right, #2f466b, #662d60);
+    -fx-background-color: linear-gradient(to right, #f87000, #fd0026);
     -fx-background-radius: 20px;
     -fx-cursor: hand;
 }
 .button-design:hover{
-    -fx-background-color: linear-gradient(to bottom right, #517ab5, #ae44a5);
+    -fx-background-color: linear-gradient(to right, #f87000, #fd0026);
+}
+.background-image{
+    -fx-background-image: url("../images/home.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
 }
