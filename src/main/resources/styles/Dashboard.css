@@ -7,12 +7,20 @@
 .navigation-design{
     -fx-background-color: transparent;
     -fx-font-size: 25px;
-    -fx-text-alignment: left;
+    -fx-text-alignment: center;
     -fx-text-fill: #979191;
+}
+navigation-text{
+    -fx-font-size: 25px;
+    -fx-text-fill: #979191;
+    -fx-text-alignment: center;
 }
 .navigation-design:hover{
     -fx-text-fill: #ffff;
     -fx-underline: true;
+}
+.avatar{
+    -fx-border-radius: 50%;
 }
 .list-container{
     -fx-border-width: 1px;

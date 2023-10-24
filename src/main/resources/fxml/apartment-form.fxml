@@ -7,20 +7,35 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.controller.ApartmentFormController">
-   <VBox prefHeight="217.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <Label text="Create a new apartment"/>
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentFormController">
+   <VBox prefHeight="217.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label text="Create a new apartment" />
       <HBox>
-         <Label text="Name"/>
-         <TextField fx:id="nameTextField"/>
+         <Label text="id" />
+         <TextField fx:id="idTextField" />
       </HBox>
       <HBox layoutX="10.0" layoutY="27.0">
-         <Label text="Area"/>
-         <TextField fx:id="areaTextField"/>
+         <Label text="type" />
+         <TextField fx:id="typeTextField" />
       </HBox>
-      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit"/>
+      <HBox layoutX="10.0" layoutY="52.0">
+         <children>
+            <Label text="Area" />
+            <TextField fx:id="areaTextField" />
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="102.0">
+         <children>
+            <Label text="number" />
+            <TextField fx:id="numberTextField" />
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="102.0">
+         <children>
+            <Label text="status" />
+            <TextField fx:id="statusTextField" />
+         </children>
+      </HBox>
+      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
    </VBox>
 </AnchorPane>

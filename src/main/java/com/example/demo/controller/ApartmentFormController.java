@@ -9,9 +9,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class ApartmentFormController {
-    public TextField nameTextField;
+
     public TextField areaTextField;
 
+
+    public TextField idTextField;
+
+
+    public TextField numberTextField;
+
+
+    public TextField typeTextField;
+    public TextField statusTextField;
     public Button submitButton;
     private ApartmentService apartmentService;
 
@@ -21,8 +30,11 @@ public class ApartmentFormController {
     }
 
     public void submitButtonOnAction() {
-        Apartment apartment = new Apartment(nameTextField.getText(),
-                Double.parseDouble(areaTextField.getText()));
+        Apartment apartment = new Apartment(Integer.parseInt(idTextField.getText()),
+                Integer.parseInt(numberTextField.getText()),
+                Double.parseDouble(areaTextField.getText()),
+                typeTextField.getText(),
+                statusTextField.getText());
         apartmentService.persist(apartment);
         SceneManager.switchScene(Scene.APARTMENT_LIST.getFileName());
     }

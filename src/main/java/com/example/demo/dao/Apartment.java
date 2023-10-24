@@ -16,17 +16,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Apartment {
     @Id
-    @GeneratedValue
     @NotNull
     private Integer id;
 
-    @NotEmpty
-    private String number;
+    @NotNull
+    private Integer number;
 
     @NotNull
-    private double area;
-    public Apartment(String number, double area) {
+    private Double area;
+    @NotNull
+    private Integer floorNumber;
+    private Integer roomCount;
+    @NotNull
+    private String type;
+    @NotNull
+    private String status;
+    public Apartment(Integer id, Integer number, Double area, String type, String status) {
         this.number = number;
         this.area = area;
+        this.id = id;
+        this.status = status;
+        this.type = type;
+        this.roomCount = 0;
+        floorNumber = Integer.valueOf(id.toString().substring(0, 1));
     }
 }
