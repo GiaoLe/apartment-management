@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.Scene;
-import com.example.demo.SceneManager;
+import com.example.demo.gui.Scene;
+import com.example.demo.gui.SceneManager;
 import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.service.ApartmentService;
 import javafx.fxml.FXML;

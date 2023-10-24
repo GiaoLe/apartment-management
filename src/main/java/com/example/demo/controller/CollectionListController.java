@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.repository.CollectionRepository;
 import com.example.demo.service.CollectionService;
-import com.example.demo.Scene;
-import com.example.demo.SceneManager;
+import com.example.demo.gui.Scene;
+import com.example.demo.gui.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;

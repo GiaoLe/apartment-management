@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.*;
+import com.example.demo.HibernateUtility;
+import com.example.demo.gui.Scene;
+import com.example.demo.gui.SceneManager;
+import com.example.demo.TextFieldWrapper;
 import com.example.demo.dao.Apartment;
 import com.example.demo.dao.Resident;
 import com.example.demo.repository.ResidentRepository;
@@ -21,6 +24,12 @@ public class ResidentFormController {
     public Label firstNameErrorLabel;
     public Label lastNameErrorLabel;
     public Button backButton;
+    public TextField nationalIDTextField;
+    public Label nationalIDErrorLabel;
+    public TextField phoneNumberTextField;
+    public Label phoneNumberErrorLabel;
+    public TextField emailTextField;
+    public Label emailErrorLabel;
 
     private ArrayList<TextFieldWrapper> textFieldWrappers;
 
@@ -31,7 +40,10 @@ public class ResidentFormController {
         textFieldWrappers = new ArrayList<>(List.of(
                 new TextFieldWrapper(firstNameTextField, firstNameErrorLabel),
                 new TextFieldWrapper(lastNameTextField, lastNameErrorLabel),
-                new TextFieldWrapper(apartmentTextField, apartmentTextFieldErrorLabel)
+                new TextFieldWrapper(apartmentTextField, apartmentTextFieldErrorLabel),
+                new TextFieldWrapper(nationalIDTextField, nationalIDErrorLabel),
+                new TextFieldWrapper(phoneNumberTextField, phoneNumberErrorLabel),
+                new TextFieldWrapper(emailTextField, emailErrorLabel)
         ));
         residentService = new ResidentService(new ResidentRepository());
     }
@@ -60,7 +72,10 @@ public class ResidentFormController {
             residentService.persist(new Resident(
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
-                    apartment));
+                    apartment,
+                    nationalIDTextField.getText(),
+                    phoneNumberTextField.getText(),
+                    emailTextField.getText()));
             SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
         }
     }
