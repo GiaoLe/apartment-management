@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Apartment {
     @Id
-    @GeneratedValue
     @NotNull
     private Integer id;
 
@@ -34,9 +33,14 @@ public class Apartment {
     private int roomCount;
     @NotNull
     private String type;
-    public Apartment(String number, double area) {
+    @NotNull
+    private String status;
+    public Apartment(Integer id ,String number, double area, String type, String status) {
+        this.id = id;
         this.number = number;
         this.area = area;
+        this.type = type;
+        this.status = status;
         floor = Integer.parseInt(number.substring(0, 1));
     }
     public void setRoomCount(Integer number){

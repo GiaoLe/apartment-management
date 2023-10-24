@@ -24,11 +24,23 @@
             <TextField fx:id="idTextField" />
          </children>
       </HBox>
-      <HBox prefHeight="32.0" prefWidth="200.0">
+      <HBox prefHeight="26.0" prefWidth="200.0">
          <children>
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
-            <Button fx:id="backButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackAction" text="Back" />
+            <Label text="Type" />
+            <TextField fx:id="typeTextField" />
          </children>
       </HBox>
+      <HBox prefHeight="32.0" prefWidth="200.0">
+         <children>
+            <HBox prefHeight="26.0" prefWidth="200.0">
+               <children>
+                  <Label text="status" />
+                  <TextField fx:id="statusTextField" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
+      <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackAction" text="Back" />
    </VBox>
 </AnchorPane>

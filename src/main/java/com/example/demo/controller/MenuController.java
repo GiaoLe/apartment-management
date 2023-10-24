@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.HibernateUtility;
 import com.example.demo.dao.Apartment;
-import com.example.demo.repository.ApartmentRepository;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.binding.ObjectExpression;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,15 +34,15 @@ public class MenuController {
             dashboardButton.setStyle("-fx-background-color: transparent;" + "-fx-text-fill: #979191;");
         }
     }
-    public List<Apartment> dataList(){
-        List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment ", Apartment.class)
+    public void showData() {
+        Object totalRooms = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("select count (*) from Apartment ", Apartment.class)
                 .getResultList());
-        return apartments;
+        Object availableRoom = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment where status = :status", Apartment.class)
+                .setParameter("status", "available")
+                .getResultList());
     }
     @FXML
     public void initialize() {
-        for(Apartment apartment : dataList()){
-            System.out.println(apartment);
-        }
+
     }
 }
