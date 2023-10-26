@@ -21,7 +21,7 @@
             <TableColumn fx:id="floorTableColumn" prefWidth="175.0" text="Floor" />
                 <TableColumn fx:id="areaTableColumn" prefWidth="75.0" text="Area" />
                 <TableColumn fx:id="totalRoomsTableColumn" prefWidth="150.0" text="Total Rooms" />
-                <TableColumn prefWidth="150.0" text="Total Residents" />
+                <TableColumn fx:id="totalResidentsTableColumn" prefWidth="150.0" text="Total Residents" />
                 <TableColumn prefWidth="175.0" text="Description" />
             </columns>
         </TableView>

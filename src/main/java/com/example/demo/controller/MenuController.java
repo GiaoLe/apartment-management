@@ -12,6 +12,7 @@ public class MenuController {
     public Button dashboardButton;
     public Button residentsButton;
     public Button apartmentsButton;
+    public Button collectionsButton;
 
     @FXML
     public void initialize() {
@@ -29,5 +30,9 @@ public class MenuController {
 
     public void dashboardButtonOnAction() {
         SceneManager.switchScene(Scene.DASHBOARD.getFileName());
+    }
+
+    public void collectionsButtonOnAction() {
+        SceneManager.switchScene(Scene.COLLECTION_LIST.getFileName());
     }
 }

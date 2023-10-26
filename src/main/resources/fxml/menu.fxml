@@ -27,6 +27,11 @@
                      <Font size="21.0" />
                   </font>
                </Button>
+               <Button fx:id="collectionsButton" alignment="BASELINE_LEFT" layoutX="22.0" layoutY="116.0" mnemonicParsing="false" onAction="#collectionsButtonOnAction" styleClass="navigation-design" stylesheets="@../styles/Dashboard.css" text="Collections" textFill="#979191">
+                  <font>
+                     <Font size="21.0" />
+                  </font>
+               </Button>
             </VBox>
          </AnchorPane>
       </left>

@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
 @NoArgsConstructor
@@ -40,4 +39,5 @@ public class Apartment {
     public int getFloor() {
         return Integer.parseInt(number.substring(0, 1));
     }
+
 }
