@@ -19,10 +19,8 @@
          <TextField fx:id="areaTextField" />
       </HBox>
       <HBox>
-         <children>
-            <Label text="Number of rooms" />
-            <TextField fx:id="roomCountTextField" />
-         </children>
+         <Label text="Number of rooms"/>
+         <TextField fx:id="roomCountTextField"/>
       </HBox>
       <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
    </VBox>
