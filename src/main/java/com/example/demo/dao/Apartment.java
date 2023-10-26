@@ -3,6 +3,7 @@ package com.example.demo.dao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,5 +34,10 @@ public class Apartment {
         this.number = number;
         this.area = area;
         this.roomCount = roomCount;
+    }
+
+    @Transient
+    public int getFloor() {
+        return Integer.parseInt(number.substring(0, 1));
     }
 }

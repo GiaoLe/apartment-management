@@ -21,6 +21,7 @@ public class ApartmentListController {
     public TableColumn<Apartment, String> numberTableColumn;
     public TableColumn<Apartment, Double> areaTableColumn;
     public TableColumn<Apartment, String> totalRoomsTableColumn;
+    public TableColumn<Apartment, Integer> floorTableColumn;
 
 
     @FXML
@@ -30,6 +31,7 @@ public class ApartmentListController {
         numberTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumber()));
         areaTableColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getArea()).asObject());
         totalRoomsTableColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getRoomCount()).asString());
+        floorTableColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getFloor()).asObject());
     }
 
     public void newButtonOnAction() {
