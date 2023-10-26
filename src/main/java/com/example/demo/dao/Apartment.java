@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
 @NoArgsConstructor
@@ -39,4 +38,5 @@ public class Apartment {
         this.roomCount = roomCount;
         floor = Integer.parseInt(number.substring(0, 1));
     }
+
 }
