@@ -7,9 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -20,7 +17,14 @@ public class Collection {
     @GeneratedValue
     private Integer id;
 
+    @NotNull
+    private String name;
+
+    @NotNull
     private CollectionType type;
 
+    @NotNull
     private double amount;
+
+    private String description;
 }

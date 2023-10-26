@@ -8,20 +8,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.controller.CollectionFormController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionFormController">
    <VBox>
-      <HBox>
+      <VBox layoutX="10.0" layoutY="10.0">
+         <Label text="Name" />
+         <TextField fx:id="nameTextField" prefHeight="13.0" prefWidth="200.0" />
+      </VBox>
+      <VBox>
+         <Label text="Label" />
+         <ChoiceBox fx:id="collectionTypeChoiceBox" prefHeight="25.0" prefWidth="201.0" />
+      </VBox>
+      <VBox layoutX="10.0" layoutY="10.0">
+         <Label text="Description" />
+         <TextField fx:id="descriptionTextField" prefHeight="13.0" prefWidth="200.0" />
+      </VBox>
+      <VBox>
          <Label text="Amount"/>
          <TextField fx:id="amountTextField"/>
-      </HBox>
+      </VBox>
       <HBox>
-         <Label text="Label"/>
-         <ChoiceBox fx:id="collectionTypeChoiceBox" prefWidth="150.0"/>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit"/>
-         <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" text="Back"/>
+         <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
       </HBox>
    </VBox>
 </AnchorPane>

@@ -21,7 +21,8 @@ public class CollectionFormController {
     public TextField amountTextField;
     public ChoiceBox<CollectionType> collectionTypeChoiceBox;
     public Button submitButton;
-    public Button backButton;
+    public TextField descriptionTextField;
+    public TextField nameTextField;
 
     @FXML
     public void initialize() {
@@ -35,7 +36,12 @@ public class CollectionFormController {
             alert.setContentText("There are no residents. Please create them first.");
             alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> SceneManager.switchScene(Scene.RESIDENT_FORM.getFileName()));
         } else {
-            Collection collection = Collection.builder().amount(Double.parseDouble(amountTextField.getText())).type(collectionTypeChoiceBox.getValue()).build();
+            Collection collection = Collection.builder()
+                    .name(nameTextField.getText())
+                    .amount(Double.parseDouble(amountTextField.getText()))
+                    .type(collectionTypeChoiceBox.getValue())
+                    .description(descriptionTextField.getText())
+                    .build();
             CollectionService collectionService = new CollectionService(new CollectionRepository());
             collectionService.persist(collection);
             ResidentCollectionService residentCollectionService = new ResidentCollectionService(new ResidentCollectionRepository());
@@ -46,7 +52,4 @@ public class CollectionFormController {
         }
     }
 
-    public void backButtonOnAction() {
-        SceneManager.switchScene(Scene.MENU.getFileName());
-    }
 }
