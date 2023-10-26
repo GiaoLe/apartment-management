@@ -19,4 +19,8 @@ public class CollectionService {
     public List<Collection> findAll() {
         return collectionRepository.findAll();
     }
+
+    public void remove(Collection collection) {
+        collectionRepository.remove(collection);
+    }
 }

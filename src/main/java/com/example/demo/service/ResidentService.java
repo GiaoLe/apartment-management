@@ -18,7 +18,7 @@ public class ResidentService {
         return residentRepository.findAll();
     }
 
-    public Resident findByID(Integer id) {
-        return residentRepository.findById(id);
+    public void remove(Resident resident) {
+        residentRepository.remove(resident);
     }
 }

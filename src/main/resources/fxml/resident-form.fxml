@@ -21,10 +21,10 @@
       <center>
           <VBox prefHeight="168.0" prefWidth="170.0" BorderPane.alignment="CENTER">
               <Label text="First Name" />
-              <TextField fx:id="firstNameTextField" />
+              <TextField fx:id="firstNameTextField" promptText="First name" />
               <Label fx:id="firstNameErrorLabel" />
               <Label layoutX="10.0" layoutY="10.0" text="Last Name" />
-              <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0" />
+              <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0" promptText="Last name" />
               <Label fx:id="lastNameErrorLabel" layoutX="10.0" layoutY="52.0" />
               <Label layoutX="10.0" layoutY="52.0" text="Apartment" />
               <TextField fx:id="apartmentTextField" layoutX="10.0" layoutY="69.0" />

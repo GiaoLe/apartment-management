@@ -15,9 +15,7 @@ public abstract class Repository<T, ID> implements GenericRepository<T, ID> {
 
     @Override
     public void persist(T entity) {
-        HibernateUtility.getSessionFactory().inTransaction(session -> {
-            session.persist(entity);
-        });
+        HibernateUtility.getSessionFactory().inTransaction(session -> session.persist(entity));
     }
 
     @Override
@@ -39,10 +37,15 @@ public abstract class Repository<T, ID> implements GenericRepository<T, ID> {
     }
 
     @Override
-    public void deleteById(ID id) {
+    public void removeByID(ID id) {
         HibernateUtility.getSessionFactory().inTransaction(session -> {
-            T entity = session.find(entityClass, id);
+            T entity = session.get(entityClass, id);
             session.remove(entity);
         });
+    }
+
+    @Override
+    public void remove(T entity) {
+        HibernateUtility.getSessionFactory().inTransaction(session -> session.remove(entity));
     }
 }

@@ -20,10 +20,12 @@ public class CollectionListController {
     public TableColumn<Collection, CollectionType> typeTableColumn;
     public TableColumn<Collection, Double> amountTableColumn;
     public TableColumn<Collection, String> descriptionTableColumn;
+    public Button deleteButton;
+
+    private final CollectionService collectionService = new CollectionService(new CollectionRepository());
 
     @FXML
     public void initialize() {
-        CollectionService collectionService = new CollectionService(new CollectionRepository());
         collectionsTableView.setItems(FXCollections.observableList(collectionService.findAll()));
         nameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         typeTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
@@ -33,5 +35,13 @@ public class CollectionListController {
 
     public void newButtonOnAction() {
         SceneManager.switchScene(Scene.COLLECTION_FORM.getFileName());
+    }
+
+    public void deleteButtonOnAction() {
+        Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
+        if (collection != null) {
+            collectionsTableView.getItems().remove(collection);
+            collectionService.remove(collection);
+        }
     }
 }

@@ -19,4 +19,7 @@ public class ApartmentService {
         return apartmentRepository.findAll();
     }
 
+    public void remove(Apartment apartment) {
+        apartmentRepository.remove(apartment);
+    }
 }
