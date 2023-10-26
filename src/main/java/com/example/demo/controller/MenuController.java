@@ -1,48 +1,42 @@
 package com.example.demo.controller;
 
-import com.example.demo.HibernateUtility;
+import com.example.demo.gui.SceneManager;
+import com.example.demo.gui.Scene;
 import com.example.demo.dao.Apartment;
-import javafx.beans.binding.ObjectExpression;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-
-import java.util.List;
+import javafx.scene.layout.BorderPane;
 
 public class MenuController {
 
-    public Button apartmentButton;
-
     public Button dashboardButton;
     public TableColumn<Apartment, Integer> availableRooms;
-    public TableColumn<Apartment, String> description;
-    public TableView<Apartment> flatList;
-    public TableColumn<Apartment, Integer> flatNumber;
-    public TableColumn<Apartment, Integer> notAvailableRooms;
-    public TableColumn<Apartment, Integer> occupiedRooms;
-    public TableColumn<Apartment, Integer> totalResidents;
-    public TableColumn<Apartment, Integer> totalRooms;
-    public void clickNavigation(ActionEvent actionEvent){
-        String btnID = ((Button) actionEvent.getSource()).getId();
-        if(btnID.contains("dashboardButton")){
-            dashboardButton.setStyle("-fx-text-fill: #ffa600;" + "-fx-underline: true");
-            apartmentButton.setStyle("-fx-background-color: transparent;" + "-fx-text-fill: #979191;");
-        }else if(btnID.contains("apartmentButton")){
-            apartmentButton.setStyle("-fx-text-fill: #ffa600;" + "-fx-underline: true");
-            dashboardButton.setStyle("-fx-background-color: transparent;" + "-fx-text-fill: #979191;");
-        }
-    }
-    public void showData() {
-        Object totalRooms = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("select count (*) from Apartment ", Apartment.class)
-                .getResultList());
-        Object availableRoom = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment where status = :status", Apartment.class)
-                .setParameter("status", "available")
-                .getResultList());
-    }
+    public TableColumn<?, ?> description;
+    public TableColumn<?, ?> flatNumber;
+    public TableColumn<?, ?> notAvailableRooms;
+    public TableColumn<?, ?> occupiedRooms;
+    public TableColumn<?, ?> totalResidents;
+    public TableColumn<?, ?> totalRooms;
+    public Button residentsButton;
+    public BorderPane borderPane;
+    public Button apartmentsButton;
+
     @FXML
     public void initialize() {
+        SceneManager.setBorderPane(borderPane);
+        dashboardButtonOnAction();
+    }
 
+    public void residentsButtonOnAction() {
+        SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
+    }
+
+    public void apartmentsButtonOnAction() {
+        SceneManager.switchScene(Scene.APARTMENT_LIST.getFileName());
+    }
+
+    public void dashboardButtonOnAction() {
+        SceneManager.switchScene(Scene.DASHBOARD.getFileName());
     }
 }

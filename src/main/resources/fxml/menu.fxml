@@ -2,11 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -47,27 +44,5 @@
             </Label>
          </AnchorPane>
       </top>
-      <center>
-         <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <AnchorPane styleClass="list-container" stylesheets="@../styles/Dashboard.css">
-               <Label layoutX="38.0" layoutY="14.0" text="Apartment List">
-                  <font>
-                     <Font name="Microsoft Sans Serif" size="31.0" />
-                  </font>
-               </Label>
-               <TableView layoutX="36.0" layoutY="118.0">
-                  <columns>
-                     <TableColumn fx:id="flatNumber" prefWidth="150.0" text="Flat Number" />
-                     <TableColumn fx:id="totalRooms" prefWidth="150.0" text="Total Rooms" />
-                     <TableColumn fx:id="availableRooms" prefWidth="150.0" text="Rooms Available" />
-                     <TableColumn fx:id="occupiedRooms" prefWidth="150.0" text="Rooms Occupied" />
-                     <TableColumn fx:id="notAvailableRooms" prefWidth="150.0" text="Rooms Not Available" />
-                     <TableColumn fx:id="totalResidents" prefWidth="150.0" text="Total Residents" />
-                     <TableColumn fx:id="description" prefWidth="175.0" text="Description" />
-                  </columns>
-               </TableView>
-            </AnchorPane>
-         </StackPane>
-      </center>
    </BorderPane>
 </AnchorPane>

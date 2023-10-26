@@ -1,36 +1,37 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.Apartment;
 import com.example.demo.gui.Scene;
 import com.example.demo.gui.SceneManager;
 import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.service.ApartmentService;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-
-import java.util.stream.Collectors;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 public class ApartmentListController {
 
-    public ListView<String> apartmentListView;
-    public Button menuButton;
     public Button newButton;
+    public TableView<Apartment> apartmentTableView;
+    public TableColumn<Apartment, String> numberTableColumn;
+    public TableColumn<Apartment, Double> areaTableColumn;
+    public TableColumn<Apartment, String> totalRoomsTableColumn;
+    public TableColumn<Apartment, Integer> floorTableColumn;
+
 
     @FXML
     public void initialize() {
         ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
-        apartmentListView.getItems().addAll(
-                apartmentService.findAll()
-                        .stream()
-                        .map(apartment -> "ID: " + apartment.getId() + "\n"
-                                + "Number: " + apartment.getNumber() + "\n"
-                                + "Area: " + apartment.getArea() + "\n"
-                                + "Floor: " + apartment.getFloor() + "\n")
-                        .collect(Collectors.toList()));
-    }
-
-    public void menuButtonOnAction() {
-        SceneManager.switchScene(Scene.MENU.getFileName());
+        apartmentTableView.setItems(FXCollections.observableList(apartmentService.findAll()));
+        numberTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumber()));
+        areaTableColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getArea()).asObject());
+        totalRoomsTableColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getRoomCount()).asString());
+        floorTableColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getFloor()).asObject());
     }
 
     public void newButtonOnAction() {
