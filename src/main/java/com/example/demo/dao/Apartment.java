@@ -26,9 +26,6 @@ public class Apartment {
     @NotNull
     private double area;
 
-    @Transient
-    private int floor;
-
     @NotNull
     private int roomCount;
 
@@ -36,7 +33,11 @@ public class Apartment {
         this.number = number;
         this.area = area;
         this.roomCount = roomCount;
-        floor = Integer.parseInt(number.substring(0, 1));
+    }
+
+    @Transient
+    public int getFloor() {
+        return Integer.parseInt(number.substring(0, 1));
     }
 
 }
