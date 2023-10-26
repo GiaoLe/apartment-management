@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+
+//TODO Implement action listener for each row to open collection-resident list
 public class CollectionListController {
     public Button newButton;
     public TableView<Collection> collectionsTableView;

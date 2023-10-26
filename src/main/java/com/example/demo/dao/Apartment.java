@@ -30,7 +30,7 @@ public class Apartment {
     private int roomCount;
 
     //TODO find a better way to handle LAZY loading than using FetchType.EAGER
-    @OneToMany(mappedBy = "apartment", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "apartment", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Resident> residents = new ArrayList<>();
 
     public Apartment(String number, double area, int roomCount) {
