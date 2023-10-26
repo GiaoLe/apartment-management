@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.Apartment;
-import com.example.demo.gui.Scene;
-import com.example.demo.gui.SceneManager;
+import com.example.demo.gui.MenuView;
+import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.service.ApartmentService;
 import javafx.fxml.FXML;
@@ -27,6 +27,6 @@ public class ApartmentFormController {
                 Double.parseDouble(areaTextField.getText()),
                 Integer.parseInt(roomCountTextField.getText()));
         apartmentService.persist(apartment);
-        SceneManager.switchScene(Scene.APARTMENT_LIST.getFileName());
+        MenuViewManager.switchView(MenuView.APARTMENT_LIST);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.gui.Scene;
-import com.example.demo.gui.SceneManager;
+import com.example.demo.gui.MenuView;
+import com.example.demo.gui.MenuViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -16,23 +16,23 @@ public class MenuController {
 
     @FXML
     public void initialize() {
-        SceneManager.setBorderPane(borderPane);
+        MenuViewManager.setBorderPane(borderPane);
         dashboardButtonOnAction();
     }
 
     public void residentsButtonOnAction() {
-        SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
+        MenuViewManager.switchView(MenuView.RESIDENT_LIST);
     }
 
     public void apartmentsButtonOnAction() {
-        SceneManager.switchScene(Scene.APARTMENT_LIST.getFileName());
+        MenuViewManager.switchView(MenuView.APARTMENT_LIST);
     }
 
     public void dashboardButtonOnAction() {
-        SceneManager.switchScene(Scene.DASHBOARD.getFileName());
+        MenuViewManager.switchView(MenuView.DASHBOARD);
     }
 
     public void collectionsButtonOnAction() {
-        SceneManager.switchScene(Scene.COLLECTION_LIST.getFileName());
+        MenuViewManager.switchView(MenuView.COLLECTION_LIST);
     }
 }

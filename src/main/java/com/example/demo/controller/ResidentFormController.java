@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.HibernateUtility;
-import com.example.demo.gui.Scene;
-import com.example.demo.gui.SceneManager;
+import com.example.demo.gui.MenuView;
+import com.example.demo.gui.MenuViewManager;
 import com.example.demo.TextFieldWrapper;
 import com.example.demo.dao.Apartment;
 import com.example.demo.dao.Resident;
@@ -67,7 +67,7 @@ public class ResidentFormController {
             alert.setContentText("Apartment with number " + apartmentTextField.getText() + " does not exist. Please create it first.");
             alert.showAndWait()
                     .filter(response -> response == ButtonType.OK)
-                    .ifPresent(response -> SceneManager.switchScene(Scene.APARTMENT_FORM.getFileName()));
+                    .ifPresent(response -> MenuViewManager.switchView(MenuView.APARTMENT_FORM));
         } else {
             Resident resident = new Resident(
                     firstNameTextField.getText(),
@@ -79,12 +79,12 @@ public class ResidentFormController {
             );
             residentService.persist(resident);
             apartment.addResident(resident);
-            SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
+            MenuViewManager.switchView(MenuView.RESIDENT_LIST);
         }
     }
 
     public void backButtonOnAction() {
-        SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
+        MenuViewManager.switchView(MenuView.RESIDENT_LIST);
     }
 }
 

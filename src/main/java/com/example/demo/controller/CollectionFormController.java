@@ -3,8 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
 import com.example.demo.dao.Resident;
-import com.example.demo.gui.Scene;
-import com.example.demo.gui.SceneManager;
+import com.example.demo.gui.MenuView;
+import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.CollectionRepository;
 import com.example.demo.repository.ResidentCollectionRepository;
 import com.example.demo.repository.ResidentRepository;
@@ -34,7 +34,7 @@ public class CollectionFormController {
         if (residents.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("There are no residents. Please create them first.");
-            alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> SceneManager.switchScene(Scene.RESIDENT_FORM.getFileName()));
+            alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> MenuViewManager.switchView(MenuView.RESIDENT_FORM));
         } else {
             Collection collection = Collection.builder()
                     .name(nameTextField.getText())
@@ -48,7 +48,7 @@ public class CollectionFormController {
             for (Resident resident : residents) {
                 residentCollectionService.persist(resident, collection);
             }
-            SceneManager.switchScene(Scene.COLLECTION_LIST.getFileName());
+            MenuViewManager.switchView(MenuView.COLLECTION_LIST);
         }
     }
 

@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.Apartment;
-import com.example.demo.gui.Scene;
-import com.example.demo.gui.SceneManager;
+import com.example.demo.gui.MenuView;
+import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.service.ApartmentService;
 import javafx.beans.property.SimpleObjectProperty;
@@ -37,7 +37,7 @@ public class ApartmentListController {
     }
 
     public void newButtonOnAction() {
-        SceneManager.switchScene(Scene.APARTMENT_FORM.getFileName());
+        MenuViewManager.switchView(MenuView.APARTMENT_FORM);
     }
 
     public void deleteButtonOnAction() {
