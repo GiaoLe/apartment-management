@@ -14,7 +14,8 @@ import javafx.scene.control.TableView;
 
 public class ResidentListController {
 
-    public Button newResidentButton;
+    private final ResidentService residentService = new ResidentService(new ResidentRepository());
+    public Button newButton;
     public TableView<Resident> residentTableView;
     public TableColumn<Resident, String> firstNameTableColumn;
     public TableColumn<Resident, String> lastNameTableColumn;
@@ -22,10 +23,10 @@ public class ResidentListController {
     public TableColumn<Resident, String> phoneNumberTableColumn;
     public TableColumn<Resident, String> emailTableColumn;
     public TableColumn<Resident, String> nationalIDTableColumn;
+    public Button deleteButton;
 
     @FXML
     public void initialize() {
-        ResidentService residentService = new ResidentService(new ResidentRepository());
         residentTableView.setItems(FXCollections.observableList(residentService.findAll()));
         firstNameTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getFirstName()));
         lastNameTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLastName()));
@@ -35,7 +36,15 @@ public class ResidentListController {
         nationalIDTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getNationalID()));
     }
 
-    public void newResidentButtonOnAction() {
+    public void newButtonOnAction() {
         SceneManager.switchScene(Scene.RESIDENT_FORM.getFileName());
+    }
+
+    public void deleteButtonOnAction() {
+        Resident resident = residentTableView.getSelectionModel().getSelectedItem();
+        if (resident != null) {
+            residentTableView.getItems().remove(resident);
+            residentService.remove(resident);
+        }
     }
 }

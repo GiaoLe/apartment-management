@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -12,7 +13,7 @@
     <VBox>
         <Label text="Apartment List">
             <font>
-                <Font name="Microsoft Sans Serif" size="31.0" />
+                <Font name="System Bold" size="30.0" />
             </font>
         </Label>
         <TableView fx:id="apartmentTableView" stylesheets="@../styles/TableView.css">
@@ -25,6 +26,11 @@
                 <TableColumn prefWidth="175.0" text="Description" />
             </columns>
         </TableView>
-        <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" text="New" />
+        <HBox>
+            <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" prefWidth="60.0"
+                    text="New"/>
+            <Button fx:id="deleteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                    onAction="#deleteButtonOnAction" prefWidth="60.0" text="Delete"/>
+        </HBox>
     </VBox>
 </AnchorPane>

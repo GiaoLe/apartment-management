@@ -1,13 +1,12 @@
 package com.example.demo.dao;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -31,6 +30,8 @@ public class Resident {
     @ManyToOne
     private Apartment apartment;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resident", fetch = FetchType.EAGER)
+    private List<ResidentCollection> residentCollectionList;
     public Resident(String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID) {
         this.firstName = firstName;
         this.lastName = lastName;
