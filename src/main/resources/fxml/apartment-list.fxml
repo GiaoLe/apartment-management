@@ -15,7 +15,7 @@
                 <Font name="Microsoft Sans Serif" size="31.0" />
             </font>
         </Label>
-        <TableView fx:id="apartmentTableView">
+        <TableView fx:id="apartmentTableView" stylesheets="@../styles/TableView.css">
             <columns>
                 <TableColumn fx:id="numberTableColumn" prefWidth="150.0" text="Number" />
             <TableColumn fx:id="floorTableColumn" prefWidth="175.0" text="Floor" />

@@ -15,7 +15,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TableView fx:id="residentTableView">
+      <TableView fx:id="residentTableView" stylesheets="@../styles/TableView.css">
         <columns>
           <TableColumn fx:id="firstNameTableColumn" prefWidth="113.0" text="First Name" />
           <TableColumn fx:id="lastNameTableColumn" prefWidth="126.5" text="Last Name" />

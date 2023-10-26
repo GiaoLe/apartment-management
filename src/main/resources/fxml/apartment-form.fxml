@@ -14,16 +14,16 @@
             <Font name="System Bold" size="30.0" />
          </font></Label>
       <VBox>
-         <Label text="Name"/>
-         <TextField fx:id="nameTextField"/>
+         <Label text="Name" />
+         <TextField fx:id="nameTextField" />
       </VBox>
       <VBox>
-         <Label text="Area"/>
-         <TextField fx:id="areaTextField"/>
+         <Label text="Area" />
+         <TextField fx:id="areaTextField" />
       </VBox>
       <VBox>
-         <Label text="Number of rooms"/>
-         <TextField fx:id="roomCountTextField"/>
+         <Label text="Number of rooms" />
+         <TextField fx:id="roomCountTextField" />
       </VBox>
       <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
    </VBox>
