@@ -17,7 +17,7 @@ public class DemoApplication extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            stage.setScene(new javafx.scene.Scene(FXMLLoader.load(Objects.requireNonNull(DemoApplication.class.getResource(Scene.MENU.getFileName())))));
+            stage.setScene(new javafx.scene.Scene(FXMLLoader.load(Objects.requireNonNull(DemoApplication.class.getResource(Scene.LOGIN_FORM.getFileName())))));
             stage.setTitle("Apartment Manager");
             stage.getIcons().add(new Image(String.valueOf(DemoApplication.class.getResource("/media/apartment-icon.png"))));
             stage.centerOnScreen();

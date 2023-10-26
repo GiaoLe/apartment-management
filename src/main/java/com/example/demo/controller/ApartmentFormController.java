@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.HibernateUtility;
 import com.example.demo.dao.Apartment;
 import com.example.demo.gui.Scene;
 import com.example.demo.gui.SceneManager;
@@ -28,13 +29,13 @@ public class ApartmentFormController {
     }
 
     public void submitButtonOnAction() {
-        Apartment apartment = new Apartment(Integer.parseInt(idTextField.getText()),
-                numberTextField.getText(),
-                Double.parseDouble(areaTextField.getText()),
-                typeTextField.getText(),
-                statusTextField.getText()
-                );
-        apartmentService.persist(apartment);
+//        Apartment apartment = new Apartment(Integer.parseInt(idTextField.getText()),
+//                numberTextField.getText(),
+//                Double.parseDouble(areaTextField.getText()),
+//                typeTextField.getText(),
+//                statusTextField.getText()
+//                );
+//        apartmentService.persist(apartment);
         countRoom();
         SceneManager.switchScene(Scene.APARTMENT_LIST.getFileName());
     }
