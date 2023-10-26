@@ -69,13 +69,16 @@ public class ResidentFormController {
                     .filter(response -> response == ButtonType.OK)
                     .ifPresent(response -> SceneManager.switchScene(Scene.APARTMENT_FORM.getFileName()));
         } else {
-            residentService.persist(new Resident(
+            Resident resident = new Resident(
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
                     apartment,
                     nationalIDTextField.getText(),
                     phoneNumberTextField.getText(),
-                    emailTextField.getText()));
+                    emailTextField.getText()
+            );
+            residentService.persist(resident);
+            apartment.addResident(resident);
             SceneManager.switchScene(Scene.RESIDENT_LIST.getFileName());
         }
     }

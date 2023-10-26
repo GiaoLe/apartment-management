@@ -31,6 +31,7 @@ public class ApartmentListController {
         areaTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getArea()));
         totalRoomsTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRoomCount()).asString());
         floorTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFloor()));
+        totalResidentsTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTotalResidents()));
     }
 
     public void newButtonOnAction() {
