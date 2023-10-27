@@ -2,26 +2,30 @@ package com.example.demo.gui;
 
 import com.example.demo.DemoApplication;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import lombok.Setter;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class SceneManager {
+    private static Stage stage;
 
-    @Setter
-    private static BorderPane borderPane;
-
-    private SceneManager() {
-    }
-
-    public static void switchScene(String fxml) {
+    public static void switchScene(Scene scene) {
         try {
-            borderPane.setCenter(new FXMLLoader(Objects.requireNonNull(DemoApplication.class.getResource(fxml))).load());
+            stage.setScene(new javafx.scene.Scene(FXMLLoader.load(Objects.requireNonNull(DemoApplication.class.getResource(scene.getFileName())))));
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public static void setStage(Stage stage) {
+        SceneManager.stage = stage;
+        stage.setTitle("Apartment Manager");
+        stage.getIcons().add(new Image(String.valueOf(DemoApplication.class.getResource("/media/apartment-icon.png"))));
+        stage.centerOnScreen();
+        stage.setMaximized(true);
+    }
+
 }

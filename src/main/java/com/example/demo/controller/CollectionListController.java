@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
-import com.example.demo.gui.Scene;
-import com.example.demo.gui.SceneManager;
+import com.example.demo.gui.MenuView;
+import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.CollectionRepository;
 import com.example.demo.service.CollectionService;
 import javafx.beans.property.SimpleObjectProperty;
@@ -34,7 +34,7 @@ public class CollectionListController {
     }
 
     public void newButtonOnAction() {
-        SceneManager.switchScene(Scene.COLLECTION_FORM.getFileName());
+        MenuViewManager.switchView(MenuView.COLLECTION_FORM);
     }
 
     public void deleteButtonOnAction() {

@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.Resident;
-import com.example.demo.gui.Scene;
-import com.example.demo.gui.SceneManager;
+import com.example.demo.gui.MenuView;
+import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -37,7 +37,7 @@ public class ResidentListController {
     }
 
     public void newButtonOnAction() {
-        SceneManager.switchScene(Scene.RESIDENT_FORM.getFileName());
+        MenuViewManager.switchView(MenuView.RESIDENT_FORM);
     }
 
     public void deleteButtonOnAction() {
