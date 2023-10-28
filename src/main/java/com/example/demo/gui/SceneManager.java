@@ -1,6 +1,6 @@
 package com.example.demo.gui;
 
-import com.example.demo.DemoApplication;
+import com.example.demo.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -13,7 +13,7 @@ public class SceneManager {
 
     public static void switchScene(Scene scene) {
         try {
-            stage.setScene(new javafx.scene.Scene(FXMLLoader.load(Objects.requireNonNull(DemoApplication.class.getResource(scene.getFileName())))));
+            stage.setScene(new javafx.scene.Scene(FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(scene.getFileName())))));
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -23,7 +23,7 @@ public class SceneManager {
     public static void setStage(Stage stage) {
         SceneManager.stage = stage;
         stage.setTitle("Apartment Manager");
-        stage.getIcons().add(new Image(String.valueOf(DemoApplication.class.getResource("/media/apartment-icon.png"))));
+        stage.getIcons().add(new Image(String.valueOf(Main.class.getResource("/media/apartment-icon.png"))));
         stage.centerOnScreen();
         stage.setMaximized(true);
     }

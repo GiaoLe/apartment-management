@@ -1,6 +1,6 @@
 package com.example.demo.gui;
 
-import com.example.demo.DemoApplication;
+import com.example.demo.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class MenuViewManager {
 
     public static void switchView(MenuView menuView) {
         try {
-            borderPane.setCenter(new FXMLLoader(Objects.requireNonNull(DemoApplication.class.getResource(menuView.getFileName()))).load());
+            borderPane.setCenter(new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName()))).load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
