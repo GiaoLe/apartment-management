@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.Apartment;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import javafx.fxml.FXML;

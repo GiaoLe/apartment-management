@@ -4,6 +4,8 @@ import com.example.demo.HibernateUtility;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.dao.Admin;
+import com.example.demo.gui.Scene;
+import com.example.demo.gui.SceneManager;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -38,7 +40,7 @@ public class LoginController {
                 alert.setContentText("Wrong username/password");
                 alert.showAndWait();
             } else {
-                MenuViewManager.switchView(MenuView.DASHBOARD);
+                SceneManager.switchScene(Scene.MENU);
             }
         }
     }

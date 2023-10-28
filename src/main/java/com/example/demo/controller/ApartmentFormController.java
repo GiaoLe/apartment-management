@@ -35,9 +35,7 @@ public class ApartmentFormController {
         apartmentService.persist(apartment);
         MenuViewManager.switchView(MenuView.APARTMENT_LIST);
     }
-    public void handleBackAction() {
-        SceneManager.switchScene(Scene.MENU.getFileName());
-    }
+
     public void countRoom() {
         Object count = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("select count (*) from Apartment ", Apartment.class)
                 .getResultList());
