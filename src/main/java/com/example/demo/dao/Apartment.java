@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Apartment {
     @Id
-    @GeneratedValue
     @NotNull
     private Integer id;
 
@@ -25,18 +24,22 @@ public class Apartment {
 
     @NotNull
     private double area;
-
+    @NotNull
+    private String type;
+    @NotNull
+    private String status;
     @NotNull
     private int roomCount;
-
     //TODO find a better way to handle LAZY loading than using FetchType.EAGER
     @OneToMany(mappedBy = "apartment", fetch = FetchType.EAGER)
     private List<Resident> residents = new ArrayList<>();
 
-    public Apartment(String number, double area, int roomCount) {
+    public Apartment(String number, double area, int roomCount, String type, String status) {
         this.number = number;
         this.area = area;
         this.roomCount = roomCount;
+        this.type = type;
+        this.status = status;
     }
 
     public void addResident(Resident resident) {

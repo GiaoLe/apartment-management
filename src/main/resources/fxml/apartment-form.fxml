@@ -24,6 +24,18 @@
             <TextField fx:id="roomCountTextField" />
          </children>
       </HBox>
+      <HBox layoutX="10.0" layoutY="77.0">
+         <children>
+            <Label text="type" />
+            <TextField fx:id="typeTextField" />
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="127.0">
+         <children>
+            <Label text="status" />
+            <TextField fx:id="statusTextField" />
+         </children>
+      </HBox>
       <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
    </VBox>
 </AnchorPane>

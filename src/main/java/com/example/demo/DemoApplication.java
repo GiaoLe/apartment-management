@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.gui.MenuView;
 import com.example.demo.gui.Scene;
 import com.example.demo.gui.SceneManager;
 import javafx.application.Application;
@@ -13,6 +14,6 @@ public class DemoApplication extends Application {
     @Override
     public void start(Stage stage) {
         SceneManager.setStage(stage);
-        SceneManager.switchScene(Scene.LOGIN_FORM);
+        SceneManager.switchScene(Scene.MENU);
     }
 }

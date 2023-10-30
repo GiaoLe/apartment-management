@@ -31,7 +31,9 @@ public class ApartmentFormController {
     public void submitButtonOnAction() {
         Apartment apartment = new Apartment(nameTextField.getText(),
                 Double.parseDouble(areaTextField.getText()),
-                Integer.parseInt(roomCountTextField.getText()));
+                Integer.parseInt(roomCountTextField.getText()),
+                typeTextField.getText(),
+                statusTextField.getText());
         apartmentService.persist(apartment);
         MenuViewManager.switchView(MenuView.APARTMENT_LIST);
     }
