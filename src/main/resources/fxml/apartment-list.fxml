@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="722.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
+<AnchorPane fx:id="container" prefHeight="722.0" prefWidth="1131.0" styleClass="container" stylesheets="@../styles/ApartmentList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
       <Button fx:id="newButton" layoutX="77.0" layoutY="630.0" mnemonicParsing="false" onAction="#newButtonOnAction" prefWidth="60.0" text="New" />
       <Button fx:id="deleteButton" layoutX="145.0" layoutY="630.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefWidth="60.0" text="Delete" />
      <Label layoutX="46.0" layoutY="28.0" text="Apartment List">
