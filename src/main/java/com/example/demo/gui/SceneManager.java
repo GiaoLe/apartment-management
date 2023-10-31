@@ -13,6 +13,7 @@ public class SceneManager {
 
     public static void switchScene(Scene scene) {
         try {
+            stage.setFullScreen(true);
             stage.setScene(new javafx.scene.Scene(FXMLLoader.load(Objects.requireNonNull(DemoApplication.class.getResource(scene.getFileName())))));
             stage.show();
         } catch (IOException e) {
