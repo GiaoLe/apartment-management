@@ -21,10 +21,8 @@ public class Collection {
 
     @NotNull
     private String name;
-
     @NotNull
     private CollectionType type;
-
     @NotNull
     private double amount;
 

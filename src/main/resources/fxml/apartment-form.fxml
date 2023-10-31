@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentFormController">
    <VBox>
-      <Label text="Create a new apartment" />
-      <HBox>
-         <Label text="Name" />
-         <TextField fx:id="idTextField" />
-      </HBox>
-      <HBox layoutX="10.0" layoutY="27.0">
-         <Label text="Area" />
-         <TextField fx:id="areaTextField" />
-      </HBox>
-      <HBox>
+      <Label text="Create a new apartment">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
+      <VBox>
+         <children>
+            <Label text="Name" />
+            <TextField fx:id="idTextField" />
+         </children>
+      </VBox>
+      <VBox>
+         <children>
+            <Label text="Area" />
+            <TextField fx:id="areaTextField" />
+         </children>
+      </VBox>
+      <VBox layoutX="10.0" layoutY="352.0">
          <children>
             <Label text="Number of rooms" />
             <TextField fx:id="roomCountTextField" />
          </children>
-      </HBox>
-      <HBox layoutX="10.0" layoutY="77.0">
+      </VBox>
+      <VBox>
          <children>
-            <Label text="type" />
-            <TextField fx:id="typeTextField" />
+            <Label text="Type" />
+            <ChoiceBox fx:id="apartmentTypeChoiceBox" prefWidth="150.0" />
          </children>
-      </HBox>
-      <HBox layoutX="10.0" layoutY="127.0">
-         <children>
-            <Label text="status" />
-            <TextField fx:id="statusTextField" />
-         </children>
-      </HBox>
+      </VBox>
       <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
    </VBox>
 </AnchorPane>

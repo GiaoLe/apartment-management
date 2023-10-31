@@ -14,8 +14,6 @@ public class ApartmentFormController {
     public TextField areaTextField;
     public Button submitButton;
     public TextField roomCountTextField;
-    public TextField statusTextField;
-    public TextField typeTextField;
     private ApartmentService apartmentService;
 
     @FXML
@@ -28,8 +26,6 @@ public class ApartmentFormController {
                 .id(idTextField.getText())
                 .area(Double.parseDouble(areaTextField.getText()))
                 .roomCount(Integer.parseInt(roomCountTextField.getText()))
-                .status(statusTextField.getText())
-                .type(typeTextField.getText())
                 .build();
         apartmentService.persist(apartment);
         MenuViewManager.switchView(MenuView.APARTMENT_LIST);
