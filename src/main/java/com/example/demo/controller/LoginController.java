@@ -4,6 +4,8 @@ import com.example.demo.HibernateUtility;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.dao.Admin;
+import com.example.demo.gui.Scene;
+import com.example.demo.gui.SceneManager;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -12,13 +14,13 @@ import javafx.scene.control.TextField;
 public class LoginController {
     public Button loginButton;
 
-    public PasswordField passwordField;
+    public PasswordField passwordText;
 
-    public TextField userTextField;
+    public TextField userText;
 
     public void handleLogin() {
-        String user = userTextField.getText();
-        String password = passwordField.getText();
+        String user = userText.getText();
+        String password = passwordText.getText();
         Alert alert;
         if (user.isEmpty() || password.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
@@ -28,8 +30,8 @@ public class LoginController {
             alert.showAndWait();
         } else {
             Admin admin = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Admin where userName = :userName and password = :password", Admin.class)
-                    .setParameter("userName", userTextField.getText())
-                    .setParameter("password", passwordField.getText())
+                    .setParameter("userName", userText.getText())
+                    .setParameter("password", passwordText.getText())
                     .uniqueResult());
             if (admin == null) {
                 alert = new Alert(Alert.AlertType.ERROR);
@@ -38,7 +40,7 @@ public class LoginController {
                 alert.setContentText("Wrong username/password");
                 alert.showAndWait();
             } else {
-                MenuViewManager.switchView(MenuView.DASHBOARD);
+                SceneManager.switchScene(Scene.MENU);
             }
         }
     }

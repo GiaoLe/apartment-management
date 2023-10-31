@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionListController">
+<AnchorPane styleClass="container" stylesheets="@../styles/CollectionList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionListController">
    <VBox prefHeight="425.0" prefWidth="767.0">
       <TableView fx:id="collectionsTableView" editable="true" prefHeight="400.0" prefWidth="413.0">
         <columns>
@@ -18,10 +18,8 @@
         </columns>
       </TableView>
        <HBox>
-           <Button fx:id="newButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                   onAction="#newButtonOnAction" prefHeight="25.0" prefWidth="60.0" text="New" textAlignment="CENTER"/>
-           <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefWidth="60.0"
-                   text="Delete" textAlignment="CENTER"/>
+           <Button fx:id="newButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="25.0" prefWidth="60.0" text="New" textAlignment="CENTER" />
+           <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefWidth="60.0" text="Delete" textAlignment="CENTER" />
        </HBox>
    </VBox>
 </AnchorPane>

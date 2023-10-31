@@ -2,20 +2,54 @@
     -fx-background-color: linear-gradient(to right, #f87000, #fd0026);
 }
 .sidebar{
-    -fx-background-color: #2b2a2f;
+    -fx-background-color: #4A274F;
+    -fx-padding: 30 0 0 0;
+    -fx-background-radius: 0 10px 10px 0;
 }
-.navigation-design{
+.sidebar-design{
     -fx-background-color: transparent;
     -fx-font-size: 25px;
-    -fx-text-alignment: left;
-    -fx-text-fill: #979191;
+    -fx-font-weight: 700;
+    -fx-text-fill: #f0a07c;
+    -fx-border-color: white;
+    -fx-border-width: 0.5 0 0.5 0;
 }
-.navigation-design:hover{
-    -fx-text-fill: #ffff;
+.sidebar-design:hover{
+    -fx-background-color: #3e4b5b;
     -fx-underline: true;
+}
+.selected-item{
+    -fx-background-color: #3e4b5b;
+    -fx-underline: true;
+}
+.header-title{
+    -fx-text-fill: linear-gradient(to right, #f87000, #fd0026);
+    -fx-font-weight: 700;
+    -fx-font-size: 35px;
+    -fx-padding: 0 0 40 0;
+}
+.header-content{
+    -fx-font-size: 20px;
+
+}
+.head-sidebar{
+    -fx-font-weight: 700;
+    -fx-text-fill: #f0a07c;
+    -fx-font-size: 15px;
 }
 .list-container{
     -fx-border-width: 1px;
     -fx-border-color: rgb(224, 224, 224);
     -fx-border-radius: 20px;
+}
+@keyframes clickEffect {
+    0% {
+        background-color: #ffffff; /* Màu nền ban đầu */
+    }
+    100% {
+        background-color: #ff0000; /* Màu nền khi nút được click */
+    }
+}
+.button-clicked {
+    -fx-animated: clickEffect 0.3s ease;
 }
