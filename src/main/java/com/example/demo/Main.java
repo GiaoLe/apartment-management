@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.gui.MenuView;
 import com.example.demo.gui.Scene;
 import com.example.demo.gui.SceneManager;
 import javafx.application.Application;
