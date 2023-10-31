@@ -4,54 +4,31 @@ import com.example.demo.HibernateUtility;
 import com.example.demo.dao.Apartment;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.ApartmentRepository;
-import com.example.demo.service.ApartmentService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ApartmentListController {
 
-
-    public TableColumn<?, ?> actionsColumn;
-
-
     public TableView<ObservableMap<String, String>> apartmentTableView;
-
-
     public TableColumn<String, String> availableColumn;
-
-
     public Button deleteButton;
-
-
     public TableColumn<ObservableMap<String, String>, String> floorColumn;
-
-
     public TableColumn<ObservableMap<String, String>, String> nAvailableColumn;
-
-
     public Button newButton;
-
-
     public TableColumn<ObservableMap<String, String>, String> occupiedColumn;
-
     public TableColumn<ObservableMap<String, String>, String> residentsColumn;
-
-
     public TableColumn<ObservableMap<String, String>, String> totalColumn;
-    private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
     private final Map<String, String> floorDetails = new HashMap<>();
     private ObservableList<ObservableMap<String, String>> floorList;
-
     private final ObservableMap<String, String> firstFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> secondFloor = FXCollections.observableHashMap();
 
@@ -75,8 +52,6 @@ public class ApartmentListController {
         }
         floorList.add(firstFloor);
         floorList.add(secondFloor);
-
-
     }
     public void showFloorList() {
         updateFloorDetails();
@@ -92,6 +67,6 @@ public class ApartmentListController {
         MenuViewManager.switchView(MenuView.APARTMENT_FORM);
     }
 
-    public void deleteButtonOnAction(ActionEvent actionEvent) {
+    public void deleteButtonOnAction() {
     }
 }

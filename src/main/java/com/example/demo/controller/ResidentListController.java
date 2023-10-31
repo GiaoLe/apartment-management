@@ -30,7 +30,7 @@ public class ResidentListController {
         residentTableView.setItems(FXCollections.observableList(residentService.findAll()));
         firstNameTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getFirstName()));
         lastNameTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLastName()));
-        apartmentTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getApartment().getNumber()));
+        apartmentTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getApartment().getId()));
         phoneNumberTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getPhoneNumber()));
         emailTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getEmail()));
         nationalIDTableColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getNationalID()));

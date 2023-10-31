@@ -59,12 +59,12 @@ public class ResidentFormController {
     }
 
     private void persistResident() {
-        Apartment apartment = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment where number = :number", Apartment.class)
-                .setParameter("number", apartmentTextField.getText())
+        Apartment apartment = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment where id = :id", Apartment.class)
+                .setParameter("id", apartmentTextField.getText())
                 .uniqueResult());
         if (apartment == null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Apartment with number " + apartmentTextField.getText() + " does not exist. Please create it first.");
+            alert.setContentText("Apartment with id " + apartmentTextField.getText() + " does not exist. Please create it first.");
             alert.showAndWait()
                     .filter(response -> response == ButtonType.OK)
                     .ifPresent(response -> MenuViewManager.switchView(MenuView.APARTMENT_FORM));

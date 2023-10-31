@@ -1,9 +1,9 @@
 package com.example.demo.dao;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,14 +14,11 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Apartment {
     @Id
     @NotNull
-    private Integer id;
-
-    @NotEmpty
-    private String number;
-
+    private String id;
     @NotNull
     private double area;
     @NotNull
@@ -31,11 +28,11 @@ public class Apartment {
     @NotNull
     private int roomCount;
     //TODO find a better way to handle LAZY loading than using FetchType.EAGER
-    @OneToMany(mappedBy = "apartment", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "apartment", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Resident> residents = new ArrayList<>();
 
-    public Apartment(String number, double area, int roomCount, String type, String status) {
-        this.number = number;
+    public Apartment(String id, double area, int roomCount, String type, String status) {
+        this.id = id;
         this.area = area;
         this.roomCount = roomCount;
         this.type = type;
@@ -52,7 +49,6 @@ public class Apartment {
 
     @Transient
     public int getFloor() {
-        return Integer.parseInt(number.substring(0, 1));
+        return Integer.parseInt(id.substring(0, 1));
     }
-
 }

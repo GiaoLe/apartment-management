@@ -12,7 +12,7 @@
       <Label text="Create a new apartment" />
       <HBox>
          <Label text="Name" />
-         <TextField fx:id="nameTextField" />
+         <TextField fx:id="idTextField" />
       </HBox>
       <HBox layoutX="10.0" layoutY="27.0">
          <Label text="Area" />
