@@ -22,9 +22,14 @@ public class SceneManager {
 
     public static void setStage(Stage stage) {
         SceneManager.stage = stage;
+        configureStage(stage);
+    }
+
+    private static void configureStage(Stage stage) {
         stage.setTitle("Apartment Manager");
         stage.getIcons().add(new Image(String.valueOf(Main.class.getResource("/media/apartment-icon.png"))));
         stage.centerOnScreen();
+        stage.setResizable(false);
     }
 
 }

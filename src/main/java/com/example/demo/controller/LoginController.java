@@ -11,14 +11,13 @@ import javafx.scene.control.TextField;
 
 public class LoginController {
 
-    public TextField userText;
-    public PasswordField passwordText;
-
     private final AdminService adminService = new AdminService(new AdminRepository());
+    public TextField userNameTextField;
+    public PasswordField passwordField;
 
-    public void loginButtonOnAction() {
-        String userName = userText.getText();
-        String password = passwordText.getText();
+    public void signInButtonOnAction() {
+        String userName = userNameTextField.getText();
+        String password = passwordField.getText();
         Alert alert;
         if (userName.isEmpty() || password.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
@@ -28,7 +27,7 @@ public class LoginController {
             alert.showAndWait();
         } else {
             Admin admin = adminService.findByID(userName);
-            if (admin == null || admin.getPassword().compareTo(passwordText.getText()) != 0) {
+            if (admin == null || admin.getPassword().compareTo(passwordField.getText()) != 0) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERROR MESSAGE!");
                 alert.setHeaderText(null);
