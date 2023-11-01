@@ -1,7 +1,7 @@
 package com.example.demo.gui;
 
 public enum Scene {
-    LOGIN_FORM("login.fxml"),
+    LOGIN("login.fxml"),
 
     MENU("menu.fxml");
 

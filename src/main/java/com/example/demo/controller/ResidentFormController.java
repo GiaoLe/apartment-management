@@ -63,6 +63,7 @@ public class ResidentFormController {
                 .setParameter("id", apartmentTextField.getText())
                 .uniqueResult());
         if (apartment == null) {
+            //TODO retain resident information after apartment creation
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Apartment with id " + apartmentTextField.getText() + " does not exist. Please create it first.");
             alert.showAndWait()

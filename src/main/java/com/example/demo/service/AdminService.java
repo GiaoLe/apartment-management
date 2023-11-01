@@ -10,7 +10,11 @@ public class AdminService {
         this.adminRepository = adminRepository;
     }
 
-    public Admin findByID(Integer id) {
+    public Admin findByID(String id) {
         return adminRepository.findById(id);
+    }
+
+    public void merge(Admin admin) {
+        adminRepository.merge(admin);
     }
 }

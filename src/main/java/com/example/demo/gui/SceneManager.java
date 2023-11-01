@@ -25,7 +25,6 @@ public class SceneManager {
         stage.setTitle("Apartment Manager");
         stage.getIcons().add(new Image(String.valueOf(Main.class.getResource("/media/apartment-icon.png"))));
         stage.centerOnScreen();
-        stage.setMaximized(true);
     }
 
 }
