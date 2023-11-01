@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.HibernateUtility;
+import com.example.demo.repository.HibernateUtility;
 import com.example.demo.dao.Apartment;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
