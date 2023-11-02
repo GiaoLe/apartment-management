@@ -52,6 +52,7 @@ public class ResidentListController {
     }
 
     public void detailsButtonOnAction() {
+        residentPropertySheet.getItems().clear();
         Resident resident = residentTableView.getSelectionModel().getSelectedItem();
         residentPropertySheet.getItems().addAll(BeanPropertyUtils.getProperties(resident));
     }
