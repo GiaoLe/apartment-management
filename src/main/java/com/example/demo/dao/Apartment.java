@@ -24,7 +24,7 @@ public class Apartment {
     @NotNull
     private ApartmentType type;
     @NotNull
-    private ApartmentState state = ApartmentState.AVAILABLE;
+    private ApartmentState state;
     @NotNull
     private int roomCount;
     //TODO find a better way to handle LAZY loading than using FetchType.EAGER
@@ -36,10 +36,6 @@ public class Apartment {
         if (state == ApartmentState.AVAILABLE) {
             state = ApartmentState.OCCUPIED;
         }
-    }
-
-    public Integer getTotalResidents() {
-        return residents.size();
     }
 
     @Transient

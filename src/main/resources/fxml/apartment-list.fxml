@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="722.0" prefWidth="1131.0" styleClass="container" stylesheets="@../styles/ApartmentList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
+<AnchorPane prefHeight="685.0" prefWidth="1000.0" styleClass="container" stylesheets="@../styles/ApartmentList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
     <Button fx:id="newButton" layoutX="77.0" layoutY="630.0" mnemonicParsing="false" onAction="#newButtonOnAction" prefWidth="60.0" text="New" />
     <Button fx:id="deleteButton" layoutX="145.0" layoutY="630.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefWidth="60.0" text="Delete" />
     <Label layoutX="46.0" layoutY="28.0" text="Apartment List">
@@ -15,14 +15,14 @@
             <Font name="System Bold" size="30.0" />
         </font>
     </Label>
-    <TableView fx:id="apartmentTableView" layoutX="46.0" layoutY="84.0" prefHeight="538.0" prefWidth="1059.0" stylesheets="@../styles/TableView.css">
+    <TableView fx:id="apartmentTableView" layoutX="46.0" layoutY="84.0" prefHeight="538.0" prefWidth="914.0" stylesheets="@../styles/TableView.css">
         <columns>
-            <TableColumn fx:id="floorColumn" prefWidth="139.0" text="Floor" />
-            <TableColumn fx:id="totalColumn" prefWidth="168.0" text="Total Apartments" />
-            <TableColumn fx:id="availableColumn" prefWidth="158.0" text="Available Apartments" />
-            <TableColumn fx:id="nAvailableColumn" prefWidth="166.0" text="Not Available Apartments" />
-            <TableColumn fx:id="occupiedColumn" prefWidth="187.0" text="Occupied Apartments" />
-            <TableColumn fx:id="residentsColumn" prefWidth="133.0" text="Total Residents" />
+            <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Floor" />
+            <TableColumn fx:id="totalColumn" prefWidth="148.6666717529297" text="Total Apartments" />
+            <TableColumn fx:id="availableColumn" prefWidth="139.5" text="Available Apartments" />
+            <TableColumn fx:id="nAvailableColumn" prefWidth="165.66668701171875" text="Not Available Apartments" />
+            <TableColumn fx:id="occupiedColumn" prefWidth="157.33331298828125" text="Occupied Apartments" />
+            <TableColumn fx:id="residentsColumn" prefWidth="226.33331298828125" text="Total Residents" />
         </columns>
     </TableView>
 </AnchorPane>

@@ -1,7 +1,5 @@
 package com.example.demo.repository;
 
-import com.example.demo.HibernateUtility;
-
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 

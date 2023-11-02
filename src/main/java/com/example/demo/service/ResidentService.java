@@ -21,4 +21,8 @@ public class ResidentService {
     public void remove(Resident resident) {
         residentRepository.remove(resident);
     }
+
+    public void merge(Resident resident) {
+        residentRepository.merge(resident);
+    }
 }
