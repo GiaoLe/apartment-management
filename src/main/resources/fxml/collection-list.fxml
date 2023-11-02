@@ -31,7 +31,7 @@
       <top>
          <Label text="Collection List " BorderPane.alignment="CENTER">
             <font>
-               <Font name="System Bold" size="24.0" />
+               <Font name="System Bold" size="36.0" />
             </font>
          </Label>
       </top>
