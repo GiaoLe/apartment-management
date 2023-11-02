@@ -13,12 +13,13 @@ public class MenuViewManager {
     @Setter
     private static BorderPane borderPane;
 
-    private MenuViewManager() {
-    }
+    private MenuViewManager() {}
 
-    public static void switchView(MenuView menuView) {
+    public static Object switchView(MenuView menuView) {
         try {
-            borderPane.setCenter(new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName()))).load());
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
+            borderPane.setCenter(loader.load());
+            return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 public enum CollectionType {
-    BILL,
+    SERVICE_FEE,
+    MANAGEMENT_FEE,
     DONATION
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class CollectionListController {
+    private final CollectionService collectionService = new CollectionService(new CollectionRepository());
     public Button newButton;
     public TableView<Collection> collectionsTableView;
     public TableColumn<Collection, String> nameTableColumn;
@@ -21,8 +22,7 @@ public class CollectionListController {
     public TableColumn<Collection, Double> amountTableColumn;
     public TableColumn<Collection, String> descriptionTableColumn;
     public Button deleteButton;
-
-    private final CollectionService collectionService = new CollectionService(new CollectionRepository());
+    public Button detailsButton;
 
     @FXML
     public void initialize() {
@@ -42,6 +42,15 @@ public class CollectionListController {
         if (collection != null) {
             collectionsTableView.getItems().remove(collection);
             collectionService.remove(collection);
+        }
+    }
+
+    public void detailsButtonOnAction() {
+        Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
+        if (collection != null) {
+            CollectionReportController collectionReportController
+                    = (CollectionReportController) MenuViewManager.switchView(MenuView.COLLECTION_REPORT);
+            collectionReportController.initializeData(collection);
         }
     }
 }

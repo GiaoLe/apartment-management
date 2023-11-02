@@ -16,10 +16,10 @@
       <center>
          <TableView fx:id="residentTableView" editable="true" stylesheets="@../styles/TableView.css" BorderPane.alignment="CENTER">
            <columns>
-               <TableColumn fx:id="idTableColumn" prefWidth="75.0" text="ID" />
-             <TableColumn fx:id="firstNameTableColumn" prefWidth="114.0" text="First Name" />
-             <TableColumn fx:id="lastNameTableColumn" prefWidth="125.5" text="Last Name" />
-               <TableColumn fx:id="apartmentTableColumn" prefWidth="127.0" text="Apartment" />
+               <TableColumn fx:id="idTableColumn" prefWidth="91.5" text="ID" />
+             <TableColumn fx:id="firstNameTableColumn" prefWidth="139.5" text="First Name" />
+             <TableColumn fx:id="lastNameTableColumn" prefWidth="270.5" text="Last Name" />
+               <TableColumn fx:id="apartmentTableColumn" prefWidth="164.5" text="Apartment" />
            </columns>
          </TableView>
       </center>
