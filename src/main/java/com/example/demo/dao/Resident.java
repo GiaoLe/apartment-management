@@ -6,19 +6,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resident {
+public class Resident implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;
 
+    @NotNull
     private String firstName;
 
+    @NotNull
     private String lastName;
 
     @NotNull
@@ -32,6 +35,7 @@ public class Resident {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "resident", fetch = FetchType.EAGER)
     private List<ResidentCollection> residentCollectionList;
+
     public Resident(String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,5 +43,14 @@ public class Resident {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.nationalID = nationalID;
+    }
+
+    public String getApartment() {
+        return apartment.getId();
+    }
+
+    @SuppressWarnings("unused")
+    public Integer getResidentCollectionList() {
+        return residentCollectionList.size();
     }
 }

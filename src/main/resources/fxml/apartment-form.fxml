@@ -15,28 +15,20 @@
             <Font name="System Bold" size="20.0" />
          </font></Label>
       <VBox>
-         <children>
-            <Label text="Name" />
-            <TextField fx:id="idTextField" />
-         </children>
+         <Label text="Name"/>
+         <TextField fx:id="idTextField"/>
       </VBox>
       <VBox>
-         <children>
-            <Label text="Area" />
-            <TextField fx:id="areaTextField" />
-         </children>
+         <Label text="Area"/>
+         <TextField fx:id="areaTextField"/>
       </VBox>
       <VBox layoutX="10.0" layoutY="352.0">
-         <children>
-            <Label text="Number of rooms" />
-            <TextField fx:id="roomCountTextField" />
-         </children>
+         <Label text="Number of rooms"/>
+         <TextField fx:id="roomCountTextField"/>
       </VBox>
       <VBox>
-         <children>
-            <Label text="Type" />
-            <ChoiceBox fx:id="apartmentTypeChoiceBox" prefWidth="150.0" />
-         </children>
+         <Label text="Type"/>
+         <ChoiceBox fx:id="apartmentTypeChoiceBox" prefWidth="150.0"/>
       </VBox>
       <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
    </VBox>
