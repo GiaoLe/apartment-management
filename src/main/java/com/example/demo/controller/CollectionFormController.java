@@ -27,6 +27,10 @@ public class CollectionFormController {
     @FXML
     public void initialize() {
         collectionTypeChoiceBox.getItems().addAll(CollectionType.values());
+        collectionTypeChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            amountTextField.setDisable(newValue != CollectionType.SERVICE_FEE
+                    && newValue != CollectionType.MANAGEMENT_FEE);
+        });
     }
 
     public void submitButtonOnAction() {
