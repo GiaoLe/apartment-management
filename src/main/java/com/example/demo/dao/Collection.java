@@ -24,7 +24,7 @@ public class Collection {
     @NotNull
     private CollectionType type;
     @NotNull
-    private double amount;
+    private Double amount;
 
     private String description;
 
