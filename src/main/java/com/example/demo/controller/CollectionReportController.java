@@ -17,8 +17,10 @@ public class CollectionReportController {
     public TableColumn<ResidentCollection, String> firstNameTableColumn;
     public TableColumn<ResidentCollection, String> lastNameTableColumn;
     public TableColumn<ResidentCollection, String> apartmentTableColumn;
+    public TableColumn<ResidentCollection, Double> amountTableColumn;
     public TableColumn<ResidentCollection, Boolean> isPaidTableColumn;
     public TextField collectionName;
+
     public void initializeData(Collection collection) {
         collectionName.setText(collection.getName());
 
@@ -27,6 +29,16 @@ public class CollectionReportController {
         firstNameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResident().getFirstName()));
         lastNameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResident().getLastName()));
         apartmentTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResident().getApartment()));
+        amountTableColumn.setCellValueFactory(cellData -> {
+            double apartmentArea = cellData.getValue().getResident().getApartmentObject().getArea();
+            Double amount =
+                    switch (collection.getType()) {
+                        case SERVICE_FEE -> 7 * apartmentArea;
+                        case MANAGEMENT_FEE -> 5 * apartmentArea;
+                        default -> collection.getAmount();
+                    };
+            return new SimpleObjectProperty<>(amount);
+        });
         isPaidTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
     }
 

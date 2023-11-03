@@ -18,8 +18,9 @@
                   <TableColumn fx:id="residentIDTableColumn" prefWidth="233.66666412353516" text="ResidentID" />
                   <TableColumn fx:id="firstNameTableColumn" prefWidth="173.83331298828125" text="First Name" />
                   <TableColumn fx:id="lastNameTableColumn" minWidth="2.333343505859375" prefWidth="260.66668701171875" text="Last Name" />
-                  <TableColumn fx:id="apartmentTableColumn" minWidth="0.0" prefWidth="178.83331298828125" text="Apartment" />
-                  <TableColumn fx:id="isPaidTableColumn" prefWidth="155.16668701171875" text="Is Paid" />
+                  <TableColumn fx:id="apartmentTableColumn" minWidth="0.0" prefWidth="93.0" text="Apartment" />
+               <TableColumn fx:id="amountTableColumn" prefWidth="161.0" text="Amount" />
+                  <TableColumn fx:id="isPaidTableColumn" prefWidth="73.5" text="Is Paid" />
               </columns>
           </TableView>
         </center>

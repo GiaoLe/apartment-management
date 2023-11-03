@@ -48,6 +48,10 @@ public class Resident implements Serializable {
         return apartment.getId();
     }
 
+    public Apartment getApartmentObject() {
+        return apartment;
+    }
+
     @SuppressWarnings("unused")
     public Integer getResidentCollectionList() {
         return residentCollectionList.size();
