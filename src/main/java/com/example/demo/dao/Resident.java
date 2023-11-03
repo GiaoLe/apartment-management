@@ -30,9 +30,13 @@ public class Resident implements Serializable {
 
     private String nationalID;
     @ManyToOne
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private Apartment apartment;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "resident", fetch = FetchType.EAGER)
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private List<ResidentCollection> residentCollectionList;
 
     public Resident(String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID) {
@@ -44,16 +48,7 @@ public class Resident implements Serializable {
         this.nationalID = nationalID;
     }
 
-    public String getApartment() {
+    public String getApartmentID() {
         return apartment.getId();
-    }
-
-    public Apartment getApartmentObject() {
-        return apartment;
-    }
-
-    @SuppressWarnings("unused")
-    public Integer getResidentCollectionList() {
-        return residentCollectionList.size();
     }
 }

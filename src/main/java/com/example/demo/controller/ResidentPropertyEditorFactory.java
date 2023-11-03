@@ -16,7 +16,6 @@ public class ResidentPropertyEditorFactory implements Callback<PropertySheet.Ite
     @Override
     public PropertyEditor<?> call(PropertySheet.Item item) {
         PropertyEditor<?> propertyEditor = new DefaultPropertyEditorFactory().call(item);
-        assert propertyEditor != null;
         propertyEditor.getEditor().focusedProperty().addListener(event -> residentListController.enableUpdateButton());
         return propertyEditor;
     }

@@ -15,11 +15,7 @@ public class ApartmentService {
         apartmentRepository.persist(apartment);
     }
 
-    public List<Apartment> findAll() {
-        return apartmentRepository.findAll();
-    }
-
-    public void remove(Apartment apartment) {
-        apartmentRepository.remove(apartment);
+    public Apartment findByID(String apartmentID) {
+        return apartmentRepository.findById(apartmentID);
     }
 }

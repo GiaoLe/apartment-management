@@ -34,9 +34,9 @@ public class ResidentListController {
         idTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getId()));
         firstNameTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getFirstName()));
         lastNameTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getLastName()));
-        apartmentTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getApartment()));
+        apartmentTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getApartmentID()));
 
-        residentPropertySheet.setPropertyEditorFactory(new ResidentPropertyEditorFactory(this));
+//        residentPropertySheet.setPropertyEditorFactory(new ResidentPropertyEditorFactory(this));
     }
 
     public void newButtonOnAction() {
