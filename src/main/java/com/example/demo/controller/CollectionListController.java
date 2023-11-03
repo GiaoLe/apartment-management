@@ -19,7 +19,7 @@ public class CollectionListController {
     public TableView<Collection> collectionsTableView;
     public TableColumn<Collection, String> nameTableColumn;
     public TableColumn<Collection, CollectionType> typeTableColumn;
-    public TableColumn<Collection, Double> amountTableColumn;
+    public TableColumn<Collection, String> amountTableColumn;
     public TableColumn<Collection, String> descriptionTableColumn;
     public Button deleteButton;
     public Button detailsButton;
@@ -29,7 +29,10 @@ public class CollectionListController {
         collectionsTableView.setItems(FXCollections.observableList(collectionService.findAll()));
         nameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         typeTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
-        amountTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAmount()));
+        amountTableColumn.setCellValueFactory(cellData -> switch (cellData.getValue().getType()) {
+            case SERVICE_FEE, MANAGEMENT_FEE -> new SimpleObjectProperty<>(cellData.getValue().getAmount() + "/m2");
+            default -> new SimpleObjectProperty<>(cellData.getValue().getAmount().toString());
+        });
         descriptionTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescription()));
     }
 

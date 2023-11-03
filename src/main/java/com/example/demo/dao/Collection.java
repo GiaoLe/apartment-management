@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+//TODO Improve amount calculation (by implementing a formula in CollectionType)
 @Entity
 @Data
 @NoArgsConstructor
@@ -23,6 +24,7 @@ public class Collection {
     private String name;
     @NotNull
     private CollectionType type;
+
     @NotNull
     private Double amount;
 

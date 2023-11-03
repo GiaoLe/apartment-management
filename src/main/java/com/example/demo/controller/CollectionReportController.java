@@ -33,8 +33,7 @@ public class CollectionReportController {
             double apartmentArea = cellData.getValue().getResident().getApartmentObject().getArea();
             Double amount =
                     switch (collection.getType()) {
-                        case SERVICE_FEE -> 7 * apartmentArea;
-                        case MANAGEMENT_FEE -> 5 * apartmentArea;
+                        case SERVICE_FEE, MANAGEMENT_FEE -> collection.getAmount() * apartmentArea;
                         default -> collection.getAmount();
                     };
             return new SimpleObjectProperty<>(amount);

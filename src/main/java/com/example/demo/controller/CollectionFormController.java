@@ -27,10 +27,6 @@ public class CollectionFormController {
     @FXML
     public void initialize() {
         collectionTypeChoiceBox.getItems().addAll(CollectionType.values());
-        collectionTypeChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            amountTextField.setDisable(newValue != CollectionType.SERVICE_FEE
-                    && newValue != CollectionType.MANAGEMENT_FEE);
-        });
     }
 
     public void submitButtonOnAction() {
@@ -40,12 +36,10 @@ public class CollectionFormController {
             alert.setContentText("There are no residents. Please create them first.");
             alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> MenuViewManager.switchView(MenuView.RESIDENT_FORM));
         } else {
-            Collection collection = Collection.builder()
-                    .name(nameTextField.getText())
-                    .amount(Double.parseDouble(amountTextField.getText()))
-                    .type(collectionTypeChoiceBox.getValue())
-                    .description(descriptionTextField.getText())
-                    .build();
+            Collection collection = Collection.builder().name(nameTextField.getText()).type(collectionTypeChoiceBox.getValue()).description(descriptionTextField.getText()).build();
+            if (!amountTextField.getText().isEmpty()) {
+                collection.setAmount(Double.parseDouble(amountTextField.getText()));
+            }
             CollectionService collectionService = new CollectionService(new CollectionRepository());
             collectionService.persist(collection);
             ResidentCollectionService residentCollectionService = new ResidentCollectionService(new ResidentCollectionRepository());

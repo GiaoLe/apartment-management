@@ -18,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         SceneManager.setStage(stage);
-        SceneManager.switchScene(Scene.LOGIN);
+        SceneManager.switchScene(Scene.MENU);
         AdminService adminService = new AdminService(new AdminRepository());
         adminService.merge(new Admin("admin", "admin"));
     }
