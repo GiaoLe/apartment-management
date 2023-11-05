@@ -11,8 +11,8 @@ public enum MenuView {
     COLLECTION_FORM("collection-form.fxml"),
 
     COLLECTION_REPORT("collection-report.fxml"),
-    DASHBOARD("dashboard.fxml");
-
+    DASHBOARD("dashboard.fxml"),
+    APARTMENT_ITEMS("apartment-items.fxml");
     private static final String FXML_PATH = "/fxml/";
     private final String fileName;
 
