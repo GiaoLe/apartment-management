@@ -54,10 +54,10 @@ public class ApartmentListController {
         floorList.add(secondFloor);
     }
     public void showFloorList() {
-        updateFloorDetails();
-        floorColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("floor")));
-        totalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("totalApartments")));
-        apartmentTableView.setItems(floorList);
+//        updateFloorDetails();
+//        floorColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("floor")));
+//        totalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("totalApartments")));
+//        apartmentTableView.setItems(floorList);
     }
     public void initialize() {
         showFloorList();
