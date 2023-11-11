@@ -1,3 +1,9 @@
+.light-gray-background{
+    -fx-background-color: #d5d4d4;
+}
 .container{
-    -fx-background-color: #e8eff9;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-color: rgb(128, 128, 128);
+    -fx-border-radius: 10px 10px 10px 10px;
+    -fx-background-radius: 10px 10px 10px 10px;
 }

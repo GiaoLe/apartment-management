@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="contentRow" prefHeight="67.0" prefWidth="1215.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
+   <children>
+      <Label fx:id="floorText" alignment="CENTER" prefHeight="108.0" prefWidth="86.0" text="asd" textFill="#575757">
+         <font>
+            <Font name="Corbel Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalText" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="83.0" prefWidth="167.0" text="asd" textFill="#575757">
+         <font>
+            <Font name="Corbel Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="availableText" alignment="CENTER" layoutX="96.0" layoutY="10.0" prefHeight="97.0" prefWidth="194.0" text="asd" textFill="#575757">
+         <font>
+            <Font name="Corbel Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="nAvailableText" alignment="CENTER" layoutX="268.0" layoutY="10.0" prefHeight="95.0" prefWidth="195.0" text="asd" textFill="#575757">
+         <font>
+            <Font name="Corbel Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="occupiedText" alignment="CENTER" layoutX="466.0" layoutY="10.0" prefHeight="98.0" prefWidth="195.0" text="asd" textFill="#575757">
+         <font>
+            <Font name="Corbel Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalResidents" alignment="CENTER" layoutX="664.0" layoutY="10.0" prefHeight="92.0" prefWidth="196.0" text="asd" textFill="#575757">
+         <font>
+            <Font name="Corbel Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="actionsText" alignment="CENTER" layoutX="862.0" layoutY="10.0" prefHeight="80.0" prefWidth="196.0" text="asd" textFill="#575757">
+         <font>
+            <Font name="Corbel Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</HBox>
