@@ -1,5 +1,6 @@
 package com.example.demo.controller;
-
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import com.example.demo.Main;
 import com.example.demo.dao.ApartmentState;
 import com.example.demo.dao.ApartmentType;
@@ -15,14 +16,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -56,6 +56,8 @@ public class ApartmentListController {
     public Label totalAText;
     public Label tableHeader;
     public Label totalRText;
+    public Button backBtn;
+    public TableView<ObservableMap<String, String>> floorTableView;
     public TableColumn<ObservableMap<String, String>, String> occupiedColumn;
     public TableColumn<ObservableMap<String, String>, String> residentsColumn;
     public TableColumn<ObservableMap<String, String>, String> totalColumn;
@@ -63,10 +65,11 @@ public class ApartmentListController {
     public TableColumn<ObservableMap<String, String>, String> nAvailableColumn;
     public TableView<ObservableMap<String, String>> apartmentTableView;
     public TableColumn<ObservableMap<String, String>, String> availableColumn;
-    public TableColumn<String, String> acionsColumn;
     private ObservableList<ObservableMap<String, String>> floorList;
     private final ObservableMap<String, String> firstFloor = FXCollections.observableHashMap();
 
+    public AnchorPane dialogContainer;
+    public AnchorPane dialogBox;
     private final ObservableMap<String, String> secondFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> thirdFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> fourthFloor = FXCollections.observableHashMap();
@@ -75,6 +78,19 @@ public class ApartmentListController {
     private final ObservableMap<String, String> seventhFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> eighthFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> ninthFloor = FXCollections.observableHashMap();
+    public MenuItem availableItem;
+    public MenuItem duplexItem;
+    public MenuItem maintanceItem;
+    public MenuItem occupiedItem;
+    public MenuItem penthouseItem;
+    public MenuItem studioItem;
+    public MenuItem triplexItem;
+    public MenuItem reservedItem;
+    public Button filterBtn;
+    public TextField apartmentIDFilter;
+    public TextField hostNameFilter;
+    public MenuButton stateMenu;
+    public MenuButton typeMenu;
 
     private final ObservableMap<String, String> tenthFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> eleventhFloor = FXCollections.observableHashMap();
@@ -87,7 +103,7 @@ public class ApartmentListController {
     private final ObservableMap<String, String> eighteenthFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> nineteenthFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> twentiethFloor = FXCollections.observableHashMap();
-
+    public Button closeDialogBtn;
 
     public void updateFloorDetails() {
         List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment ", Apartment.class)
@@ -453,7 +469,6 @@ public class ApartmentListController {
         updateFloor(eleventhFloor, twelfthFloor, thirteenthFloor, fourteenthFloor, fifteenthFloor, sixteenthFloor, seventeenthFloor, eighteenthFloor, nineteenthFloor, twentiethFloor);
 
     }
-
     private void updateAppsState(Apartment apartment, ObservableMap<String, String> No) {
         if (apartment.getState() == ApartmentState.AVAILABLE) {
             No.put("availableApartments", "1");
@@ -490,17 +505,57 @@ public class ApartmentListController {
         availableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("availableApartments")));
         nAvailableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("nAAvailableApartments")));
         occupiedColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("oApartments")));
-        apartmentTableView.setItems(floorList);
+        floorTableView.setItems(floorList);
 
     }
     public void initialize() throws IOException {
         showFloorList();
     }
 
-    public void newButtonOnAction() {
-        MenuViewManager.switchView(MenuView.APARTMENT_FORM);
-    }
+    public void selectedFloor(MouseEvent mouseEvent) {
+        floorTableView.setOnMouseClicked(event -> {
+            ObservableMap<String, String> selectedFloor = floorTableView.getSelectionModel().getSelectedItem();
+            if(Objects.equals(selectedFloor.get("floor"), "1")){
+                floorTableView.setVisible(false);
+                apartmentTableView.setVisible(true);
+                backBtn.setVisible(true);
+                filterBtn.setVisible(true);
+            }
+        });
+        backBtn.setOnMouseClicked(event -> {
+            floorTableView.setVisible(true);
+            apartmentTableView.setVisible(false);
+            backBtn.setVisible(false);
+            filterBtn.setVisible(false);
 
-    public void deleteButtonOnAction() {
+        });
+    }
+    public void toggleFilter(){
+        if(filterBtn.visibleProperty().getValue()){
+            filterBtn.setOnMouseClicked(event -> {
+                dialogContainer.setVisible(true);
+                dialogBox.setVisible(true);
+            });
+            List<MenuItem> typeItems = FXCollections.observableArrayList(studioItem, penthouseItem, duplexItem, triplexItem);
+            List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem, occupiedItem, reservedItem, maintanceItem);
+            selectedType(typeItems);
+            selectedState(stateItems);
+        }
+        if (closeDialogBtn.visibleProperty().getValue()){
+            closeDialogBtn.setOnMouseClicked(event -> {
+                dialogContainer.setVisible(false);
+                dialogBox.setVisible(false);
+            });
+        }
+    }
+    public void selectedType(List<MenuItem> listItems){
+        for (MenuItem selectedItems : listItems){
+            selectedItems.setOnAction(event -> typeMenu.setText(selectedItems.getText()));
+        }
+    }
+    public void selectedState(List<MenuItem> listItems){
+        for (MenuItem selectedItems : listItems){
+            selectedItems.setOnAction(event -> stateMenu.setText(selectedItems.getText()));
+        }
     }
 }
