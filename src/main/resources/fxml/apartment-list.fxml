@@ -39,7 +39,7 @@
                   <Insets bottom="20.0" />
                </padding>
             </Label>
-            <TableView fx:id="apartmentTableView" layoutX="71.0" layoutY="119.0" onMouseClicked="#selectedFloor" prefHeight="688.0" prefWidth="1232.0" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <TableView fx:id="apartmentTableView" layoutX="71.0" layoutY="119.0" onMouseClicked="#selectedFloor" prefHeight="688.0" prefWidth="1335.0" stylesheets="@../styles/ApartmentList.css" visible="false">
                <columns>
                   <TableColumn fx:id="apartmentIdCol" prefWidth="139.0" text="ApartmentID" />
                   <TableColumn fx:id="hostNameCol" prefWidth="202.0" text="Host Name" />
@@ -47,7 +47,7 @@
                   <TableColumn fx:id="stateCol" prefWidth="212.0" text="State" />
                   <TableColumn fx:id="typeCol" prefWidth="220.0" text="Type" />
                   <TableColumn fx:id="areaCol" prefWidth="158.0" text="Area" />
-                  <TableColumn fx:id="actionsCol" prefWidth="149.0" text="Actions" />
+                  <TableColumn fx:id="actionsCol" prefWidth="252.0" text="Actions" />
                </columns>
                <padding>
                   <Insets bottom="40.0" />
@@ -72,7 +72,7 @@
                </graphic>
             </Button>
             <AnchorPane fx:id="dialogContainer" opacity="0.2" prefHeight="857.0" prefWidth="1535.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <AnchorPane fx:id="dialogBox" layoutX="260.0" layoutY="192.0" prefHeight="559.0" prefWidth="823.0" styleClass="dialog-deisgn" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <AnchorPane fx:id="dialogBox" layoutX="260.0" layoutY="192.0" prefHeight="433.0" prefWidth="809.0" styleClass="dialog-deisgn" stylesheets="@../styles/ApartmentList.css" visible="false">
                <children>
                   <Button fx:id="closeDialogBtn" layoutX="756.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="40.0" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css">
                      <graphic>
@@ -89,7 +89,7 @@
                      </font>
                   </Label>
                   <Separator layoutX="-3.0" layoutY="55.0" prefHeight="5.0" prefWidth="825.0" />
-                  <VBox layoutX="356.0" layoutY="62.0" prefHeight="497.0" prefWidth="824.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="62.0">
+                  <VBox layoutX="356.0" layoutY="62.0" prefHeight="275.0" prefWidth="823.0" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="62.0">
                      <children>
                         <HBox prefHeight="95.0" prefWidth="824.0">
                            <children>
@@ -118,7 +118,7 @@
                               <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
                                     <Label prefHeight="52.0" prefWidth="226.0" text="State" />
-                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="MenuButton">
+                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Choose State">
                                       <items>
                                         <MenuItem fx:id="availableItem" mnemonicParsing="false" text="AVAILABLE" />
                                         <MenuItem fx:id="occupiedItem" mnemonicParsing="false" text="OCCUPIED" />
@@ -134,7 +134,7 @@
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
                                     <Label prefHeight="52.0" prefWidth="226.0" text="Type" />
-                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="MenuButton">
+                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Choose Type">
                                        <items>
                                           <MenuItem fx:id="studioItem" mnemonicParsing="false" text="STUDIO" />
                                           <MenuItem fx:id="penthouseItem" mnemonicParsing="false" text="PENTHOUSE" />
@@ -149,6 +149,7 @@
                               </VBox>
                            </children>
                         </HBox>
+                        <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="71.0" text="Button" />
                      </children>
                   </VBox>
                </children>

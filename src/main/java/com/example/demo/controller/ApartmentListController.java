@@ -1,4 +1,6 @@
 package com.example.demo.controller;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Insets;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import com.example.demo.Main;
@@ -21,6 +23,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -103,7 +106,7 @@ public class ApartmentListController {
     private final ObservableMap<String, String> nineteenthFloor = FXCollections.observableHashMap();
     private final ObservableMap<String, String> twentiethFloor = FXCollections.observableHashMap();
     public Button closeDialogBtn;
-    public TableColumn<?, ?> actionsCol;
+    public TableColumn<Apartment, String> actionsCol;
     public TableColumn<Apartment, String> apartmentIdCol;
     public TableColumn<Apartment, Double> areaCol;
     public TableColumn<Apartment, String> hostNameCol;
@@ -530,14 +533,15 @@ public class ApartmentListController {
     }
 
     private void showFloorDetail(int floor) {
+        List<Apartment> floorApartments = new ArrayList<>();
         for(Apartment apartment : apartments){
             if(apartment.getFloor() == floor){
-                List<Apartment> apartments = new ArrayList<>();
-                apartments.add(apartment);
-                ObservableList<Apartment> apartmentObservableList = FXCollections.observableList(apartments);
-                showApartments(apartmentObservableList);
+                floorApartments.add(apartment);
             }
+
         }
+        ObservableList<Apartment> apartmentObservableList = FXCollections.observableList(floorApartments);
+        showApartments(apartmentObservableList);
     }
 
     public void handleClickedFloor(){
@@ -556,6 +560,7 @@ public class ApartmentListController {
             List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem, occupiedItem, reservedItem, maintanceItem);
             selectedType(typeItems);
             selectedState(stateItems);
+            handleFilter();
         }
         if (closeDialogBtn.visibleProperty().getValue()){
             closeDialogBtn.setOnMouseClicked(event -> {
@@ -574,8 +579,26 @@ public class ApartmentListController {
             selectedItems.setOnAction(event -> stateMenu.setText(selectedItems.getText()));
         }
     }
+    public void handleFilter (){
+        boolean stateFlag = false;
+        boolean typeFlag = false;
+        ObservableList<ApartmentState> apartmentStates = FXCollections.observableArrayList(ApartmentState.MAINTENANCE, ApartmentState.AVAILABLE, ApartmentState.OCCUPIED, ApartmentState.RESERVED);
+        ObservableList<ApartmentType> apartmentTypes = FXCollections.observableArrayList(ApartmentType.DUPLEX, ApartmentType.PENTHOUSE, ApartmentType.STUDIO, ApartmentType.TRIPLEX);
+        for (ApartmentState apartmentState : apartmentStates){
+            if(Objects.equals(stateMenu.getText(), apartmentState.toString())){
+                stateFlag = true;
+                break;
+            }
+        }
+        for (ApartmentType apartmentType : apartmentTypes){
+            if(Objects.equals(typeMenu.getText(), apartmentType.toString())){
+                typeFlag = true;
+                break;
+            }
+        }
+    }
     public void showApartments(ObservableList<Apartment> index){
-        apartmentIdCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
+        apartmentIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
         stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()).asString());
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()).asString());
         areaCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getArea()));
@@ -607,6 +630,62 @@ public class ApartmentListController {
                 }
             };
         });
+        Callback<TableColumn<Apartment, String>, TableCell<Apartment, String>> cellFoctory = (TableColumn<Apartment, String> param) -> {
+            final TableCell<Apartment, String> cell = new TableCell<Apartment, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+
+                    } else {
+                        Button editBtn = new Button("Edit");
+                        Button deleteBtn = new Button("Delete");
+                        editBtn.setOnMouseExited(e -> editBtn.setStyle(
+                                " -fx-cursor: hand ;"
+                                        + "-fx-background-color: #ffff;"
+                                        + "-fx-border-width: 1px;"
+                                        + "-fx-border-color: black;"
+                                        + "-fx-border-radius: 14;"
+                                        + "-fx-background-radius: 14;"
+                        ));
+                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #9a9898;"
+                                + "-fx-border-width: 1px;"
+                                + "-fx-border-color: black;"
+                                + "-fx-border-radius: 14;"
+                                + "-fx-background-radius: 14;"));
+                        deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
+                                " -fx-cursor: hand ;"
+                                        + "-fx-background-color: #ffff;"
+                                        + "-fx-border-width: 1px;"
+                                        + "-fx-border-color: black;"
+                                        + "-fx-border-radius: 14;"
+                                        + "-fx-background-radius: 14;"
+                        ));
+                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #9a9898;"
+                                + "-fx-border-width: 1px;"
+                                + "-fx-border-color: black;"
+                                + "-fx-border-radius: 14;"
+                                + "-fx-background-radius: 14;"));
+                        HBox managebtn = new HBox(editBtn, deleteBtn);
+                        managebtn.setStyle("-fx-alignment:center");
+                        HBox.setMargin(deleteBtn, new Insets(2, 2, 0, 3));
+                        HBox.setMargin(editBtn, new Insets(2, 3, 0, 2));
+                        setGraphic(managebtn);
+                        setText(null);
+
+                    }
+                }
+
+            };
+
+            return cell;
+        };
+        actionsCol.setCellFactory(cellFoctory);
+        System.out.println("Size of ObservableList before setting to TableView: " + index.size());
+        System.out.println(index);
         apartmentTableView.setItems(index);
+        System.out.println("Size of ObservableList after setting to TableView: " + apartmentTableView.getItems().size());
     }
 }

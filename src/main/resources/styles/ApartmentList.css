@@ -28,13 +28,12 @@
     -fx-cursor: HAND;
     -fx-padding: 5;
 }
-.table-row-cell:hover{
-    -fx-background-color: #eaeaf1;
+.table-view:hover .table-row-cell:hover{
+    -fx-background-color: transparent;
     -fx-background-radius: 14;
 }
-.table-row-cell:selected{
-    -fx-background-color: #bdbdcb;
-    -fx-background-radius: 14;
+.table-view .table-row-cell:selected .text{
+    -fx-fill: black;
 }
 .table-view .column-header, .table-view .filter{
     -fx-border-width: 0;
