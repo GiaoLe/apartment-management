@@ -9,7 +9,6 @@ public enum MenuView {
     APARTMENT_FORM("apartment-form.fxml"),
     COLLECTION_LIST("collection-list.fxml"),
     COLLECTION_FORM("collection-form.fxml"),
-
     COLLECTION_REPORT("collection-report.fxml"),
     DASHBOARD("dashboard.fxml"),
     APARTMENT_ITEMS("apartment-items.fxml");
