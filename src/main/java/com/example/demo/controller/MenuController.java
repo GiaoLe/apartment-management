@@ -29,13 +29,6 @@ import java.util.Locale;
 public class MenuController {
     public ImageView toggleIcon;
     public Button dashboardButton;
-    public TableColumn<Apartment, Integer> availableRooms;
-    public TableColumn<?, ?> description;
-    public TableColumn<?, ?> flatNumber;
-    public TableColumn<?, ?> notAvailableRooms;
-    public TableColumn<?, ?> occupiedRooms;
-    public TableColumn<?, ?> totalResidents;
-    public TableColumn<?, ?> totalRooms;
     public Button slideBtn;
     public Button residentsButton;
     public BorderPane borderPane;
@@ -43,12 +36,6 @@ public class MenuController {
     public Button collectionsButton;
     public Label dateLabel;
     public VBox sideBar;
-    public HBox dashBoardNavigation;
-    public HBox ApartmentsNavigation;
-
-    public HBox CollectionsNavigation;
-
-    public HBox ResidentsNavigation;
     public void date() {
         LocalDate localDate = LocalDate.now();
         int year = localDate.getYear();
@@ -56,41 +43,7 @@ public class MenuController {
         int day = localDate.getDayOfMonth();
         dateLabel.setText(monthName + " " + day + ", " + year);
     }
-    @FXML
-    public void handleClickSideBar(MouseEvent actionEvent) {
-        String handleClick = ((HBox) actionEvent.getSource()).getId();
-        switch (handleClick){
-            case "ResidentsNavigation":
-                residentsButton.getStyleClass().add("selected-item");
-                MenuViewManager.switchView(MenuView.RESIDENT_LIST);
-                apartmentsButton.getStyleClass().remove("selected-item");
-                collectionsButton.getStyleClass().remove("selected-item");
-                dashboardButton.getStyleClass().remove("selected-item");
-                break;
-            case "ApartmentsNavigation":
-                residentsButton.getStyleClass().remove("selected-item");
-                apartmentsButton.getStyleClass().add("selected-item");
-                MenuViewManager.switchView(MenuView.APARTMENT_LIST);
-                collectionsButton.getStyleClass().remove("selected-item");
-                dashboardButton.getStyleClass().remove("selected-item");
-                break;
-            case "CollectionsNavigation":
-                residentsButton.getStyleClass().remove("selected-item");
-                apartmentsButton.getStyleClass().remove("selected-item");
-                collectionsButton.getStyleClass().add("selected-item");
-                MenuViewManager.switchView(MenuView.COLLECTION_LIST);
-                dashboardButton.getStyleClass().remove("selected-item");
-                break;
-            case "dashBoardNavigation":
-                residentsButton.getStyleClass().remove("selected-item");
-                apartmentsButton.getStyleClass().remove("selected-item");
-                collectionsButton.getStyleClass().remove("selected-item");
-                dashboardButton.getStyleClass().add("selected-item");
-                MenuViewManager.switchView(MenuView.DASHBOARD);
 
-        }
-
-    }
     public void toggleSidebar() {
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), sideBar);
         Timeline timeline = new Timeline(
@@ -112,5 +65,21 @@ public class MenuController {
     public void initialize() {
         MenuViewManager.setBorderPane(borderPane);
         date();
+    }
+
+    public void dashboardButtonOnAction(ActionEvent actionEvent) {
+        MenuViewManager.switchView(MenuView.DASHBOARD);
+    }
+
+    public void residentsButtonOnAction(ActionEvent actionEvent) {
+        MenuViewManager.switchView(MenuView.RESIDENT_LIST);
+    }
+
+    public void collectionsButtonOnAction(ActionEvent actionEvent) {
+        MenuViewManager.switchView(MenuView.COLLECTION_LIST);
+    }
+
+    public void apartmentsButtonOnAction(ActionEvent actionEvent) {
+        MenuViewManager.switchView(MenuView.APARTMENT_LIST);
     }
 }
