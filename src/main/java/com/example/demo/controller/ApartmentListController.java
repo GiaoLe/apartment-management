@@ -642,6 +642,22 @@ public class ApartmentListController {
                     } else {
                         Button editBtn = new Button("Edit");
                         Button deleteBtn = new Button("Delete");
+                        editBtn.setStyle(
+                                " -fx-cursor: hand ;"
+                                        + "-fx-background-color: #ffff;"
+                                        + "-fx-border-width: 1px;"
+                                        + "-fx-border-color: black;"
+                                        + "-fx-border-radius: 14;"
+                                        + "-fx-background-radius: 14;"
+                        );
+                        deleteBtn.setStyle(
+                                " -fx-cursor: hand ;"
+                                        + "-fx-background-color: #ffff;"
+                                        + "-fx-border-width: 1px;"
+                                        + "-fx-border-color: black;"
+                                        + "-fx-border-radius: 14;"
+                                        + "-fx-background-radius: 14;"
+                        );
                         editBtn.setOnMouseExited(e -> editBtn.setStyle(
                                 " -fx-cursor: hand ;"
                                         + "-fx-background-color: #ffff;"
@@ -650,7 +666,17 @@ public class ApartmentListController {
                                         + "-fx-border-radius: 14;"
                                         + "-fx-background-radius: 14;"
                         ));
-                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #9a9898;"
+                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"
+                                + "-fx-border-width: 1px;"
+                                + "-fx-border-color: black;"
+                                + "-fx-border-radius: 14;"
+                                + "-fx-background-radius: 14;"));
+                        editBtn.setOnMouseClicked(e -> editBtn.setStyle("-fx-background-color: #b7b7b7;"
+                                + "-fx-border-width: 1px;"
+                                + "-fx-border-color: black;"
+                                + "-fx-border-radius: 14;"
+                                + "-fx-background-radius: 14;"));
+                        deleteBtn.setOnMouseClicked(e -> deleteBtn.setStyle("-fx-background-color: #b7b7b7;"
                                 + "-fx-border-width: 1px;"
                                 + "-fx-border-color: black;"
                                 + "-fx-border-radius: 14;"
@@ -663,7 +689,7 @@ public class ApartmentListController {
                                         + "-fx-border-radius: 14;"
                                         + "-fx-background-radius: 14;"
                         ));
-                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #9a9898;"
+                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"
                                 + "-fx-border-width: 1px;"
                                 + "-fx-border-color: black;"
                                 + "-fx-border-radius: 14;"
