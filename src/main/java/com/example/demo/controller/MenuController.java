@@ -1,47 +1,42 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.Apartment;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import javafx.animation.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
 public class MenuController {
     public ImageView toggleIcon;
     public Button dashboardButton;
-    public Button slideBtn;
     public Button residentsButton;
     public BorderPane borderPane;
     public Button apartmentsButton;
     public Button collectionsButton;
     public Label dateLabel;
     public VBox sideBar;
-    public void date() {
-        LocalDate localDate = LocalDate.now();
-        int year = localDate.getYear();
-        String monthName = localDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
-        int day = localDate.getDayOfMonth();
-        dateLabel.setText(monthName + " " + day + ", " + year);
+    public Label userIDLabel;
+
+    @FXML
+    public void initialize() {
+        MenuViewManager.setBorderPane(borderPane);
+        dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        userIDLabel.setText("User ID: " + LoginController.getCurrentUserID());
+        System.out.println(LoginController.getCurrentUserID());
     }
 
     public void toggleSidebar() {
@@ -60,11 +55,6 @@ public class MenuController {
         }
 
         translateTransition.play();
-    }
-@FXML
-    public void initialize() {
-        MenuViewManager.setBorderPane(borderPane);
-        date();
     }
 
     public void dashboardButtonOnAction(ActionEvent actionEvent) {

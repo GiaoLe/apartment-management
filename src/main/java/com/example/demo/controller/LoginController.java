@@ -8,12 +8,16 @@ import com.example.demo.service.AdminService;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import lombok.Getter;
 
 public class LoginController {
 
     private final AdminService adminService = new AdminService(new AdminRepository());
     public TextField userNameTextField;
     public PasswordField passwordField;
+
+    @Getter
+    private static String currentUserID = "Admin";
 
     public void signInButtonOnAction() {
         String userName = userNameTextField.getText();
@@ -34,6 +38,7 @@ public class LoginController {
                 alert.setContentText("Wrong username/password");
                 alert.showAndWait();
             } else {
+                currentUserID = userName;
                 SceneManager.switchScene(Scene.MENU);
             }
         }

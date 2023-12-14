@@ -16,64 +16,6 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles/Dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.MenuController">
    <BorderPane fx:id="borderPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #F4F5F7;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <top>
-         <AnchorPane prefHeight="76.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
-            <Label fx:id="dateLabel" layoutX="900.0" layoutY="28.0" prefHeight="64.0" prefWidth="239.0" stylesheets="@../styles/Dashboard.css" text="Date">
-               <styleClass>
-                  <String fx:value="header-content" />
-                  <String fx:value="header-title" />
-               </styleClass>
-            </Label>
-            <HBox layoutX="-1.0" layoutY="10.0" prefHeight="73.0" prefWidth="312.0">
-               <children>
-                  <ImageView fitHeight="56.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../media/apartment-icon.png" />
-                     </image>
-                  </ImageView>
-                  <Label prefHeight="103.0" prefWidth="242.0" styleClass="header-title" stylesheets="@../styles/Dashboard.css" text="The BlueMoon">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <Separator layoutX="308.0" layoutY="11.0" orientation="VERTICAL" prefHeight="98.0" prefWidth="5.0" />
-            <VBox layoutX="365.0" layoutY="25.0" prefHeight="87.0" prefWidth="329.0">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="TOP" prefHeight="79.0" prefWidth="229.0" text="Wellcome back, " textFill="#8d8d8d">
-                           <font>
-                              <Font name="SansSerif Regular" size="28.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="82.0" prefWidth="120.0" text="Admin">
-                           <font>
-                              <Font name="SansSerif Regular" size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <Button fx:id="slideBtn" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="86.0" minWidth="35.0" mnemonicParsing="false" onAction="#toggleSidebar" prefHeight="26.0" prefWidth="56.0" style="-fx-cursor: pointer; -fx-background-color: #F4F5F7;">
-               <graphic>
-                  <ImageView fx:id="toggleIcon" fitHeight="26.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/menu.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </Button>
-            <BorderPane.margin>
-               <Insets bottom="30.0" />
-            </BorderPane.margin>
-         </AnchorPane>
-      </top>
       <left>
          <VBox fx:id="sideBar" prefHeight="600.0" prefWidth="312.0" styleClass="sidebar" BorderPane.alignment="CENTER">
             <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#dashboardButtonOnAction" prefHeight="51.0" prefWidth="210.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Dashboard" textFill="RED">
@@ -107,5 +49,35 @@
       <right>
          <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
       </right>
+      <top>
+         <HBox BorderPane.alignment="CENTER">
+            <HBox prefHeight="73.0" prefWidth="312.0">
+               <ImageView fitHeight="56.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../media/apartment-icon.png" />
+               </ImageView>
+               <Label prefHeight="103.0" prefWidth="242.0" styleClass="header-title" stylesheets="@../styles/Dashboard.css" text="The BlueMoon">
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </Label>
+            </HBox>
+            <Separator orientation="VERTICAL" prefHeight="98.0" prefWidth="3.0" />
+            <VBox prefHeight="87.0" prefWidth="329.0">
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <Label fx:id="userIDLabel" prefHeight="40.0" prefWidth="342.0" text="UserID">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </HBox>
+            </VBox>
+            <Label fx:id="dateLabel" prefHeight="97.0" prefWidth="330.0" stylesheets="@../styles/Dashboard.css" text="Date">
+               <styleClass>
+                  <String fx:value="header-content" />
+                  <String fx:value="header-title" />
+               </styleClass>
+            </Label>
+         </HBox>
+      </top>
    </BorderPane>
 </AnchorPane>
