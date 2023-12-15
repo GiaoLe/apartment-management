@@ -36,7 +36,6 @@ public class MenuController {
         MenuViewManager.setBorderPane(borderPane);
         dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         userIDLabel.setText("User ID: " + LoginController.getCurrentUserID());
-        System.out.println(LoginController.getCurrentUserID());
     }
 
     public void toggleSidebar() {
@@ -57,19 +56,19 @@ public class MenuController {
         translateTransition.play();
     }
 
-    public void dashboardButtonOnAction(ActionEvent actionEvent) {
+    public void dashboardButtonOnAction() {
         MenuViewManager.switchView(MenuView.DASHBOARD);
     }
 
-    public void residentsButtonOnAction(ActionEvent actionEvent) {
+    public void residentsButtonOnAction() {
         MenuViewManager.switchView(MenuView.RESIDENT_LIST);
     }
 
-    public void collectionsButtonOnAction(ActionEvent actionEvent) {
+    public void collectionsButtonOnAction() {
         MenuViewManager.switchView(MenuView.COLLECTION_LIST);
     }
 
-    public void apartmentsButtonOnAction(ActionEvent actionEvent) {
+    public void apartmentsButtonOnAction() {
         MenuViewManager.switchView(MenuView.APARTMENT_LIST);
     }
 }

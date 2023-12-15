@@ -3,35 +3,21 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import com.example.demo.Main;
 import com.example.demo.dao.ApartmentState;
 import com.example.demo.dao.ApartmentType;
 import com.example.demo.repository.HibernateUtility;
 import com.example.demo.dao.Apartment;
-import com.example.demo.gui.MenuView;
-import com.example.demo.gui.MenuViewManager;
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
-import javafx.util.Duration;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.util.*;
 
 public class ApartmentListController {
@@ -82,7 +68,7 @@ public class ApartmentListController {
     private final ObservableMap<String, String> ninthFloor = FXCollections.observableHashMap();
     public MenuItem availableItem;
     public MenuItem duplexItem;
-    public MenuItem maintanceItem;
+    public MenuItem maintainingItem;
     public MenuItem occupiedItem;
     public MenuItem penthouseItem;
     public MenuItem studioItem;
@@ -557,7 +543,7 @@ public class ApartmentListController {
                 dialogBox.setVisible(true);
             });
             List<MenuItem> typeItems = FXCollections.observableArrayList(studioItem, penthouseItem, duplexItem, triplexItem);
-            List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem, occupiedItem, reservedItem, maintanceItem);
+            List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem, occupiedItem, reservedItem, maintainingItem);
             selectedType(typeItems);
             selectedState(stateItems);
             handleFilter();

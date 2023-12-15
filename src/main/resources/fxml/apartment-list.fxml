@@ -123,7 +123,7 @@
                                         <MenuItem fx:id="availableItem" mnemonicParsing="false" text="AVAILABLE" />
                                         <MenuItem fx:id="occupiedItem" mnemonicParsing="false" text="OCCUPIED" />
                                           <MenuItem fx:id="reservedItem" mnemonicParsing="false" text="RESERVED" />
-                                          <MenuItem fx:id="maintanceItem" mnemonicParsing="false" text="MAINTENANCE" />
+                                          <MenuItem fx:id="maintainingItem" mnemonicParsing="false" text="MAINTENANCE" />
                                       </items>
                                     </MenuButton>
                                  </children>

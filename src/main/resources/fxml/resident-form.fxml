@@ -27,16 +27,16 @@
               <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0" promptText="Last name" />
               <Label fx:id="lastNameErrorLabel" layoutX="10.0" layoutY="52.0" />
               <Label layoutX="10.0" layoutY="52.0" text="Apartment" />
-              <TextField fx:id="apartmentTextField" layoutX="10.0" layoutY="69.0" />
+              <TextField fx:id="apartmentTextField" layoutX="10.0" layoutY="69.0" promptText="Existing apartment ID" />
               <Label fx:id="apartmentTextFieldErrorLabel" />
             <Label layoutX="10.0" layoutY="128.0" text="National ID" />
-            <TextField fx:id="nationalIDTextField" layoutX="10.0" layoutY="145.0" />
+            <TextField fx:id="nationalIDTextField" layoutX="10.0" layoutY="145.0" promptText="National ID" />
             <Label fx:id="nationalIDErrorLabel" layoutX="10.0" layoutY="170.0" />
             <Label layoutX="10.0" layoutY="212.0" text="Phone number" />
-            <TextField fx:id="phoneNumberTextField" layoutX="10.0" layoutY="229.0" />
+            <TextField fx:id="phoneNumberTextField" layoutX="10.0" layoutY="229.0" promptText="Phone number" />
             <Label fx:id="phoneNumberErrorLabel" layoutX="10.0" layoutY="254.0" />
             <Label layoutX="10.0" layoutY="271.0" text="Email" />
-            <TextField fx:id="emailTextField" layoutX="10.0" layoutY="288.0" />
+            <TextField fx:id="emailTextField" layoutX="10.0" layoutY="288.0" promptText="Email" />
             <Label fx:id="emailErrorLabel" layoutX="10.0" layoutY="313.0" />
               <HBox prefHeight="100.0" prefWidth="200.0">
                   <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
