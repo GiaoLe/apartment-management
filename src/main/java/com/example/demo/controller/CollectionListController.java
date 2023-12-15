@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 public class CollectionListController {
@@ -26,6 +27,11 @@ public class CollectionListController {
 
     @FXML
     public void initialize() {
+        fillTableViewWithData();
+        enableDoubleClickForViewDetails();
+    }
+
+    private void fillTableViewWithData() {
         collectionsTableView.setItems(FXCollections.observableList(collectionService.findAll()));
         nameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         typeTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
@@ -34,6 +40,18 @@ public class CollectionListController {
             default -> new SimpleObjectProperty<>(cellData.getValue().getAmount().toString());
         });
         descriptionTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescription()));
+    }
+
+    private void enableDoubleClickForViewDetails() {
+        collectionsTableView.setRowFactory(tableView -> {
+            TableRow<Collection> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    detailsButtonOnAction();
+                }
+            });
+            return row;
+        });
     }
 
     public void newButtonOnAction() {
