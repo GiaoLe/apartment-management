@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.BeanPropertyUtils;
@@ -30,13 +31,28 @@ public class ResidentListController {
 
     @FXML
     public void initialize() {
+        fillTableViewWithResidentData();
+        enableDoubleClickForResidentDetails();
+    }
+
+    private void fillTableViewWithResidentData() {
         residentTableView.setItems(FXCollections.observableList(residentService.findAll()));
         idTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getId()));
         firstNameTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getFirstName()));
         lastNameTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getLastName()));
         apartmentTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getApartmentID()));
+    }
 
-//        residentPropertySheet.setPropertyEditorFactory(new ResidentPropertyEditorFactory(this));
+    private void enableDoubleClickForResidentDetails() {
+        residentTableView.setRowFactory(tableView -> {
+            TableRow<Resident> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    detailsButtonOnAction();
+                }
+            });
+            return row;
+        });
     }
 
     public void newButtonOnAction() {
