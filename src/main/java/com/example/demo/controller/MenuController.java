@@ -6,7 +6,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,10 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
 public class MenuController {
     public ImageView toggleIcon;
@@ -27,15 +24,23 @@ public class MenuController {
     public BorderPane borderPane;
     public Button apartmentsButton;
     public Button collectionsButton;
-    public Label dateLabel;
+    public Label dateTimeLabel;
     public VBox sideBar;
     public Label userIDLabel;
 
     @FXML
     public void initialize() {
         MenuViewManager.setBorderPane(borderPane);
-        dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        userIDLabel.setText("User ID: " + LoginController.getCurrentUserID());
+        displayLiveTime();
+        userIDLabel.setText("UID: " + LoginController.getCurrentUserID());
+    }
+
+    private void displayLiveTime() {
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> dateTimeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")))),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Timeline.INDEFINITE);
+        clock.play();
     }
 
     public void toggleSidebar() {

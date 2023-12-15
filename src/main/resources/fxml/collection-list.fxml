@@ -21,10 +21,10 @@
       <center>
          <TableView fx:id="collectionsTableView" editable="true" prefHeight="400.0" prefWidth="413.0" BorderPane.alignment="CENTER">
            <columns>
-             <TableColumn fx:id="nameTableColumn" prefWidth="177.66665649414062" text="Name" />
-             <TableColumn fx:id="typeTableColumn" prefWidth="218.33334350585938" text="Type" />
-               <TableColumn fx:id="amountTableColumn" prefWidth="226.16668701171875" text="Amount (USD)" />
-               <TableColumn fx:id="descriptionTableColumn" minWidth="0.0" prefWidth="379.33331298828125" text="Description" />
+             <TableColumn fx:id="nameTableColumn" prefWidth="160.0" text="Name" />
+             <TableColumn fx:id="typeTableColumn" prefWidth="169.0" text="Type" />
+               <TableColumn fx:id="amountTableColumn" prefWidth="198.0" text="Amount (USD)" />
+               <TableColumn fx:id="descriptionTableColumn" minWidth="0.0" prefWidth="475.5" text="Description" />
            </columns>
          </TableView>
       </center>
