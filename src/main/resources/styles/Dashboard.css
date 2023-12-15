@@ -22,6 +22,13 @@
     -fx-font-size: 25px;
     -fx-font-weight: 700;
     -fx-text-fill: #484848;
+    -fx-cursor: HAND;
+}
+.sidebar-button:hover{
+    -fx-background-color: #dcdcdc;
+}
+.sidebar-button:pressed{
+    -fx-background-color: #b7b7b7;
 }
 .header-title{
     -fx-text-fill: linear-gradient(to right, #f87000, #fd0026);

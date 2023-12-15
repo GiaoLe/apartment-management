@@ -21,14 +21,14 @@
    <content>
       <AnchorPane prefHeight="857.0" prefWidth="1535.0" styleClass="container" stylesheets="@../styles/ApartmentList.css">
          <children>
-            <TableView fx:id="floorTableView" layoutX="40.0" layoutY="66.0" onMouseClicked="#selectedFloor" prefHeight="748.0" prefWidth="1183.0" stylesheets="@../styles/ApartmentList.css" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="312.0" AnchorPane.topAnchor="66.0">
+            <TableView fx:id="floorTableView" layoutX="40.0" layoutY="66.0" onMouseClicked="#selectedFloor" prefHeight="748.0" prefWidth="1036.0" stylesheets="@../styles/ApartmentList.css" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="459.0" AnchorPane.topAnchor="66.0">
                <columns>
                   <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Floor" />
-                  <TableColumn fx:id="totalColumn" prefWidth="184.0" text="Total Apartments " />
-                  <TableColumn fx:id="availableColumn" prefWidth="213.0" text="Available Apartments" />
-                  <TableColumn fx:id="nAvailableColumn" prefWidth="268.0" text="Not Available Apartments" />
-                  <TableColumn fx:id="occupiedColumn" prefWidth="228.0" text="Occupied Apartments" />
-                  <TableColumn fx:id="residentsColumn" prefWidth="174.0" text="Total Residents" />
+                  <TableColumn fx:id="totalColumn" prefWidth="150.0" text="Total Apartments " />
+                  <TableColumn fx:id="availableColumn" prefWidth="191.0" text="Available Apartments" />
+                  <TableColumn fx:id="nAvailableColumn" prefWidth="206.0" text="Not Available Apartments" />
+                  <TableColumn fx:id="occupiedColumn" prefWidth="188.0" text="Occupied Apartments" />
+                  <TableColumn fx:id="residentsColumn" prefWidth="187.0" text="Total Residents" />
                </columns>
             </TableView>
             <Label fx:id="tableHeader" layoutX="71.0" layoutY="14.0" prefHeight="56.0" prefWidth="296.0" styleClass="table-header" stylesheets="@../styles/ApartmentList.css" text="Apartments Infomation">
@@ -39,21 +39,21 @@
                   <Insets bottom="20.0" />
                </padding>
             </Label>
-            <TableView fx:id="apartmentTableView" layoutX="71.0" layoutY="119.0" onMouseClicked="#selectedFloor" prefHeight="688.0" prefWidth="1335.0" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <TableView fx:id="apartmentTableView" layoutX="71.0" layoutY="119.0" onMouseClicked="#selectedFloor" prefHeight="688.0" prefWidth="1050.0" stylesheets="@../styles/ApartmentList.css" visible="false">
                <columns>
-                  <TableColumn fx:id="apartmentIdCol" prefWidth="139.0" text="ApartmentID" />
-                  <TableColumn fx:id="hostNameCol" prefWidth="202.0" text="Host Name" />
-                  <TableColumn fx:id="totalResidentsCol" prefWidth="152.0" text="Total Residents" />
-                  <TableColumn fx:id="stateCol" prefWidth="212.0" text="State" />
-                  <TableColumn fx:id="typeCol" prefWidth="220.0" text="Type" />
-                  <TableColumn fx:id="areaCol" prefWidth="158.0" text="Area" />
-                  <TableColumn fx:id="actionsCol" prefWidth="252.0" text="Actions" />
+                  <TableColumn fx:id="apartmentIdCol" prefWidth="154.0" text="ApartmentID" />
+                  <TableColumn fx:id="hostNameCol" prefWidth="165.0" text="Host Name" />
+                  <TableColumn fx:id="totalResidentsCol" prefWidth="158.0" text="Total Residents" />
+                  <TableColumn fx:id="stateCol" prefWidth="141.0" text="State" />
+                  <TableColumn fx:id="typeCol" prefWidth="143.0" text="Type" />
+                  <TableColumn fx:id="areaCol" prefWidth="111.0" text="Area" />
+                  <TableColumn fx:id="actionsCol" prefWidth="178.0" text="Actions" />
                </columns>
                <padding>
                   <Insets bottom="40.0" />
                </padding>
             </TableView>
-            <Button fx:id="backBtn" layoutX="1197.0" layoutY="60.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="47.0" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <Button fx:id="backBtn" layoutX="1033.0" layoutY="60.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="46.0" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" visible="false">
                <graphic>
                   <ImageView fitHeight="36.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
