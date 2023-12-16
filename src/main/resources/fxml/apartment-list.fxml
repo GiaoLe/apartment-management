@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -118,7 +119,7 @@
                               <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
                                     <Label prefHeight="52.0" prefWidth="226.0" text="State" />
-                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Choose State">
+                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-border-color: black; -fx-border-radius: 10px;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose State">
                                       <items>
                                         <MenuItem fx:id="availableItem" mnemonicParsing="false" text="AVAILABLE" />
                                         <MenuItem fx:id="occupiedItem" mnemonicParsing="false" text="OCCUPIED" />
@@ -134,7 +135,7 @@
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
                                     <Label prefHeight="52.0" prefWidth="226.0" text="Type" />
-                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Choose Type">
+                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-border-color: black; -fx-border-radius: 10px;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
                                        <items>
                                           <MenuItem fx:id="studioItem" mnemonicParsing="false" text="STUDIO" />
                                           <MenuItem fx:id="penthouseItem" mnemonicParsing="false" text="PENTHOUSE" />
@@ -149,7 +150,17 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="71.0" text="Button" />
+                        <Button fx:id="submitFilter" mnemonicParsing="false" prefHeight="39.0" prefWidth="127.0" stylesheets="@../styles/ApartmentList.css" text="Search">
+                           <VBox.margin>
+                              <Insets left="350.0" top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="btn-design" />
+                              <String fx:value="search-btn" />
+                           </styleClass></Button>
                      </children>
                   </VBox>
                </children>

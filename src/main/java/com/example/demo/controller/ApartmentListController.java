@@ -101,6 +101,8 @@ public class ApartmentListController {
     public TableColumn<Apartment, String> typeCol;
     List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
             .getResultList());
+    ObservableMap<String, String> selectedFloor;
+    public Button submitFilter;
     public void updateFloorDetails() {
          floorList = FXCollections.observableArrayList();
         for(Apartment apartment : apartments){
@@ -505,7 +507,7 @@ public class ApartmentListController {
 
     public void selectedFloor() {
         floorTableView.setOnMouseClicked(event -> {
-            ObservableMap<String, String> selectedFloor = floorTableView.getSelectionModel().getSelectedItem();
+            selectedFloor = floorTableView.getSelectionModel().getSelectedItem();
             showFloorDetail(Integer.parseInt(selectedFloor.get("floor")));
             handleClickedFloor();
         });
@@ -546,7 +548,33 @@ public class ApartmentListController {
             List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem, occupiedItem, reservedItem, maintainingItem);
             selectedType(typeItems);
             selectedState(stateItems);
-            handleFilter();
+            List<Apartment> selectedFloorForFilter = new ArrayList<>() ;
+            for(Apartment apartment : apartments){
+                if(apartment.getFloor() == Integer.parseInt(selectedFloor.get("floor"))){
+                    selectedFloorForFilter.add(apartment);
+                }
+            }
+            submitFilter.setOnMouseClicked(e -> {
+                ApartmentFilter apartmentFilter = new ApartmentFilter(apartmentIDFilter, hostNameFilter, stateMenu, typeMenu, submitFilter, typeItems, stateItems, selectedFloorForFilter);
+                List<Apartment> filteredApartment = apartmentFilter.handleFilter();
+                if (filteredApartment.isEmpty()){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Không tìm thấy kết quả");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Không tìm thấy căn hộ " +apartmentIDFilter.getText());
+                    alert.showAndWait();
+                }
+                else {
+                    dialogContainer.setVisible(false);
+                    dialogBox.setVisible(false);
+                    apartmentIDFilter.clear();
+                    hostNameFilter.clear();
+                    stateMenu.setText("Choose State");
+                    typeMenu.setText("Choose Type");
+                    ObservableList<Apartment> apartmentObservableList = FXCollections.observableList(filteredApartment);
+                    showApartments(apartmentObservableList);
+                }
+            });
         }
         if (closeDialogBtn.visibleProperty().getValue()){
             closeDialogBtn.setOnMouseClicked(event -> {
@@ -563,24 +591,6 @@ public class ApartmentListController {
     public void selectedState(List<MenuItem> listItems){
         for (MenuItem selectedItems : listItems){
             selectedItems.setOnAction(event -> stateMenu.setText(selectedItems.getText()));
-        }
-    }
-    public void handleFilter (){
-        boolean stateFlag = false;
-        boolean typeFlag = false;
-        ObservableList<ApartmentState> apartmentStates = FXCollections.observableArrayList(ApartmentState.MAINTENANCE, ApartmentState.AVAILABLE, ApartmentState.OCCUPIED, ApartmentState.RESERVED);
-        ObservableList<ApartmentType> apartmentTypes = FXCollections.observableArrayList(ApartmentType.DUPLEX, ApartmentType.PENTHOUSE, ApartmentType.STUDIO, ApartmentType.TRIPLEX);
-        for (ApartmentState apartmentState : apartmentStates){
-            if(Objects.equals(stateMenu.getText(), apartmentState.toString())){
-                stateFlag = true;
-                break;
-            }
-        }
-        for (ApartmentType apartmentType : apartmentTypes){
-            if(Objects.equals(typeMenu.getText(), apartmentType.toString())){
-                typeFlag = true;
-                break;
-            }
         }
     }
     public void showApartments(ObservableList<Apartment> index){
