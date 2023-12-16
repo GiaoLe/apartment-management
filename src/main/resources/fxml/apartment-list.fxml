@@ -165,6 +165,126 @@
                   </VBox>
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="apartmentInfoDialog" layoutX="249.0" layoutY="58.0" prefHeight="754.0" prefWidth="810.0" styleClass="dialog-deisgn" stylesheets="@../styles/ApartmentList.css" visible="false">
+               <children>
+                  <Button fx:id="apartmentInfoClosebtn" layoutX="746.0" layoutY="9.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="40.0" stylesheets="@../styles/ApartmentList.css">
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/circle-xmark.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="btn-design" />
+                        <String fx:value="search-btn" />
+                     </styleClass>
+                  </Button>
+                  <Label alignment="CENTER" layoutX="129.0" prefHeight="58.0" prefWidth="422.0" text="Infomation of Apartment">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutX="-3.0" layoutY="55.0" prefHeight="0.0" prefWidth="811.0" />
+                  <VBox layoutX="11.0" layoutY="73.0" prefHeight="528.0" prefWidth="787.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="72.0">
+                     <children>
+                        <HBox prefHeight="95.0" prefWidth="635.0">
+                           <children>
+                              <HBox prefHeight="95.0" prefWidth="412.0">
+                                 <children>
+                                    <Label prefHeight="52.0" prefWidth="86.0" text="ApartmentID:" />
+                                    <Label fx:id="apartmentInfoID" prefHeight="55.0" prefWidth="117.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox prefHeight="95.0" prefWidth="409.0">
+                                 <children>
+                                    <Label prefHeight="52.0" prefWidth="71.0" text="Host Name: " />
+                                    <Label fx:id="hostNameInfo" prefHeight="55.0" prefWidth="117.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="601.0">
+                           <children>
+                              <HBox prefHeight="95.0" prefWidth="399.0">
+                                 <children>
+                                    <Label prefHeight="52.0" prefWidth="37.0" text="State:" />
+                                    <Label fx:id="stateInfo" prefHeight="55.0" prefWidth="117.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox prefHeight="95.0" prefWidth="363.0">
+                                 <children>
+                                    <Label prefHeight="52.0" prefWidth="35.0" text="Type: " />
+                                    <Label fx:id="typeInfo" prefHeight="55.0" prefWidth="117.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="residentTableView" onMouseClicked="#selectedFloor" prefHeight="339.0" prefWidth="765.0" stylesheets="@../styles/ApartmentList.css">
+                           <columns>
+                              <TableColumn fx:id="residentID" prefWidth="120.0" text="ResidentID" />
+                              <TableColumn fx:id="lastName" prefWidth="161.0" text="Last Name" />
+                              <TableColumn fx:id="phoneNumber" prefWidth="211.0" text="Phone number" />
+                              <TableColumn fx:id="email" prefWidth="180.0" text="Email" />
+                              <TableColumn fx:id="nationalID" prefWidth="110.0" text="NationalID" />
+                           </columns>
+                           <padding>
+                              <Insets bottom="40.0" />
+                           </padding>
+                        </TableView>
+                        <HBox prefHeight="41.0" prefWidth="785.0">
+                           <children>
+                              <Button fx:id="addResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="142.0" style="-fx-border-width: 0px;" stylesheets="@../styles/ApartmentList.css" text="Add new resident">
+                                 <styleClass>
+                                    <String fx:value="btn-design" />
+                                    <String fx:value="search-btn" />
+                                    <String fx:value="add-new" />
+                                 </styleClass>
+                                 <HBox.margin>
+                                    <Insets left="460.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="editResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="69.0" style="-fx-border-width: 0px;" stylesheets="@../styles/ApartmentList.css" text="Edit">
+                                 <styleClass>
+                                    <String fx:value="btn-design" />
+                                    <String fx:value="search-btn" />
+                                    <String fx:value="edit" />
+                                 </styleClass>
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="delResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="75.0" style="-fx-border-width: 0px;" stylesheets="@../styles/ApartmentList.css" text="Delete">
+                                 <styleClass>
+                                    <String fx:value="btn-design" />
+                                    <String fx:value="search-btn" />
+                                    <String fx:value="delete" />
+                                 </styleClass>
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </content>

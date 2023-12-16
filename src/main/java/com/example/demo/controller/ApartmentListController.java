@@ -1,10 +1,12 @@
 package com.example.demo.controller;
+import com.example.demo.dao.Resident;
+import com.example.demo.gui.MenuView;
+import com.example.demo.gui.MenuViewManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import com.example.demo.dao.ApartmentState;
-import com.example.demo.dao.ApartmentType;
 import com.example.demo.repository.HibernateUtility;
 import com.example.demo.dao.Apartment;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,7 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
 
@@ -21,29 +22,10 @@ import java.io.IOException;
 import java.util.*;
 
 public class ApartmentListController {
-    public ImageView toggleIcon;
-    public Button deleteButton;
-    public Button newButton;
-    private final Map<String, String> floorDetails = new HashMap<>();
-    public VBox tableView;
-
-    public Label ActionsText;
-
-
-    public Label aApartmentsText;
-
-
-    public HBox container;
-
     public Label floorText;
 
-    public Label nAApaartmentsText;
 
-    public Label oApartmentsText;
-
-    public Label totalAText;
     public Label tableHeader;
-    public Label totalRText;
     public Button backBtn;
     public TableView<ObservableMap<String, String>> floorTableView;
     public TableColumn<ObservableMap<String, String>, String> occupiedColumn;
@@ -103,6 +85,21 @@ public class ApartmentListController {
             .getResultList());
     ObservableMap<String, String> selectedFloor;
     public Button submitFilter;
+    public Button apartmentInfoClosebtn;
+    public AnchorPane apartmentInfoDialog;
+    public Label apartmentInfoID;
+    public Label hostNameInfo;
+    public Label stateInfo;
+    public Label typeInfo;
+    public TableColumn<Resident, String> email;
+    public TableColumn<Resident, String> lastName;
+    public TableColumn<Resident, String> nationalID;
+    public TableColumn<Resident, String> phoneNumber;
+    public TableColumn<Resident, String> residentID;
+    public TableView<Resident> residentTableView;
+    public Button addResBtn;
+    public Button delResBtn;
+    public Button editResBtn;
     public void updateFloorDetails() {
          floorList = FXCollections.observableArrayList();
         for(Apartment apartment : apartments){
@@ -633,7 +630,6 @@ public class ApartmentListController {
                     super.updateItem(item, empty);
                     if (empty) {
                         setGraphic(null);
-                        setText(null);
 
                     } else {
                         Button editBtn = new Button("Edit");
@@ -690,14 +686,36 @@ public class ApartmentListController {
                                 + "-fx-border-color: black;"
                                 + "-fx-border-radius: 14;"
                                 + "-fx-background-radius: 14;"));
+                        editBtn.setOnMouseClicked(e -> {
+                            dialogContainer.setVisible(true);
+                            apartmentInfoDialog.setVisible(true);
+                            apartmentInfoClosebtn.setOnMouseClicked(e1 -> {
+                                dialogContainer.setVisible(false);
+                                apartmentInfoDialog.setVisible(false);
+                            });
+                            Apartment apartment = getTableView().getItems().get(getIndex());
+                            apartmentInfoID.setText(apartment.getId());
+                            stateInfo.setText(String.valueOf(apartment.getState()));
+                            typeInfo.setText(String.valueOf(apartment.getType()));
+                            ObservableList<Resident> residentObservableList = FXCollections.observableList(apartment.getResidents());
+                            residentID.setCellValueFactory(cellData -> new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getId())));
+                            phoneNumber.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPhoneNumber()));
+                            lastName.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getLastName()));
+                            email.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getEmail()));
+                            nationalID.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNationalID()));
+                            residentTableView.setItems(residentObservableList);
+                            addResBtn.setOnMouseClicked(e2 -> {
+                                MenuViewManager.switchView(MenuView.RESIDENT_FORM);
+                            });
+                        });
                         HBox managebtn = new HBox(editBtn, deleteBtn);
                         managebtn.setStyle("-fx-alignment:center");
                         HBox.setMargin(deleteBtn, new Insets(2, 2, 0, 3));
                         HBox.setMargin(editBtn, new Insets(2, 3, 0, 2));
                         setGraphic(managebtn);
-                        setText(null);
 
                     }
+                    setText(null);
                 }
 
             };
@@ -706,7 +724,6 @@ public class ApartmentListController {
         };
         actionsCol.setCellFactory(cellFoctory);
         System.out.println("Size of ObservableList before setting to TableView: " + index.size());
-        System.out.println(index);
         apartmentTableView.setItems(index);
         System.out.println("Size of ObservableList after setting to TableView: " + apartmentTableView.getItems().size());
     }

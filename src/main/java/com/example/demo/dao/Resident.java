@@ -32,8 +32,8 @@ public class Resident implements Serializable {
     @ManyToOne
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
+    @JoinColumn(name = "apartment_id")
     private Apartment apartment;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "resident", fetch = FetchType.EAGER)
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
@@ -51,4 +51,18 @@ public class Resident implements Serializable {
     public String getApartmentID() {
         return apartment.getId();
     }
+    @Override
+    public String toString() {
+        return "Resident{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", nationalID='" + nationalID + '\'' +
+                ", apartment=" + "id=" + apartment.getId() + // Avoid calling toString on the entire apartment
+                ", residentCollectionList=" + "size=" + residentCollectionList.size() + // Avoid calling toString on the entire list
+                '}';
+    }
+
 }

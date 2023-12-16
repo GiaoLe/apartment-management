@@ -94,3 +94,15 @@
     -fx-background-color: #b7b7b7;
 
 }
+.add-new{
+    -fx-background-color: #e6f7d9;
+    -fx-text-fill: #56ca00;
+}
+.edit{
+    -fx-background-color: #fff4d9;
+    -fx-text-fill: #ffb400;
+}
+.delete{
+    -fx-background-color: #ffe4e5;
+    -fx-text-fill: #ff4c51;
+}
