@@ -114,23 +114,28 @@ public class ApartmentListController {
     List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
             .getResultList());
     private final int totalFloor = 50;
-    private final ObservableMap<String, String> floorDetail = FXCollections.observableHashMap();
+    private ObservableMap<String, String> floorDetail = FXCollections.observableHashMap();
 
     public void updateFloorDetails(List<Apartment> apartmentsToShowFloorList) {
-        floorDetail.clear();
+        floorList = FXCollections.observableArrayList();
         for(int i = 1 ; i <= totalFloor ; i++){
-            floorList = FXCollections.observableArrayList();
+            floorDetail = FXCollections.observableHashMap();
             int numberOfApartment = 0;
+
             for(Apartment apartment : apartmentsToShowFloorList){
                 if(apartment.getFloor() == i){
                     if(floorDetail.get("floor") == null){
                         floorDetail.put("floor", String.valueOf(i));
                         floorDetail.put("totalApartments", "1");
+                        floorDetail.put("totalResidents", String.valueOf(apartment.getResidents().size()));
                         updateAppsState(apartment, floorDetail);
-                    }else {
-                        System.out.println("floor detail: " + floorDetail);
+                    }
+                    else {
                         numberOfApartment = Integer.parseInt(floorDetail.get("totalApartments")) + 1;
+                        long totalResidents = Long.parseLong(floorDetail.get("totalResidents"));
+                        totalResidents += apartment.getResidents().size();
                         floorDetail.put("totalApartments", String.valueOf(numberOfApartment));
+                        floorDetail.put("totalResidents", String.valueOf(totalResidents));
                         if (apartment.getState() == ApartmentState.AVAILABLE) {
                             floorDetail.put("availableApartments", String.valueOf(Integer.parseInt(floorDetail.get("availableApartments")) + 1));
                         } else if (apartment.getState() == ApartmentState.OCCUPIED) {
@@ -143,7 +148,9 @@ public class ApartmentListController {
                 else {
                 }
             }
-            floorList.add(floorDetail);
+            if(!floorDetail.isEmpty()){
+                floorList.add(floorDetail);
+            }
         }
     }
     private void updateAppsState(Apartment apartment, ObservableMap<String, String> No) {
@@ -169,6 +176,7 @@ public class ApartmentListController {
         availableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("availableApartments")));
         nAvailableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("nAAvailableApartments")));
         occupiedColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("oApartments")));
+        residentsColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("totalResidents")));
         floorTableView.setItems(floorList);
     }
     public void initialize() throws IOException {
@@ -272,6 +280,7 @@ public class ApartmentListController {
     }
     public void showApartments(ObservableList<Apartment> index){
         apartmentIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+        totalResidentsCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResidents().size()).asString());
         stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()).asString());
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()).asString());
         areaCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getArea()));
@@ -388,10 +397,9 @@ public class ApartmentListController {
                                 dialogContainer.setVisible(false);
                                 List<Apartment> newApartmentList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
                                         .getResultList());
+                                showFloorDetail(Integer.parseInt(selectedFloor.get("floor")));
                                 floorList.clear();
                                 showFloorList(newApartmentList);
-                                ObservableList<Apartment> apartmentObservableList = FXCollections.observableList(newApartmentList);
-                                showApartments(apartmentObservableList);
                             });
 
                             ObservableList<Resident> residentObservableList = FXCollections.observableList(apartment.getResidents());
@@ -420,8 +428,6 @@ public class ApartmentListController {
             return cell;
         };
         actionsCol.setCellFactory(cellFoctory);
-        System.out.println("Size of ObservableList before setting to TableView: " + index.size());
         apartmentTableView.setItems(index);
-        System.out.println("Size of ObservableList after setting to TableView: " + apartmentTableView.getItems().size());
     }
 }
