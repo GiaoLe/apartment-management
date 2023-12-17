@@ -18,4 +18,6 @@ public class ApartmentService {
     public Apartment findByID(String apartmentID) {
         return apartmentRepository.findById(apartmentID);
     }
+    public void merge(Apartment apartment){ apartmentRepository.merge(apartment);}
+    public void removeByID(Apartment apartment){ apartmentRepository.removeByID(apartment.getId()); }
 }

@@ -36,6 +36,13 @@ public class Apartment {
             state = ApartmentState.OCCUPIED;
         }
     }
+    public Apartment(String id, double area, ApartmentType type, ApartmentState state, int roomCount){
+        this.id = id;
+        this.area = area;
+        this.type = type;
+        this.state = state;
+        this.roomCount = roomCount;
+    }
     @Transient
     public int getFloor() {
         return Integer.parseInt(id.substring(0, 1));

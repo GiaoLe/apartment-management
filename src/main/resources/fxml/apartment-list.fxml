@@ -22,7 +22,8 @@
    <content>
       <AnchorPane prefHeight="857.0" prefWidth="1535.0" styleClass="container" stylesheets="@../styles/ApartmentList.css">
          <children>
-            <TableView fx:id="floorTableView" layoutX="40.0" layoutY="66.0" onMouseClicked="#selectedFloor" prefHeight="748.0" prefWidth="1036.0" stylesheets="@../styles/ApartmentList.css" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="459.0" AnchorPane.topAnchor="66.0">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+            <TableView fx:id="floorTableView" layoutX="40.0" layoutY="66.0" onMouseClicked="#selectedFloor" prefHeight="717.0" prefWidth="1036.0" stylesheets="@../styles/ApartmentList.css" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="459.0" AnchorPane.topAnchor="66.0">
                <columns>
                   <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Floor" />
                   <TableColumn fx:id="totalColumn" prefWidth="150.0" text="Total Apartments " />
@@ -96,7 +97,10 @@
                            <children>
                               <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" text="ApartmentID" />
+                                    <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 600;" text="ApartmentID">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font></Label>
                                     <TextField fx:id="apartmentIDFilter" prefHeight="34.0" prefWidth="355.0" />
                                  </children>
                                  <HBox.margin>
@@ -105,7 +109,10 @@
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" text="Host Name" />
+                                    <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 600;" text="Host Name">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font></Label>
                                     <TextField fx:id="hostNameFilter" prefHeight="34.0" prefWidth="355.0" />
                                  </children>
                                  <HBox.margin>
@@ -118,14 +125,20 @@
                            <children>
                               <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" text="State" />
-                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-border-color: black; -fx-border-radius: 10px;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose State">
+                                    <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 600;" text="State">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font></Label>
+                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-font-weight: 600;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose State">
                                       <items>
                                         <MenuItem fx:id="availableItem" mnemonicParsing="false" text="AVAILABLE" />
                                         <MenuItem fx:id="occupiedItem" mnemonicParsing="false" text="OCCUPIED" />
                                           <MenuItem fx:id="reservedItem" mnemonicParsing="false" text="RESERVED" />
                                           <MenuItem fx:id="maintainingItem" mnemonicParsing="false" text="MAINTENANCE" />
                                       </items>
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font>
                                     </MenuButton>
                                  </children>
                                  <HBox.margin>
@@ -134,14 +147,20 @@
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" text="Type" />
-                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-border-color: black; -fx-border-radius: 10px;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
+                                    <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 600;" text="Type">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font></Label>
+                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-font-weight: 600;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
                                        <items>
                                           <MenuItem fx:id="studioItem" mnemonicParsing="false" text="STUDIO" />
                                           <MenuItem fx:id="penthouseItem" mnemonicParsing="false" text="PENTHOUSE" />
                                           <MenuItem fx:id="duplexItem" mnemonicParsing="false" text="DUPLEX" />
                                           <MenuItem fx:id="triplexItem" mnemonicParsing="false" text="TRIPLEX" />
                                        </items>
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font>
                                     </MenuButton>
                                  </children>
                                  <HBox.margin>
@@ -188,51 +207,65 @@
                   <Separator layoutX="-3.0" layoutY="55.0" prefHeight="0.0" prefWidth="811.0" />
                   <VBox layoutX="11.0" layoutY="73.0" prefHeight="528.0" prefWidth="787.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="72.0">
                      <children>
-                        <HBox prefHeight="95.0" prefWidth="635.0">
+                        <HBox prefHeight="95.0" prefWidth="772.0">
                            <children>
-                              <HBox prefHeight="95.0" prefWidth="412.0">
+                              <VBox prefHeight="95.0" prefWidth="375.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="86.0" text="ApartmentID:" />
-                                    <Label fx:id="apartmentInfoID" prefHeight="55.0" prefWidth="117.0" />
+                                    <Label prefHeight="52.0" prefWidth="76.0" text="ApartmentID" />
+                                    <TextField fx:id="apartmentIDFilter1" prefHeight="34.0" prefWidth="355.0" />
                                  </children>
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
-                              </HBox>
-                              <HBox prefHeight="95.0" prefWidth="409.0">
+                              </VBox>
+                              <VBox prefHeight="95.0" prefWidth="404.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="71.0" text="Host Name: " />
-                                    <Label fx:id="hostNameInfo" prefHeight="55.0" prefWidth="117.0" />
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="Host name" />
+                                    <TextField fx:id="hostNameFilter1" prefHeight="34.0" prefWidth="355.0" />
                                  </children>
                                  <padding>
-                                    <Insets left="20.0" />
+                                    <Insets left="50.0" />
                                  </padding>
-                              </HBox>
+                              </VBox>
                            </children>
                         </HBox>
-                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="601.0">
+                        <HBox prefHeight="95.0" prefWidth="824.0">
                            <children>
-                              <HBox prefHeight="95.0" prefWidth="399.0">
+                              <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="37.0" text="State:" />
-                                    <Label fx:id="stateInfo" prefHeight="55.0" prefWidth="117.0" />
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="State" />
+                                    <MenuButton fx:id="stateMenu1" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-border-color: black; -fx-border-radius: 10px;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose State">
+                                       <items>
+                                          <MenuItem fx:id="availableItem1" mnemonicParsing="false" text="AVAILABLE" />
+                                          <MenuItem fx:id="occupiedItem1" mnemonicParsing="false" text="OCCUPIED" />
+                                          <MenuItem fx:id="reservedItem1" mnemonicParsing="false" text="RESERVED" />
+                                          <MenuItem fx:id="maintainingItem1" mnemonicParsing="false" text="MAINTENANCE" />
+                                       </items>
+                                    </MenuButton>
                                  </children>
-                                 <padding>
+                                 <HBox.margin>
                                     <Insets left="20.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox prefHeight="95.0" prefWidth="363.0">
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="35.0" text="Type: " />
-                                    <Label fx:id="typeInfo" prefHeight="55.0" prefWidth="117.0" />
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="Type" />
+                                    <MenuButton fx:id="typeMenu1" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-border-color: black; -fx-border-radius: 10px;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
+                                       <items>
+                                          <MenuItem fx:id="studioItem1" mnemonicParsing="false" text="STUDIO" />
+                                          <MenuItem fx:id="penthouseItem1" mnemonicParsing="false" text="PENTHOUSE" />
+                                          <MenuItem fx:id="duplexItem1" mnemonicParsing="false" text="DUPLEX" />
+                                          <MenuItem fx:id="triplexItem1" mnemonicParsing="false" text="TRIPLEX" />
+                                       </items>
+                                    </MenuButton>
                                  </children>
-                                 <padding>
-                                    <Insets left="20.0" />
-                                 </padding>
-                              </HBox>
+                                 <HBox.margin>
+                                    <Insets left="80.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
                         </HBox>
-                        <TableView fx:id="residentTableView" onMouseClicked="#selectedFloor" prefHeight="339.0" prefWidth="765.0" stylesheets="@../styles/ApartmentList.css">
+                        <TableView fx:id="residentTableView" onMouseClicked="#selectedFloor" prefHeight="408.0" prefWidth="785.0" stylesheets="@../styles/ApartmentList.css">
                            <columns>
                               <TableColumn fx:id="residentID" prefWidth="120.0" text="ResidentID" />
                               <TableColumn fx:id="lastName" prefWidth="161.0" text="Last Name" />
@@ -250,17 +283,17 @@
                                  <styleClass>
                                     <String fx:value="btn-design" />
                                     <String fx:value="search-btn" />
-                                    <String fx:value="add-new" />
+                                    <String fx:value="edit" />
                                  </styleClass>
                                  <HBox.margin>
                                     <Insets left="460.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="editResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="69.0" style="-fx-border-width: 0px;" stylesheets="@../styles/ApartmentList.css" text="Edit">
+                              <Button fx:id="editResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="83.0" style="-fx-border-width: 0px;" stylesheets="@../styles/ApartmentList.css" text="Change">
                                  <styleClass>
                                     <String fx:value="btn-design" />
                                     <String fx:value="search-btn" />
-                                    <String fx:value="edit" />
+                                    <String fx:value="add-new" />
                                  </styleClass>
                                  <HBox.margin>
                                     <Insets left="20.0" />

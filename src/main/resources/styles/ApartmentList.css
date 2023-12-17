@@ -1,4 +1,5 @@
-.container{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+  .container{
     -fx-background-color: #ffff;
     -fx-effect: dropshadow(two-pass-box, #949393, 10, 0, 0, 5);
     -fx-background-radius: 14;
