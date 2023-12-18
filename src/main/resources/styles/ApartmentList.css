@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
   .container{
     -fx-background-color: #ffff;
     -fx-effect: dropshadow(two-pass-box, #949393, 10, 0, 0, 5);
@@ -29,10 +29,18 @@
     -fx-cursor: HAND;
     -fx-padding: 5;
 }
-.table-view:hover .table-row-cell:hover{
-    -fx-background-color: transparent;
-    -fx-background-radius: 14;
+.menu-item{
+    -fx-text-fill: red; /* Màu chữ */
+    -fx-font-size: 14px;    /* Kích thước font chữ */
 }
+  .table-row-cell:hover {
+      -fx-background-color: lightgray; /* Màu của hàng khi hover */
+  }
+
+  /* Màu khi được nhấn */
+  .table-row-cell:pressed {
+      -fx-background-color: darkgray; /* Màu của hàng khi được nhấn */
+  }
 .table-view .table-row-cell:selected .text{
     -fx-fill: black;
 }

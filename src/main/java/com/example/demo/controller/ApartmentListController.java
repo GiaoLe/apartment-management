@@ -4,7 +4,9 @@ import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.ApartmentRepository;
+import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ApartmentService;
+import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.MenuButton;
@@ -23,6 +25,8 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ApartmentListController {
     public Label floorText;
@@ -99,7 +103,7 @@ public class ApartmentListController {
     public Button delResBtn;
     public Button editResBtn;
     public TextField apartmentIDFilter1;
-    public TextField hostNameFilter1;
+    public MenuButton hostNameFilter1;
     public MenuItem availableItem1;
     public MenuItem duplexItem1;
     public MenuItem occupiedItem1;
@@ -115,7 +119,8 @@ public class ApartmentListController {
             .getResultList());
     private final int totalFloor = 50;
     private ObservableMap<String, String> floorDetail = FXCollections.observableHashMap();
-
+    private final ResidentService residentService = new ResidentService(new ResidentRepository());
+    public Button addNewApartment;
     public void updateFloorDetails(List<Apartment> apartmentsToShowFloorList) {
         floorList = FXCollections.observableArrayList();
         for(int i = 1 ; i <= totalFloor ; i++){
@@ -197,7 +202,10 @@ public class ApartmentListController {
             apartmentTableView.setVisible(false);
             backBtn.setVisible(false);
             filterBtn.setVisible(false);
-
+            addNewApartment.setVisible(false);
+        });
+        addNewApartment.setOnMouseClicked(e -> {
+            MenuViewManager.switchView(MenuView.APARTMENT_FORM);
         });
     }
 
@@ -220,6 +228,7 @@ public class ApartmentListController {
         apartmentTableView.setVisible(true);
         backBtn.setVisible(true);
         filterBtn.setVisible(true);
+        addNewApartment.setVisible(true);
     }
     public void toggleFilter(){
         if(filterBtn.visibleProperty().getValue()){
@@ -277,6 +286,22 @@ public class ApartmentListController {
         for (MenuItem selectedItems : listItems){
             selectedItems.setOnAction(event -> stateMenu.setText(selectedItems.getText()));
         }
+    }
+    public void updateData(){
+        List<Apartment> newApartmentList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
+                .getResultList());
+        showFloorDetail(Integer.parseInt(selectedFloor.get("floor")));
+        floorList.clear();
+        showFloorList(newApartmentList);
+    }
+    public void updateResidentListsInApartment (Apartment apartment) {
+        ObservableList<Resident> residentObservableList = FXCollections.observableList(apartment.getResidents());
+        residentID.setCellValueFactory(cellData -> new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getId())));
+        phoneNumber.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPhoneNumber()));
+        lastName.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getLastName()));
+        email.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getEmail()));
+        nationalID.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNationalID()));
+        residentTableView.setItems(residentObservableList);
     }
     public void showApartments(ObservableList<Apartment> index){
         apartmentIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
@@ -375,6 +400,11 @@ public class ApartmentListController {
                                 + "-fx-border-color: black;"
                                 + "-fx-border-radius: 14;"
                                 + "-fx-background-radius: 14;"));
+                        deleteBtn.setOnMouseClicked(e -> {
+                            Apartment apartment = getTableView().getItems().get(getIndex());
+                           apartmentService.remove(apartment);
+                           updateData();
+                        });
                         editBtn.setOnMouseClicked(e -> {
                             dialogContainer.setVisible(true);
                             apartmentInfoDialog.setVisible(true);
@@ -390,29 +420,60 @@ public class ApartmentListController {
                             selectedType(typeItems, typeMenu1);
                             List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem1, occupiedItem1, reservedItem1, maintainingItem1);
                             selectedType(stateItems, stateMenu1);
+                            updateResidentListsInApartment(apartment);
                             editResBtn.setOnMouseClicked(e2 -> {
                                 Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), ApartmentState.valueOf(stateMenu1.getText()), apartment.getRoomCount());
                                 apartmentService.merge(updateApartment);
                                 apartmentInfoDialog.setVisible(false);
                                 dialogContainer.setVisible(false);
-                                List<Apartment> newApartmentList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
-                                        .getResultList());
-                                showFloorDetail(Integer.parseInt(selectedFloor.get("floor")));
                                 floorList.clear();
-                                showFloorList(newApartmentList);
+                                updateData();
                             });
+                            for(Resident resident : apartment.getResidents()){
+                                MenuItem menuItem = new MenuItem(String.valueOf(resident.getId()));
+                                menuItem.setId(String.valueOf(resident.getId()));
+                                menuItem.setOnAction(event -> {
+                                    hostNameFilter1.setText(menuItem.getText());
+                                });
+                                hostNameFilter1.getItems().add(menuItem);
+                                menuItem.setStyle("-fx-border-radius: 14;" + "-fx-pref-width: 80px;");
 
-                            ObservableList<Resident> residentObservableList = FXCollections.observableList(apartment.getResidents());
-                            residentID.setCellValueFactory(cellData -> new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getId())));
-                            phoneNumber.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPhoneNumber()));
-                            lastName.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getLastName()));
-                            email.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getEmail()));
-                            nationalID.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNationalID()));
-                            residentTableView.setItems(residentObservableList);
+                            }
                             addResBtn.setOnMouseClicked(e2 -> {
                                 MenuViewManager.switchView(MenuView.RESIDENT_FORM);
                             });
+                            AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
+                            residentTableView.setOnMouseClicked(e2 -> {
+                                resident.set(residentTableView.getSelectionModel().getSelectedItem());
+                                Resident selectedResident = residentTableView.getSelectionModel().getSelectedItem();
+                            });
+                            final TableRow<Resident>[] selectedRow = new TableRow[]{null};
+                            residentTableView.setRowFactory(tv -> {
+                                TableRow<Resident> row = new TableRow<>();
+                                row.setOnMouseClicked(event -> {
+                                    if (selectedRow[0] != null) {
+                                        selectedRow[0].setStyle("");
+                                    }
+
+                                    // Lưu trữ hàng được chọn hiện tại và thiết lập style cho nó
+                                    selectedRow[0] = row;
+                                    selectedRow[0].setStyle("-fx-background-color: darkgray;" + "-fx-border-radius: 14;" + "-fx-background-radius: 14;");
+                                    if(event.getClickCount() >= 2){
+                                        
+                                    }
+                                });
+                                return row;
+                            });
+                            delResBtn.setOnMouseClicked(e2 -> {
+                                residentService.remove(resident.get());
+                                updateData();
+                                Apartment apartmentAftetUpdate = HibernateUtility.getSessionFactory().fromSession(session -> session.createQuery("from Apartment  where id = :id", Apartment.class)
+                                        .setParameter("id", apartment.getId())
+                                        .uniqueResult());
+                                updateResidentListsInApartment(apartmentAftetUpdate);
+                            });
                         });
+
                         HBox managebtn = new HBox(editBtn, deleteBtn);
                         managebtn.setStyle("-fx-alignment:center");
                         HBox.setMargin(deleteBtn, new Insets(2, 2, 0, 3));
