@@ -21,7 +21,7 @@
 
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="858.0" prefWidth="1365.0" style="-fx-background-color: #eaff7b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentFormController">
    <content>
-      <AnchorPane prefHeight="869.0" prefWidth="1382.0" style="-fx-background-color: #eaff7b;">
+      <AnchorPane prefHeight="869.0" prefWidth="1382.0" style="-fx-background-color: #f6fdff;">
          <children>
             <VBox layoutY="28.0" prefHeight="365.0" prefWidth="450.0">
                <children>
@@ -63,7 +63,7 @@
                   <VBox prefHeight="89.0" prefWidth="277.0">
                      <children>
                         <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Type" />
-                        <ChoiceBox fx:id="apartmentTypeChoiceBox" prefHeight="33.0" prefWidth="144.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-font-size: 15px;">
+                        <ChoiceBox fx:id="apartmentTypeChoiceBox" prefHeight="33.0" prefWidth="144.0" style="-fx-background-color: #d3dce5; -fx-border-color: black; -fx-border-width: 1px; -fx-border-radius: 14; -fx-background-radius: 14; -fx-font-size: 15px;">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>

@@ -175,6 +175,22 @@ public class ApartmentListController {
         nAvailableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("nAAvailableApartments")));
         occupiedColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("oApartments")));
         residentsColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("totalResidents")));
+        floorTableView.setRowFactory(tv -> {
+            return new TableRow<ObservableMap<String, String>>() {
+                @Override
+                protected void updateItem(ObservableMap<String, String> item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (getIndex() % 2 == 0) {
+                        // Hàng chẵn
+                        setStyle("-fx-background-color: #fff;");
+                    } else {
+                        // Hàng lẻ
+                        setStyle("-fx-background-color: #f0f0f0;");
+                    }
+                }
+            };
+        });
         floorTableView.setItems(floorList);
     }
     public void initialize() throws IOException {
@@ -370,39 +386,17 @@ public class ApartmentListController {
                         editBtn.setOnMouseExited(e -> editBtn.setStyle(
                                 " -fx-cursor: hand ;"
                                         + "-fx-background-color: #ffff;"
-                                        + "-fx-border-width: 1px;"
-                                        + "-fx-border-color: black;"
                                         + "-fx-border-radius: 14;"
                                         + "-fx-background-radius: 14;"
                         ));
-                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"
-                                + "-fx-border-width: 1px;"
-                                + "-fx-border-color: black;"
-                                + "-fx-border-radius: 14;"
-                                + "-fx-background-radius: 14;"));
-                        editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #b7b7b7;"
-                                + "-fx-border-width: 1px;"
-                                + "-fx-border-color: black;"
-                                + "-fx-border-radius: 14;"
-                                + "-fx-background-radius: 14;"));
-                        deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #b7b7b7;"
-                                + "-fx-border-width: 1px;"
-                                + "-fx-border-color: black;"
-                                + "-fx-border-radius: 14;"
-                                + "-fx-background-radius: 14;"));
+                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"));
+                        editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #868686;"));
+                        deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #868686FF;"));
                         deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
                                 " -fx-cursor: hand ;"
                                         + "-fx-background-color: #ffff;"
-                                        + "-fx-border-width: 1px;"
-                                        + "-fx-border-color: black;"
-                                        + "-fx-border-radius: 14;"
-                                        + "-fx-background-radius: 14;"
                         ));
-                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"
-                                + "-fx-border-width: 1px;"
-                                + "-fx-border-color: black;"
-                                + "-fx-border-radius: 14;"
-                                + "-fx-background-radius: 14;"));
+                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"));
                         deleteBtn.setOnMouseClicked(e -> {
                             Apartment apartment = getTableView().getItems().get(getIndex());
                            apartmentService.remove(apartment);
@@ -492,6 +486,22 @@ public class ApartmentListController {
             return cell;
         };
         actionsCol.setCellFactory(cellFoctory);
+        apartmentTableView.setRowFactory(tv -> {
+            return new TableRow<Apartment>() {
+                @Override
+                protected void updateItem(Apartment item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (getIndex() % 2 == 0) {
+                        // Hàng chẵn
+                        setStyle("-fx-background-color: #fff;");
+                    } else {
+                        // Hàng lẻ
+                        setStyle("-fx-background-color: #f0f0f0;");
+                    }
+                }
+            };
+        });
         apartmentTableView.setItems(index);
     }
 }

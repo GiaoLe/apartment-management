@@ -16,6 +16,8 @@ import javafx.util.Duration;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuController {
     public ImageView toggleIcon;
@@ -33,6 +35,10 @@ public class MenuController {
         MenuViewManager.setBorderPane(borderPane);
         displayLiveTime();
         userIDLabel.setText("UID: " + LoginController.getCurrentUserID());
+        setSelectedBtn(dashboardButton, MenuView.DASHBOARD);
+        setSelectedBtn(apartmentsButton, MenuView.APARTMENT_LIST);
+        setSelectedBtn(collectionsButton, MenuView.COLLECTION_LIST);
+        setSelectedBtn(residentsButton, MenuView.RESIDENT_LIST);
     }
 
     private void displayLiveTime() {
@@ -61,19 +67,17 @@ public class MenuController {
         translateTransition.play();
     }
 
-    public void dashboardButtonOnAction() {
-        MenuViewManager.switchView(MenuView.DASHBOARD);
+    public void setSelectedBtn (Button button, MenuView menuView){
+        button.setOnAction(e -> {
+            clearUnderline();
+            button.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
+            MenuViewManager.switchView(menuView);
+        });
     }
-
-    public void residentsButtonOnAction() {
-        MenuViewManager.switchView(MenuView.RESIDENT_LIST);
-    }
-
-    public void collectionsButtonOnAction() {
-        MenuViewManager.switchView(MenuView.COLLECTION_LIST);
-    }
-
-    public void apartmentsButtonOnAction() {
-        MenuViewManager.switchView(MenuView.APARTMENT_LIST);
+    public void clearUnderline(){
+        List<Button> buttonList = new ArrayList<>(List.of(dashboardButton, apartmentsButton, collectionsButton, residentsButton));
+        for (Button button : buttonList){
+            button.setStyle("");
+        }
     }
 }

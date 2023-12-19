@@ -5,13 +5,16 @@
 }
 .table-view{
     -fx-background-radius:  10;
+    -fx-border-color: transparent; /* Đặt màu đường biên là trong suốt */
+    -fx-padding: 0; /* Đặt padding là 0 */
 }
 .table-header{
     -fx-font-size: 15px;
     -fx-font-weight: 800;
+    -fx-border-width: 0;
 }
 .table-view .column-header-background {
-    -fx-background-color: #9a9898;
+    -fx-background-color: transparent;
     -fx-background-radius: 10;
     -fx-font-size: 15px;
     -fx-text-fill: #212529;
@@ -23,10 +26,15 @@
 }
 .table-row-cell{
     -fx-background-color: transparent;
-    -fx-border-width: 0;
+    -fx-border-width: 0 0 0.5px 0;
+    -fx-border-color: gray;
+    -fx-border-style: solid;
+
     -fx-font-size: 15px;
     -fx-cursor: HAND;
     -fx-padding: 5;
+    -fx-start-margin: 10px;
+    -fx-end-margin: 10px;
 }
 .menu-item{
     -fx-text-fill: red; /* Màu chữ */
@@ -34,6 +42,8 @@
 }
   .table-row-cell:hover {
       -fx-background-color: lightgray; /* Màu của hàng khi hover */
+      -fx-start-margin: 10px;
+      -fx-end-margin: 10px;
   }
 
   /* Màu khi được nhấn */
