@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Resident implements Serializable {
     @Id
-    @GeneratedValue
     @Setter(AccessLevel.NONE)
+    @GeneratedValue
     private Integer id;
 
     @NotNull
@@ -39,7 +39,7 @@ public class Resident implements Serializable {
     @Setter(AccessLevel.NONE)
     private List<ResidentCollection> residentCollectionList;
 
-    public Resident(String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID) {
+    public Resident( String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.apartment = apartment;
@@ -61,7 +61,6 @@ public class Resident implements Serializable {
                 ", email='" + email + '\'' +
                 ", nationalID='" + nationalID + '\'' +
                 ", apartment=" + "id=" + apartment.getId() + // Avoid calling toString on the entire apartment
-                ", residentCollectionList=" + "size=" + residentCollectionList.size() + // Avoid calling toString on the entire list
                 '}';
     }
 

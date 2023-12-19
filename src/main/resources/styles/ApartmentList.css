@@ -2,10 +2,9 @@
   .container{
     -fx-background-color: #ffff;
     -fx-effect: dropshadow(two-pass-box, #949393, 10, 0, 0, 5);
-    -fx-background-radius: 14;
 }
 .table-view{
-    -fx-background-radius:  14;
+    -fx-background-radius:  10;
 }
 .table-header{
     -fx-font-size: 15px;
@@ -13,7 +12,7 @@
 }
 .table-view .column-header-background {
     -fx-background-color: #9a9898;
-    -fx-background-radius: 14;
+    -fx-background-radius: 10;
     -fx-font-size: 15px;
     -fx-text-fill: #212529;
     -fx-border-width: 0;

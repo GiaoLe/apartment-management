@@ -20,6 +20,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
 
@@ -43,18 +45,9 @@ public class ApartmentListController {
     public TableView<Apartment> apartmentTableView;
     public TableColumn<ObservableMap<String, String>, String> availableColumn;
     private ObservableList<ObservableMap<String, String>> floorList;
-    private final ObservableMap<String, String> firstFloor = FXCollections.observableHashMap();
 
     public AnchorPane dialogContainer;
     public AnchorPane dialogBox;
-    private final ObservableMap<String, String> secondFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> thirdFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> fourthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> fifthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> sixthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> seventhFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> eighthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> ninthFloor = FXCollections.observableHashMap();
     public MenuItem availableItem;
     public MenuItem duplexItem;
     public MenuItem maintainingItem;
@@ -346,23 +339,33 @@ public class ApartmentListController {
                         setGraphic(null);
 
                     } else {
-                        Button editBtn = new Button("Edit");
-                        Button deleteBtn = new Button("Delete");
+                        Button editBtn = new Button();
+                        Button deleteBtn = new Button();
+                        ImageView imageView = new ImageView();
+                        ImageView imageView1 = new ImageView();
+
+                        // Lấy đường dẫn đầy đủ của tệp ảnh từ thư mục resources/images
+                        String imagePath = getClass().getResource("/images/pencil.png").toExternalForm();
+                        String imagePath1 = getClass().getResource("/images/delete.png").toExternalForm();
+
+                        // Tạo một đối tượng Image từ đường dẫn
+                        Image image = new Image(imagePath);
+                        Image image1 = new Image(imagePath1);
+                        imageView.setImage(image);
+                        imageView1.setImage(image1);
+                        imageView.setFitWidth(20);
+                        imageView.setFitHeight(20);
+                        imageView1.setFitWidth(20);
+                        imageView1.setFitHeight(20);
+                        editBtn.setGraphic(imageView);
+                        deleteBtn.setGraphic(imageView1);
                         editBtn.setStyle(
                                 " -fx-cursor: hand ;"
                                         + "-fx-background-color: #ffff;"
-                                        + "-fx-border-width: 1px;"
-                                        + "-fx-border-color: black;"
-                                        + "-fx-border-radius: 14;"
-                                        + "-fx-background-radius: 14;"
                         );
                         deleteBtn.setStyle(
                                 " -fx-cursor: hand ;"
                                         + "-fx-background-color: #ffff;"
-                                        + "-fx-border-width: 1px;"
-                                        + "-fx-border-color: black;"
-                                        + "-fx-border-radius: 14;"
-                                        + "-fx-background-radius: 14;"
                         );
                         editBtn.setOnMouseExited(e -> editBtn.setStyle(
                                 " -fx-cursor: hand ;"
