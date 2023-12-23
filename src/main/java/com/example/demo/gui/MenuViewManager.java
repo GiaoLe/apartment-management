@@ -106,4 +106,17 @@ public class MenuViewManager {
             throw new RuntimeException(e);
         }
     }
+    public static Object switchViewToAddNewRes(MenuView menuView, Apartment apartment){
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
+            Parent root = loader.load();
+            ResidentFormController residentFormController = loader.getController();
+            residentFormController.apartmentTextField.setText(apartment.getId());
+            residentFormController.switchViewFlag = true;
+            borderPane.setCenter(root);
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

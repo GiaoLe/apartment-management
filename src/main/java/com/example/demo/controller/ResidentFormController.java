@@ -35,8 +35,11 @@ public class ResidentFormController {
 
     private ResidentService residentService;
     public DatePicker datePicker;
-    public TextField residentIDTextField;
     public TextField IDTextField;
+    public MenuItem maleItem;
+    public MenuItem femaleItem;
+    public MenuButton genderMenuButton;
+    public Boolean switchViewFlag = false;
     @FXML
     public void initialize() {
         textFieldWrappers = new ArrayList<>(List.of(
@@ -74,6 +77,7 @@ public class ResidentFormController {
         } else {
             Resident resident = new Resident(
                     IDTextField.getText(),
+                    genderMenuButton.getText(),
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
                     apartment,
@@ -82,10 +86,13 @@ public class ResidentFormController {
                     emailTextField.getText(),
                     Date.valueOf(datePicker.getValue())
             );
-            System.out.println(resident);
             residentService.persist(resident);
             apartment.addResident(resident);
-            MenuViewManager.switchView(MenuView.RESIDENT_LIST);
+            if(switchViewFlag){
+                MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, resident);
+            }else {
+                MenuViewManager.switchView(MenuView.RESIDENT_LIST);
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -26,13 +27,16 @@
             <TableColumn fx:id="isPaidTableColumn" prefWidth="119.0" text="Is Paid" />
         </columns>
     </TableView>
-      <HBox>
+      <HBox prefHeight="38.0" prefWidth="644.0">
           <Label text="Report: ">
               <font>
                   <Font name="System Bold" size="24.0" />
               </font>
+         <HBox.margin>
+            <Insets left="30.0" />
+         </HBox.margin>
           </Label>
-          <TextField fx:id="collectionName" editable="false" prefHeight="38.0" prefWidth="700.0" />
+          <TextField fx:id="collectionName" editable="false" prefHeight="38.0" prefWidth="216.0" style="-fx-background-color: transparent;" stylesheets="@../styles/CollectionReport.css" />
       </HBox>
    <HBox fx:id="searchContainer" layoutX="33.0" layoutY="52.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14;">
       <children>
@@ -51,7 +55,11 @@
          </TextField>
       </children>
    </HBox>
-     <Button fx:id="backBtn" layoutX="33.0" layoutY="627.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefWidth="60.0" text="Back" />
+     <Button fx:id="backBtn" layoutX="860.0" layoutY="636.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefWidth="60.0" stylesheets="@../styles/CollectionReport.css" text="Back">
+      <styleClass>
+         <String fx:value="btn-design" />
+         <String fx:value="search-btn" />
+      </styleClass></Button>
    <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14;" text="Search options">
       <font>
          <Font size="18.0" />

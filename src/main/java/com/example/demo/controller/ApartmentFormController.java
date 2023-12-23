@@ -65,6 +65,9 @@ public class ApartmentFormController {
     public TextField phoneNumberTextField;
 
     public TextField residentIDTextField;
+    public MenuItem maleItem;
+    public MenuItem femaleItem;
+    public MenuButton genderMenuButton;
     ResidentService residentService = new ResidentService(new ResidentRepository());
     public TableColumn<Apartment, String> apartmentIdCol;
     public TableColumn<Apartment, String> stateCol;
@@ -86,18 +89,25 @@ public class ApartmentFormController {
     }
 
     public void submitButtonOnAction() {
+        ApartmentState apartmentStateToSet;
+        if(residentlist.isEmpty()){
+            apartmentStateToSet = ApartmentState.AVAILABLE;
+        }else {
+            apartmentStateToSet = ApartmentState.OCCUPIED;
+        }
         List<Resident> residentList = new ArrayList<>();
         Apartment apartment = Apartment.builder()
                 .id(idTextField.getText())
                 .area(Double.parseDouble(areaTextField.getText()))
                 .roomCount(Integer.parseInt(roomCountTextField.getText()))
                 .type(apartmentTypeChoiceBox.getValue())
-                .state(ApartmentState.AVAILABLE)
+                .state(apartmentStateToSet)
                 .build();
         apartmentService.persist(apartment);
         for(ObservableMap<String, String> observableMap : residentlist){
             Resident resident = new Resident(
                     observableMap.get("ID"),
+                    observableMap.get("gender"),
                     observableMap.get("firstName"),
                     observableMap.get("lastName"),
                     apartment,
@@ -111,6 +121,7 @@ public class ApartmentFormController {
         }
         apartment.setResidents(residentList);
         MenuViewManager.switchView(MenuView.APARTMENT_LIST);
+        clearTextField(new ArrayList<>(List.of(IDTextField, firstNameTextField, lastNameTextField, nationalIDTextField, phoneNumberTextField, emailTextField)));
     }
     public void handleAddNewRes() {
         dialogContainer.setVisible(true);
@@ -157,6 +168,7 @@ public class ApartmentFormController {
     public void handleSubmitAddRes() {
         residents = FXCollections.observableHashMap();
         residents.put("ID", IDTextField.getText());
+        residents.put("gender", genderMenuButton.getText());
         residents.put("firstName", firstNameTextField.getText());
         residents.put("lastName", lastNameTextField.getText());
         residents.put("nationalID", nationalIDTextField.getText());

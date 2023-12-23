@@ -28,7 +28,8 @@ public class Resident implements Serializable {
     private String lastName;
     @NotNull
     private String IDNumber;
-
+    @NotNull
+    private Boolean gender;
     @NotNull
     private String phoneNumber;
 
@@ -42,8 +43,9 @@ public class Resident implements Serializable {
     private Apartment apartment;
 
 
-    public Resident(String IDNumber, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
+    public Resident(String IDNumber,String gender, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
         this.IDNumber = IDNumber;
+        this.gender = !gender.equals("Male");
         this.firstName = firstName;
         this.lastName = lastName;
         this.apartment = apartment;
@@ -57,6 +59,7 @@ public class Resident implements Serializable {
     public String toString() {
         return "Resident{" +
                 "id=" + id +
+                ", gender='" + gender +'\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", IDNumber='" + IDNumber + '\'' +

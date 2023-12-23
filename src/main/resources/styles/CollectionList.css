@@ -1,3 +1,33 @@
 .container{
-    -fx-background-color: #e8eff9;
+    -fx-background-color:   #f6fdff;
+}
+.search-btn{
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 15px;
+}
+.search-btn:hover{
+    -fx-background-color: #d0d0d0;
+}
+.search-btn:pressed{
+    -fx-background-color: #b7b7b7;
+
+}
+.btn-design{
+    -fx-background-color: #ffff;
+    -fx-cursor: HAND;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 15px;
+}
+.btn-design:hover{
+    -fx-background-color: #d0d0d0;
+}
+.btn-design:pressed{
+    -fx-background-color: #b7b7b7;
+
 }

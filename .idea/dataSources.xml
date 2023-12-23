@@ -18,7 +18,7 @@ D:/cnpm/apartment-management/src/main/resources/hibernate.cfg.xml</remarks>
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="@localhost" uuid="4c9295f2-6d88-4b0b-9ae3-cb4f01a546c1">
+    <data-source source="LOCAL" name="@localhost" uuid="ba504683-0930-434d-a572-31e9c8021dce">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

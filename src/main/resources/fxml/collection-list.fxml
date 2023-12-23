@@ -37,11 +37,17 @@
                   </TextField>
                </children>
             </HBox>
-            <HBox layoutX="879.0" layoutY="708.0">
+            <HBox layoutX="750.0" layoutY="708.0" prefHeight="33.0" prefWidth="309.0">
                <children>
-                  <Button fx:id="newButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="25.0" prefWidth="60.0" text="New" textAlignment="CENTER" />
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefWidth="60.0" text="Delete" textAlignment="CENTER" />
-                  <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefWidth="60.0" text="Details" textAlignment="CENTER" />
+                  <Button fx:id="newButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="New" textAlignment="CENTER" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="Delete" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="Details" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin></Button>
                </children>
             </HBox>
             <TableView fx:id="collectionsTableView" editable="true" layoutX="57.0" layoutY="115.0" prefHeight="581.0" prefWidth="1002.0" stylesheets="@../styles/TableView.css">

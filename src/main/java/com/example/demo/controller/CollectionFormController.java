@@ -48,8 +48,11 @@ public class CollectionFormController {
             CollectionService collectionService = new CollectionService(new CollectionRepository());
             collectionService.persist(collection);
             ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
-            for (Apartment apartment : apartments) {
-                apartmentCollectionService.persist(apartment, collection);
+
+            if (!collectionTypeChoiceBox.getValue().equals(CollectionType.DONATION)){
+                for (Apartment apartment : apartments) {
+                    apartmentCollectionService.persist(apartment, collection);
+                }
             }
             MenuViewManager.switchView(MenuView.COLLECTION_LIST);
         }

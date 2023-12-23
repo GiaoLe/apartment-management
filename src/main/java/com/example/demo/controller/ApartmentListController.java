@@ -480,7 +480,7 @@ public class ApartmentListController {
 
                             }
                             addResBtn.setOnMouseClicked(e2 -> {
-                                MenuViewManager.switchView(MenuView.RESIDENT_FORM);
+                                MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment);
                             });
                             AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
                             residentTableView.setOnMouseClicked(e2 -> {
