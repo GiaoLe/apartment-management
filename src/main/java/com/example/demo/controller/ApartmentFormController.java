@@ -19,8 +19,10 @@ import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,11 +67,13 @@ public class ApartmentFormController {
     public TextField residentIDTextField;
     ResidentService residentService = new ResidentService(new ResidentRepository());
     public TableColumn<Apartment, String> apartmentIdCol;
-    public TableColumn<Apartment, ApartmentState> stateCol;
+    public TableColumn<Apartment, String> stateCol;
     public TableColumn<Apartment, String> totalResidentsCol;
     public TableColumn<Apartment, ApartmentType> typeCol;
 
     public TableView<Apartment> apartmentTableView;
+    public TextField IDTextField;
+    public DatePicker datePicker;
     @FXML
     public void initialize() {
 
@@ -93,18 +97,18 @@ public class ApartmentFormController {
         apartmentService.persist(apartment);
         for(ObservableMap<String, String> observableMap : residentlist){
             Resident resident = new Resident(
+                    observableMap.get("ID"),
                     observableMap.get("firstName"),
                     observableMap.get("lastName"),
                     apartment,
                     observableMap.get("phoneNumber"),
                     observableMap.get("email"),
-                    observableMap.get("nationalID")
+                    observableMap.get("nationalID"),
+                    Date.valueOf(observableMap.get("datePicker"))
             );
-            System.out.println(resident);
             residentList.add(resident);
             residentService.persist(resident);
         }
-        System.out.println(residentList);
         apartment.setResidents(residentList);
         MenuViewManager.switchView(MenuView.APARTMENT_LIST);
     }
@@ -119,19 +123,46 @@ public class ApartmentFormController {
                 .getResultList());
         totalResidentsCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResidents().size()).asString());
         apartmentIdCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
-        stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()));
+        stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()).asString());
+        stateCol.setCellFactory(column -> {
+            return new TextFieldTableCell<Apartment, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(item != null){
+                        if(item.equals(ApartmentState.AVAILABLE.toString())){
+                            getStyleClass().add("state-apartment-design");
+                            getStyleClass().add("available-state");
+
+                        }else if(item.equals(ApartmentState.OCCUPIED.toString())){
+                            getStyleClass().add("state-apartment-design");
+                            getStyleClass().add("occupied-state");
+
+                        }else if(item.equals(ApartmentState.MAINTENANCE.toString())) {
+                            getStyleClass().add("state-apartment-design");
+                            getStyleClass().add("maintenance-state");
+
+                        }else if(item.equals(ApartmentState.RESERVED.toString())){
+                            getStyleClass().add("state-apartment-design");
+                            getStyleClass().add("reserved-state");
+                        }
+                    }
+                }
+            };
+        });
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
         ObservableList<Apartment> apartmentObservableList = FXCollections.observableList(apartments);
         apartmentTableView.setItems(apartmentObservableList);
     }
     public void handleSubmitAddRes() {
         residents = FXCollections.observableHashMap();
-        residents.put("ID", residentIDTextField.getText());
+        residents.put("ID", IDTextField.getText());
         residents.put("firstName", firstNameTextField.getText());
         residents.put("lastName", lastNameTextField.getText());
         residents.put("nationalID", nationalIDTextField.getText());
         residents.put("phoneNumber", phoneNumberTextField.getText());
         residents.put("email", emailTextField.getText());
+        residents.put("datePicker", Date.valueOf(datePicker.getValue()).toString());
         residentTableView.setVisible(true);
         residentlist.add(residents);
         resIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("ID")));
@@ -139,6 +170,20 @@ public class ApartmentFormController {
         lastNameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("lastName")));
         phoneNumberCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("phoneNumber")));
         nationalIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("nationalID")));
+        residentTableView.setOnMouseClicked(event -> {
+            if(event.getClickCount() >= 2){
+                dialogContainer.setVisible(true);
+                addNewResContainer.setVisible(true);
+                ObservableMap<String, String> selectedResident = residentTableView.getSelectionModel().getSelectedItem();
+                residentIDTextField.setText(selectedResident.get("ID"));
+                firstNameTextField.setText(selectedResident.get("firstName"));
+                lastNameTextField.setText(selectedResident.get("lastName"));
+                apartmentTextField.setText(idTextField.getText());
+                nationalIDTextField.setText(selectedResident.get("nationalID"));
+                phoneNumberTextField.setText(selectedResident.get("phoneNumber"));
+                emailTextField.setText(selectedResident.get("email"));
+            }
+        });
         residentTableView.setItems(residentlist);
         dialogContainer.setVisible(false);
         addNewResContainer.setVisible(false);

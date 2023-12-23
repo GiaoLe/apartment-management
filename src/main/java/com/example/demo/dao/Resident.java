@@ -5,12 +5,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Resident implements Serializable {
     @Id
     @Setter(AccessLevel.NONE)
@@ -19,9 +22,12 @@ public class Resident implements Serializable {
 
     @NotNull
     private String firstName;
-
+    @NotNull
+    private Date timeMoveIn;
     @NotNull
     private String lastName;
+    @NotNull
+    private String IDNumber;
 
     @NotNull
     private String phoneNumber;
@@ -34,34 +40,36 @@ public class Resident implements Serializable {
     @Setter(AccessLevel.NONE)
     @JoinColumn(name = "apartment_id")
     private Apartment apartment;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resident", fetch = FetchType.EAGER)
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private List<ResidentCollection> residentCollectionList;
 
-    public Resident( String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID) {
+
+    public Resident(String IDNumber, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
+        this.IDNumber = IDNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.apartment = apartment;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.nationalID = nationalID;
+        this.timeMoveIn = date;
     }
 
-    public String getApartmentID() {
-        return apartment.getId();
-    }
     @Override
     public String toString() {
         return "Resident{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", IDNumber='" + IDNumber + '\'' +
+                ", timeMoveIn=" + timeMoveIn +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", nationalID='" + nationalID + '\'' +
-                ", apartment=" + "id=" + apartment.getId() + // Avoid calling toString on the entire apartment
+                ", apartment=" + "id=" + apartment.getId() +
                 '}';
+    }
+
+    public String getApartmentID() {
+        return apartment.getId();
     }
 
 }

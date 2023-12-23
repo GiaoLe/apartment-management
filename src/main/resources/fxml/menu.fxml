@@ -23,7 +23,7 @@
             <BorderPane.margin>
                <Insets />
             </BorderPane.margin>
-            <VBox fx:id="sideBar" prefHeight="755.0" prefWidth="282.0" style="-fx-background-color: #fff;" styleClass="sidebar">
+            <VBox fx:id="sideBar" prefHeight="702.0" prefWidth="270.0" style="-fx-background-color: #fff;" styleClass="sidebar">
                <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="53.0" prefWidth="285.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Dashboard" textFill="RED">
                   <font>
                      <Font size="22.0" />
@@ -56,11 +56,11 @@
          <VBox BorderPane.alignment="CENTER">
             <HBox>
                <VBox alignment="CENTER">
-                  <HBox alignment="CENTER" prefHeight="96.0" prefWidth="282.0" style="-fx-background-color: #fff;">
+                  <HBox alignment="CENTER" prefHeight="96.0" prefWidth="267.0" style="-fx-background-color: #fff;">
                      <ImageView fitHeight="63.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                         <Image url="@../media/apartment-icon.png" />
                      </ImageView>
-                     <Label prefHeight="94.0" prefWidth="219.0" style="-fx-background-color: #fff;" stylesheets="@../styles/Dashboard.css" text="The BlueMoon">
+                     <Label prefHeight="94.0" prefWidth="204.0" style="-fx-background-color: #fff;" stylesheets="@../styles/Dashboard.css" text="The BlueMoon">
                         <HBox.margin>
                            <Insets left="10.0" />
                         </HBox.margin>

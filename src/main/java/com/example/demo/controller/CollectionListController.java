@@ -8,11 +8,15 @@ import com.example.demo.repository.CollectionRepository;
 import com.example.demo.service.CollectionService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CollectionListController {
     private final CollectionService collectionService = new CollectionService(new CollectionRepository());
@@ -24,17 +28,82 @@ public class CollectionListController {
     public TableColumn<Collection, String> descriptionTableColumn;
     public Button deleteButton;
     public Button detailsButton;
+    public MenuButton collectionTypeMenuButton;;
+    public TextField searchTextField;
+    public MenuItem nameCollectionItem;
 
+    public MenuItem typeCollectionItem;
+    public MenuItem amountCollectionItem;
+    public MenuItem deadlinePaymentItem;
+
+    public TableColumn<Collection, Date> deadlinePaymentCol;
+    private final List<Collection> collectionList = collectionService.findAll();
     @FXML
     public void initialize() {
-        fillTableViewWithData();
+        fillTableViewWithData(collectionService.findAll());
         enableDoubleClickForViewDetails();
-    }
+        wrapMenuItem(new ArrayList<>(List.of(nameCollectionItem, typeCollectionItem, amountCollectionItem, deadlinePaymentItem)));
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            List<Collection> filterList = new ArrayList<>();
+            handleFilter(filterList, newValue);
+            fillTableViewWithData(filterList);
 
-    private void fillTableViewWithData() {
-        collectionsTableView.setItems(FXCollections.observableList(collectionService.findAll()));
+        });
+    }
+    public void wrapMenuItem(List<MenuItem> list){
+        for(MenuItem menuItem : list){
+            menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    collectionTypeMenuButton.setText(menuItem.getText());
+                    if(searchTextField.getText().isEmpty()){
+                        fillTableViewWithData(collectionList);
+                    }
+                    else {
+                        System.out.println(searchTextField.getText());
+                        List<Collection> filterList = new ArrayList<>();
+                        handleFilter(filterList, searchTextField.getText());
+                        fillTableViewWithData(filterList);
+                    }
+                }
+            });
+        }
+    }
+    public void handleFilter(List<Collection> filterList, String newValue){
+        switch (collectionTypeMenuButton.getText()){
+            case "Name":
+                for(Collection collection : collectionList){
+                    if(collection.getName().contains(newValue)){
+                        filterList.add(collection);
+                        System.out.println(collection);
+                    }
+                }
+                break;
+            case "Type":
+                for(Collection collection : collectionList){
+                    if(collection.getType().toString().toLowerCase().contains(newValue.toLowerCase())){
+                        filterList.add(collection);
+                    }
+                }
+                break;
+            case "Amount":
+                Double amount = Double.parseDouble(newValue);
+                for(Collection collection : collectionList){
+                    if(amount.equals(collection.getAmount())){
+                        filterList.add(collection);
+                    }
+                }
+                break;
+            default:
+                filterList.addAll(collectionList);
+                break;
+        }
+    }
+    private void fillTableViewWithData(List<Collection> collectToShow) {
+        collectionsTableView.setItems(FXCollections.observableList(collectToShow));
         nameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         typeTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
+        deadlinePaymentCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTimeToPay()));
         amountTableColumn.setCellValueFactory(cellData -> switch (cellData.getValue().getType()) {
             case SERVICE_FEE, MANAGEMENT_FEE -> new SimpleObjectProperty<>(cellData.getValue().getAmount() + "/m2");
             default -> new SimpleObjectProperty<>(cellData.getValue().getAmount().toString());
@@ -65,7 +134,6 @@ public class CollectionListController {
             collectionService.remove(collection);
         }
     }
-
     public void detailsButtonOnAction() {
         Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
         if (collection != null) {

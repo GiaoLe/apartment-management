@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -15,6 +16,8 @@ import java.util.List;
 public class Apartment {
     @Id
     @NotNull
+    @Setter
+    @Getter
     private String id;
     @NotNull
     private double area;
@@ -29,6 +32,10 @@ public class Apartment {
     @Getter
     @Setter
     private List<Resident> residents = new ArrayList<>();
+    @Getter
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
+    private List<ApartmentCollection> apartmentCollectionList;
 
     public void addResident(Resident resident) {
         residents.add(resident);
@@ -65,8 +72,17 @@ public class Apartment {
             sb.delete(sb.length() - 2, sb.length());
         }
 
-        sb.append("]}");
+        sb.append("]}, ");
+        for (ApartmentCollection apartmentCollection : apartmentCollectionList) {
+            if(Objects.equals(apartmentCollection.getApartment().getId(), this.getId())){
+                sb.append(apartmentCollection).append(", ");
+            }
+        }
 
+        if (!apartmentCollectionList.isEmpty()) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        sb.append("]}");
         return sb.toString();
     }
 }

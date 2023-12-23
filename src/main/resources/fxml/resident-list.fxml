@@ -5,50 +5,37 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.PropertySheet?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="container" stylesheets="@../styles/ResidentList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ResidentListController">
-    <BorderPane prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <center>
-            <TableView fx:id="residentTableView" editable="true" stylesheets="@../styles/TableView.css" BorderPane.alignment="CENTER">
-                <columns>
-                    <TableColumn fx:id="idTableColumn" prefWidth="91.5" text="ID" />
-                    <TableColumn fx:id="firstNameTableColumn" prefWidth="139.5" text="First Name" />
-                    <TableColumn fx:id="lastNameTableColumn" prefWidth="270.5" text="Last Name" />
-                    <TableColumn fx:id="apartmentTableColumn" prefWidth="164.5" text="Apartment" />
-                </columns>
-            </TableView>
-        </center>
-        <top>
-            <Label text="Resident List" BorderPane.alignment="CENTER">
-                <font>
-                    <Font name="System Bold" size="30.0" />
-                </font>
-            </Label>
-        </top>
-        <bottom>
-            <HBox BorderPane.alignment="CENTER">
-                <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" prefWidth="60.0" text="New" />
-                <Button fx:id="deleteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefWidth="60.0" text="Delete" />
-                <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefWidth="60.0" text="Details" />
-            </HBox>
-        </bottom>
-        <right>
-            <AnchorPane BorderPane.alignment="CENTER">
-                <VBox alignment="TOP_CENTER" prefHeight="530.0" prefWidth="333.0">
-                    <Label text="Details" textAlignment="CENTER">
-                        <font>
-                            <Font name="System Bold" size="24.0" />
-                        </font>
-                    </Label>
-                    <PropertySheet fx:id="residentPropertySheet" onKeyTyped="#enableUpdateButton" />
-                    <Button fx:id="updateButton" disable="true" mnemonicParsing="false" onAction="#updateButtonOnAction" text="Update" />
-                </VBox>
-            </AnchorPane>
-        </right>
-    </BorderPane>
+<AnchorPane fx:id="residentContainer" prefHeight="600.0" prefWidth="1000.0" styleClass="container" stylesheets="@../styles/ResidentList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ResidentListController">
+      <HBox layoutY="574.0">
+          <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" prefWidth="60.0" text="New" />
+          <Button fx:id="deleteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefWidth="60.0" text="Delete" />
+          <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefWidth="60.0" text="Details" />
+      </HBox>
+      <TableView fx:id="residentTableView" editable="true" layoutX="14.0" layoutY="45.0" prefHeight="530.0" prefWidth="607.0" stylesheets="@../styles/TableView.css">
+          <columns>
+              <TableColumn fx:id="idTableColumn" prefWidth="91.5" text="ID" />
+              <TableColumn fx:id="firstNameTableColumn" prefWidth="139.5" text="First Name" />
+              <TableColumn fx:id="lastNameTableColumn" prefWidth="243.0" text="Last Name" />
+              <TableColumn fx:id="apartmentTableColumn" prefWidth="131.0" text="Apartment" />
+          </columns>
+      </TableView>
+       <VBox alignment="TOP_CENTER" layoutX="641.0" layoutY="45.0" prefHeight="530.0" prefWidth="334.0">
+           <Label text="Details" textAlignment="CENTER">
+               <font>
+                   <Font name="System Bold" size="24.0" />
+               </font>
+           </Label>
+           <PropertySheet fx:id="residentPropertySheet" onKeyTyped="#enableUpdateButton" />
+           <Button fx:id="updateButton" disable="true" mnemonicParsing="false" onAction="#updateButtonOnAction" text="Update" />
+       </VBox>
+      <Label layoutX="410.0" text="Resident List">
+          <font>
+              <Font name="System Bold" size="30.0" />
+          </font>
+      </Label>
 </AnchorPane>

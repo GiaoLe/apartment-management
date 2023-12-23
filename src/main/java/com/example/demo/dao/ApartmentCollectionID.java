@@ -9,8 +9,8 @@ import java.io.Serializable;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResidentCollectionID implements Serializable {
-    private Integer residentID;
+public class ApartmentCollectionID implements Serializable {
+    private Integer aparmentID;
 
     private Integer collectionID;
 }

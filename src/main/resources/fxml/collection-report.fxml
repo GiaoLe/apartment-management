@@ -1,43 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionReportController">
-    <BorderPane prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <center>
-          <TableView fx:id="collectionReportTableView" prefHeight="200.0" prefWidth="200.0" stylesheets="@../styles/TableView.css" BorderPane.alignment="CENTER">
-              <columns>
-                  <TableColumn fx:id="residentIDTableColumn" prefWidth="233.66666412353516" text="ResidentID" />
-                  <TableColumn fx:id="firstNameTableColumn" prefWidth="173.83331298828125" text="First Name" />
-                  <TableColumn fx:id="lastNameTableColumn" minWidth="2.333343505859375" prefWidth="260.66668701171875" text="Last Name" />
-                  <TableColumn fx:id="apartmentTableColumn" minWidth="0.0" prefWidth="93.0" text="Apartment" />
-               <TableColumn fx:id="amountTableColumn" prefWidth="161.0" text="Amount" />
-                  <TableColumn fx:id="isPaidTableColumn" prefWidth="73.5" text="Is Paid" />
-              </columns>
-          </TableView>
-        </center>
-        <top>
-            <HBox BorderPane.alignment="CENTER">
-                <Label text="Report: ">
-                    <font>
-                        <Font name="System Bold" size="24.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="collectionName" editable="false" prefHeight="38.0" prefWidth="700.0" />
-            </HBox>
-        </top>
-      <bottom>
-          <HBox BorderPane.alignment="CENTER">
-              <Button mnemonicParsing="false" onAction="#backButtonOnAction" prefWidth="60.0" text="Back" />
-          </HBox>
-      </bottom>
-    </BorderPane>
+<AnchorPane fx:id="collectionReportContainer" prefHeight="709.0" prefWidth="1031.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionReportController">
+    <HBox layoutX="25.0" layoutY="603.0" />
+    <TableView fx:id="collectionReportTableView" layoutX="25.0" layoutY="110.0" prefHeight="503.0" prefWidth="895.0" stylesheets="@../styles/TableView.css">
+        <columns>
+            <TableColumn fx:id="apartmentIDCol" prefWidth="173.0" text="ApartmentID" />
+            <TableColumn fx:id="hostNameCol" prefWidth="201.0" text="Host name" />
+            <TableColumn fx:id="totalResCol" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
+         <TableColumn fx:id="amountTableColumn" prefWidth="183.0" text="Amount" />
+            <TableColumn fx:id="isPaidTableColumn" prefWidth="119.0" text="Is Paid" />
+        </columns>
+    </TableView>
+      <HBox>
+          <Label text="Report: ">
+              <font>
+                  <Font name="System Bold" size="24.0" />
+              </font>
+          </Label>
+          <TextField fx:id="collectionName" editable="false" prefHeight="38.0" prefWidth="700.0" />
+      </HBox>
+   <HBox fx:id="searchContainer" layoutX="33.0" layoutY="52.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14;">
+      <children>
+         <ImageView fitHeight="23.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/search.png" />
+            </image>
+            <HBox.margin>
+               <Insets top="8.0" />
+            </HBox.margin>
+         </ImageView>
+         <TextField fx:id="searchTextField" prefHeight="46.0" prefWidth="318.0" promptText="Search..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+            <font>
+               <Font name="System Bold" size="16.0" />
+            </font>
+         </TextField>
+      </children>
+   </HBox>
+     <Button fx:id="backBtn" layoutX="33.0" layoutY="627.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefWidth="60.0" text="Back" />
+   <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14;" text="Search options">
+      <font>
+         <Font size="18.0" />
+      </font>
+      <items>
+         <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="ApartmentID" />
+         <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Host name" />
+         <MenuItem fx:id="amountItem" mnemonicParsing="false" text="Amount" />
+         <MenuItem fx:id="isPaidItem" mnemonicParsing="false" text="Is paid" />
+      </items>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </MenuButton>
+   <MenuButton fx:id="isPaidMenuButton" layoutX="55.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14;" text="Choose option" visible="false">
+      <font>
+         <Font size="18.0" />
+      </font>
+      <items>
+         <MenuItem fx:id="trueItem" mnemonicParsing="false" text="True" />
+         <MenuItem fx:id="falseItem" mnemonicParsing="false" text="False" />
+      </items>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </MenuButton>
 </AnchorPane>

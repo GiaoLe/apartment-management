@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -19,19 +20,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1111.0" style="-fx-background-color: #f2edf3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
+<ScrollPane fx:id="apartmentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1111.0" style="-fx-background-color: #f2edf3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
    <content>
       <AnchorPane prefHeight="776.0" prefWidth="1160.0" style="-fx-background-color: #f6fdff;" styleClass="container" stylesheets="@../styles/ApartmentList.css">
          <children>
-            <TableView fx:id="floorTableView" layoutX="9.0" layoutY="66.0" onMouseClicked="#selectedFloor" prefHeight="576.0" prefWidth="1034.0" style="-fx-border-color: transparent; -fx-border-width: 0;" stylesheets="@../styles/ApartmentList.css" AnchorPane.bottomAnchor="134.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="66.0">
+            <TableView fx:id="floorTableView" layoutX="14.0" layoutY="75.0" onMouseClicked="#selectedFloor" prefHeight="576.0" prefWidth="1022.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="75.0">
                <columns>
                   <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Floor" />
                   <TableColumn fx:id="totalColumn" prefWidth="150.0" text="Total Apartments " />
                   <TableColumn fx:id="availableColumn" prefWidth="191.0" text="Available Apartments" />
                   <TableColumn fx:id="nAvailableColumn" prefWidth="206.0" text="Not Available Apartments" />
                   <TableColumn fx:id="occupiedColumn" prefWidth="188.0" text="Occupied Apartments" />
-                  <TableColumn fx:id="residentsColumn" prefWidth="187.0" text="Total Residents" />
+                  <TableColumn fx:id="residentsColumn" prefWidth="182.0" text="Total Residents" />
                </columns>
+               <stylesheets>
+                  <URL value="@../styles/ApartmentList.css" />
+                  <URL value="@../styles/TableView.css" />
+               </stylesheets>
             </TableView>
             <Label fx:id="tableHeader" layoutX="104.0" layoutY="25.0" prefHeight="30.0" prefWidth="204.0" styleClass="table-header" stylesheets="@../styles/ApartmentList.css" text="Apartments Infomation">
                <font>
@@ -41,7 +46,7 @@
                   <Insets bottom="20.0" />
                </padding>
             </Label>
-            <TableView fx:id="apartmentTableView" layoutY="150.0" onMouseClicked="#selectedFloor" prefHeight="510.0" prefWidth="1046.0" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <TableView fx:id="apartmentTableView" layoutX="24.0" layoutY="150.0" prefHeight="501.0" prefWidth="1026.0" stylesheets="@../styles/ApartmentList.css" visible="false">
                <columns>
                   <TableColumn fx:id="apartmentIdCol" prefWidth="154.0" text="ApartmentID" />
                   <TableColumn fx:id="hostNameCol" prefWidth="165.0" text="Host Name" />
@@ -77,7 +82,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="addNewApartment" layoutX="856.0" layoutY="677.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="191.0" stylesheets="@../styles/ApartmentList.css" text="Add new apartment" visible="false">
+            <Button fx:id="addNewApartment" layoutX="862.0" layoutY="669.0" mnemonicParsing="false" onAction="#handleAddNewApartment" prefHeight="44.0" prefWidth="174.0" stylesheets="@../styles/ApartmentList.css" text="Add new apartment">
                <styleClass>
                   <String fx:value="btn-design" />
                   <String fx:value="search-btn" />
@@ -207,9 +212,9 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apartmentInfoDialog" layoutX="90.0" layoutY="36.0" prefHeight="695.0" prefWidth="810.0" styleClass="dialog-deisgn" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <AnchorPane fx:id="apartmentInfoDialog" layoutX="90.0" layoutY="16.0" prefHeight="733.0" prefWidth="897.0" styleClass="dialog-deisgn" stylesheets="@../styles/ApartmentList.css" visible="false">
                <children>
-                  <Button fx:id="apartmentInfoClosebtn" layoutX="746.0" layoutY="9.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="40.0" stylesheets="@../styles/ApartmentList.css">
+                  <Button fx:id="apartmentInfoClosebtn" layoutX="831.0" layoutY="9.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="40.0" stylesheets="@../styles/ApartmentList.css">
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -222,24 +227,27 @@
                         <String fx:value="search-btn" />
                      </styleClass>
                   </Button>
-                  <Label alignment="CENTER" layoutX="129.0" prefHeight="58.0" prefWidth="422.0" text="Infomation of Apartment">
+                  <Label alignment="CENTER" layoutX="238.0" prefHeight="58.0" prefWidth="422.0" text="Infomation of Apartment">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font>
                   </Label>
-                  <Separator layoutX="-3.0" layoutY="55.0" prefHeight="0.0" prefWidth="811.0" />
-                  <VBox layoutX="12.0" layoutY="74.0" prefHeight="615.0" prefWidth="785.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="73.0">
+                  <Separator layoutX="-3.0" layoutY="55.0" prefHeight="0.0" prefWidth="897.0" />
+                  <VBox layoutX="13.0" layoutY="75.0" prefHeight="649.0" prefWidth="870.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="74.0">
                      <children>
                         <HBox prefHeight="96.0" prefWidth="785.0">
                            <children>
-                              <VBox prefHeight="95.0" prefWidth="375.0">
+                              <VBox prefHeight="95.0" prefWidth="450.0">
                                  <children>
                                     <Label prefHeight="52.0" prefWidth="131.0" style="-fx-font-weight: 800;" text="ApartmentID">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="apartmentIDFilter1" prefHeight="34.0" prefWidth="355.0" />
+                                    <TextField fx:id="apartmentIDFilter1" prefHeight="34.0" prefWidth="336.0">
+                                       <VBox.margin>
+                                          <Insets right="50.0" />
+                                       </VBox.margin></TextField>
                                  </children>
                                  <padding>
                                     <Insets left="20.0" />
@@ -260,16 +268,16 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <HBox prefHeight="92.0" prefWidth="785.0">
+                        <HBox prefHeight="86.0" prefWidth="783.0">
                            <children>
-                              <VBox prefHeight="60.0" prefWidth="342.0">
+                              <VBox prefHeight="86.0" prefWidth="414.0">
                                  <children>
                                     <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 800;" text="State">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="stateMenu1" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-border-color: black; -fx-border-radius: 10px; -fx-background-color: #d3dce5; -fx-background-radius: 14;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose State">
+                                    <MenuButton fx:id="stateMenu1" mnemonicParsing="false" prefHeight="27.0" prefWidth="127.0" style="-fx-border-color: black; -fx-border-radius: 10px; -fx-background-color: #d3dce5; -fx-background-radius: 14;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose State">
                                        <items>
                                           <MenuItem fx:id="availableItem1" mnemonicParsing="false" text="AVAILABLE" />
                                           <MenuItem fx:id="occupiedItem1" mnemonicParsing="false" text="OCCUPIED" />
@@ -289,7 +297,7 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="typeMenu1" mnemonicParsing="false" prefHeight="27.0" prefWidth="105.0" style="-fx-border-color: black; -fx-border-radius: 10px; -fx-background-color: #d3dce5; -fx-background-radius: 14;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
+                                    <MenuButton fx:id="typeMenu1" mnemonicParsing="false" prefHeight="27.0" prefWidth="121.0" style="-fx-border-color: black; -fx-border-radius: 10px; -fx-background-color: #d3dce5; -fx-background-radius: 14;" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
                                        <items>
                                           <MenuItem fx:id="studioItem1" mnemonicParsing="false" text="STUDIO" />
                                           <MenuItem fx:id="penthouseItem1" mnemonicParsing="false" text="PENTHOUSE" />
@@ -304,19 +312,36 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <TableView fx:id="residentTableView" onMouseClicked="#selectedFloor" prefHeight="368.0" prefWidth="785.0" stylesheets="@../styles/ApartmentList.css">
+                        <TableView fx:id="residentTableView" prefHeight="178.0" prefWidth="783.0" stylesheets="@../styles/ApartmentList.css">
                            <columns>
-                              <TableColumn fx:id="residentID" prefWidth="120.0" text="ResidentID" />
-                              <TableColumn fx:id="lastName" prefWidth="161.0" text="Last Name" />
+                              <TableColumn fx:id="residentID" prefWidth="100.0" text="ResidentID" />
+                              <TableColumn fx:id="lastName" prefWidth="181.0" text="Last Name" />
                               <TableColumn fx:id="phoneNumber" prefWidth="211.0" text="Phone number" />
                               <TableColumn fx:id="email" prefWidth="180.0" text="Email" />
-                              <TableColumn fx:id="nationalID" prefWidth="110.0" text="NationalID" />
+                              <TableColumn fx:id="nationalID" prefWidth="125.0" text="NationalID" />
+                              <TableColumn fx:id="asd" prefWidth="70.0" text="isHost" />
                            </columns>
                            <padding>
                               <Insets bottom="40.0" />
                            </padding>
                         </TableView>
-                        <HBox prefHeight="40.0" prefWidth="783.0">
+                        <TableView fx:id="collectionTableView" layoutX="10.0" layoutY="192.0" prefHeight="192.0" prefWidth="868.0" stylesheets="@../styles/ApartmentList.css">
+                           <columns>
+                              <TableColumn fx:id="collectionIDCol" prefWidth="103.0" text="CollectionID" />
+                              <TableColumn fx:id="nameCollectionCol" prefWidth="171.0" text="Name" />
+                              <TableColumn fx:id="typeCollectionCol" prefWidth="178.0" text="Type" />
+                              <TableColumn fx:id="amountCollectionCol" prefWidth="136.0" text="Amount(USD)" />
+                              <TableColumn fx:id="deadlinePaymentCollectionCol" prefWidth="171.0" text="Deadline payment" />
+                              <TableColumn fx:id="isPaidCol" prefWidth="108.0" text="isPaid" />
+                           </columns>
+                           <padding>
+                              <Insets bottom="40.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <HBox prefHeight="41.0" prefWidth="798.0">
                            <children>
                               <Button fx:id="addResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="149.0" style="-fx-border-width: 0px;" stylesheets="@../styles/ApartmentList.css" text="Add new resident">
                                  <styleClass>
@@ -350,7 +375,7 @@
                               </Button>
                            </children>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets top="35.0" />
                            </VBox.margin>
                         </HBox>
                      </children>

@@ -10,6 +10,7 @@ import com.example.demo.service.ResidentService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,9 @@ public class ResidentFormController {
     private ArrayList<TextFieldWrapper> textFieldWrappers;
 
     private ResidentService residentService;
-
+    public DatePicker datePicker;
+    public TextField residentIDTextField;
+    public TextField IDTextField;
     @FXML
     public void initialize() {
         textFieldWrappers = new ArrayList<>(List.of(
@@ -70,13 +73,16 @@ public class ResidentFormController {
                     .ifPresent(response -> MenuViewManager.switchView(MenuView.APARTMENT_FORM));
         } else {
             Resident resident = new Resident(
+                    IDTextField.getText(),
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
                     apartment,
                     nationalIDTextField.getText(),
                     phoneNumberTextField.getText(),
-                    emailTextField.getText()
+                    emailTextField.getText(),
+                    Date.valueOf(datePicker.getValue())
             );
+            System.out.println(resident);
             residentService.persist(resident);
             apartment.addResident(resident);
             MenuViewManager.switchView(MenuView.RESIDENT_LIST);

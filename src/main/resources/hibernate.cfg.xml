@@ -13,6 +13,6 @@
         <mapping class="com.example.demo.dao.Apartment"/>
         <mapping class="com.example.demo.dao.Collection"/>
         <mapping class="com.example.demo.dao.Admin"/>
-        <mapping class="com.example.demo.dao.ResidentCollection"/>
+        <mapping class="com.example.demo.dao.ApartmentCollection"/>
     </session-factory>
 </hibernate-configuration>

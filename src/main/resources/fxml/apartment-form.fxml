@@ -5,6 +5,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -23,7 +24,7 @@
    <content>
       <AnchorPane prefHeight="869.0" prefWidth="1382.0" style="-fx-background-color: #f6fdff;">
          <children>
-            <VBox layoutY="28.0" prefHeight="365.0" prefWidth="450.0">
+            <VBox layoutX="52.0" layoutY="26.0" prefHeight="365.0" prefWidth="450.0">
                <children>
                   <Label prefHeight="49.0" prefWidth="247.0" text="Create a new apartment">
                      <font>
@@ -95,21 +96,21 @@
                   </HBox>
                </children>
             </VBox>
-            <TableView fx:id="residentTableView" layoutX="8.0" layoutY="393.0" prefHeight="377.0" prefWidth="452.0" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <TableView fx:id="residentTableView" layoutX="54.0" layoutY="393.0" prefHeight="377.0" prefWidth="476.0" stylesheets="@../styles/ApartmentList.css" visible="false">
                <columns>
-                  <TableColumn fx:id="resIDCol" prefWidth="75.0" text="ResidentID" />
+                  <TableColumn fx:id="resIDCol" prefWidth="75.0" text="ID" />
                   <TableColumn fx:id="firstNameCol" prefWidth="95.0" text="First name" />
                   <TableColumn fx:id="lastNameCol" prefWidth="93.0" text="Last name" />
-                  <TableColumn fx:id="phoneNumberCol" prefWidth="97.0" text="Phone number" />
+                  <TableColumn fx:id="phoneNumberCol" prefWidth="120.0" text="Phone number" />
                   <TableColumn fx:id="nationalIDCol" prefWidth="91.0" text="NationalID" />
                </columns>
             </TableView>
-            <TableView fx:id="apartmentTableView" layoutX="511.0" layoutY="95.0" prefHeight="625.0" prefWidth="444.0" stylesheets="@../styles/ApartmentList.css">
+            <TableView fx:id="apartmentTableView" layoutX="588.0" layoutY="98.0" prefHeight="625.0" prefWidth="431.0" stylesheets="@../styles/ApartmentList.css">
                <columns>
-                  <TableColumn fx:id="apartmentIdCol" prefWidth="119.0" text="ApartmentID" />
-                  <TableColumn fx:id="totalResidentsCol" prefWidth="118.0" text="Total Residents" />
-                  <TableColumn fx:id="stateCol" prefWidth="113.0" text="State" />
-                  <TableColumn fx:id="typeCol" prefWidth="107.0" text="Type" />
+                  <TableColumn fx:id="apartmentIdCol" prefWidth="87.0" text="ID" />
+                  <TableColumn fx:id="totalResidentsCol" prefWidth="117.0" text="Total Residents" />
+                  <TableColumn fx:id="stateCol" prefWidth="110.0" text="State" />
+                  <TableColumn fx:id="typeCol" prefWidth="128.0" text="Type" />
                </columns>
                <padding>
                   <Insets bottom="40.0" />
@@ -129,8 +130,8 @@
                      <center>
                         <VBox prefHeight="168.0" prefWidth="170.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label layoutX="10.0" layoutY="10.0" text="ResidentID" />
-                              <TextField fx:id="residentIDTextField" layoutX="10.0" layoutY="27.0" promptText="Resident ID" />
+                              <Label layoutX="10.0" layoutY="10.0" text="ID" />
+                              <TextField fx:id="IDTextField" layoutX="10.0" layoutY="27.0" promptText="ID" />
                               <Label text="First Name">
                                  <VBox.margin>
                                     <Insets top="20.0" />
@@ -157,6 +158,8 @@
                               <Label layoutX="10.0" layoutY="271.0" text="Email" />
                               <TextField fx:id="emailTextField" layoutX="10.0" layoutY="288.0" promptText="Email" />
                               <Label fx:id="emailErrorLabel" layoutX="10.0" layoutY="313.0" />
+                              <Label layoutX="10.0" layoutY="409.0" text="Email" />
+                              <DatePicker fx:id="datePicker" />
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
                                     <Button fx:id="submitButton1" mnemonicParsing="false" onAction="#handleSubmitAddRes" text="Submit" />
@@ -185,7 +188,7 @@
                   </Button>
                </children>
             </AnchorPane>
-            <Label layoutX="511.0" layoutY="23.0" prefHeight="49.0" prefWidth="247.0" text="Existing apartments">
+            <Label layoutX="588.0" layoutY="26.0" prefHeight="49.0" prefWidth="247.0" text="Existing apartments">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

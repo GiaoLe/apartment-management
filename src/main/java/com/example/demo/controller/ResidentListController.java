@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.Apartment;
 import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
@@ -28,14 +29,21 @@ public class ResidentListController {
     public Button detailsButton;
     public TableColumn<Resident, Integer> idTableColumn;
     public Button updateButton;
-
+    private Boolean switchViewFlag = false;
+    private Resident residentToShow;
     @FXML
     public void initialize() {
         fillTableViewWithResidentData();
         enableDoubleClickForResidentDetails();
     }
-
+    public void showResidentDetailFromAnotherView(Resident resident){
+        residentToShow = resident;
+        residentPropertySheet.getItems().clear();
+        residentPropertySheet.getItems().addAll(BeanPropertyUtils.getProperties(residentToShow));
+        switchViewFlag = true;
+    }
     private void fillTableViewWithResidentData() {
+
         residentTableView.setItems(FXCollections.observableList(residentService.findAll()));
         idTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getId()));
         firstNameTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getFirstName()));
@@ -79,6 +87,13 @@ public class ResidentListController {
             updateButton.setDisable(true);
             residentService.merge(resident);
             residentTableView.refresh();
+        }
+        else{
+            if(switchViewFlag){
+                residentService.merge(residentToShow);
+                residentTableView.refresh();
+                MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, residentToShow);
+            }
         }
     }
 

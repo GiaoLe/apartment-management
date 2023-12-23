@@ -10,7 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ApartmentService {
     private final ApartmentRepository apartmentRepository;
+    public List<Apartment> findAll(){
+        return  apartmentRepository.findAll();
 
+    }
     public void persist(Apartment apartment) {
         apartmentRepository.persist(apartment);
     }

@@ -39,6 +39,24 @@ public class MenuController {
         setSelectedBtn(apartmentsButton, MenuView.APARTMENT_LIST);
         setSelectedBtn(collectionsButton, MenuView.COLLECTION_LIST);
         setSelectedBtn(residentsButton, MenuView.RESIDENT_LIST);
+        borderPane.centerProperty().addListener(e -> {
+            switch (borderPane.centerProperty().get().getId()){
+                case "apartmentContainer":
+                    clearUnderline();
+                    apartmentsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
+                    break;
+                case "residentContainer":
+                    clearUnderline();
+
+                    residentsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
+                    break;
+                case "collectionContainer", "collectionReportContainer":
+                    clearUnderline();
+
+                    collectionsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
+                    break;
+            }
+        });
     }
 
     private void displayLiveTime() {
@@ -47,24 +65,6 @@ public class MenuController {
         );
         clock.setCycleCount(Timeline.INDEFINITE);
         clock.play();
-    }
-
-    public void toggleSidebar() {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), sideBar);
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(toggleIcon.rotateProperty(), 0)),
-                new KeyFrame(Duration.seconds(0.25), new KeyValue(toggleIcon.rotateProperty(), 180))
-        );
-        timeline.play();
-        if (sideBar.getTranslateX() == 0) {
-            translateTransition.setToX(-sideBar.getPrefWidth() + sideBar.getPrefWidth()/3);
-
-        } else {
-            translateTransition.setToX(0);
-
-        }
-
-        translateTransition.play();
     }
 
     public void setSelectedBtn (Button button, MenuView menuView){

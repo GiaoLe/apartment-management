@@ -1,19 +1,19 @@
 package com.example.demo.controller;
-import com.example.demo.dao.ApartmentType;
-import com.example.demo.dao.Resident;
+import com.example.demo.dao.*;
+import com.example.demo.dao.Collection;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.ApartmentRepository;
+import com.example.demo.repository.CollectionRepository;
 import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ApartmentService;
+import com.example.demo.service.CollectionService;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import com.example.demo.dao.ApartmentState;
 import com.example.demo.repository.HibernateUtility;
-import com.example.demo.dao.Apartment;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +26,7 @@ import javafx.scene.layout.*;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -82,7 +83,7 @@ public class ApartmentListController {
     public TableColumn<Apartment, String> totalResidentsCol;
     public TableColumn<Apartment, String> typeCol;
 
-    ObservableMap<String, String> selectedFloor;
+    public ObservableMap<String, String> selectedFloor = FXCollections.observableHashMap();
     public Button submitFilter;
     public Button apartmentInfoClosebtn;
     public AnchorPane apartmentInfoDialog;
@@ -111,13 +112,22 @@ public class ApartmentListController {
     List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
             .getResultList());
     private final int totalFloor = 50;
-    private ObservableMap<String, String> floorDetail = FXCollections.observableHashMap();
     private final ResidentService residentService = new ResidentService(new ResidentRepository());
     public Button addNewApartment;
+    public TableColumn<ApartmentCollection, Double> amountCollectionCol;
+    public TableColumn<ApartmentCollection, Integer> collectionIDCol;
+
+    public TableView<ApartmentCollection> collectionTableView;
+    public TableColumn<ApartmentCollection, Date> deadlinePaymentCollectionCol;
+    public TableColumn<ApartmentCollection, String> nameCollectionCol;
+    public TableColumn<ApartmentCollection, CollectionType> typeCollectionCol;
+    private final CollectionService collectionService = new CollectionService(new CollectionRepository());
+    public TableColumn<ApartmentCollection, Boolean> isPaidCol;
+    public Apartment selectedApartment;
     public void updateFloorDetails(List<Apartment> apartmentsToShowFloorList) {
         floorList = FXCollections.observableArrayList();
         for(int i = 1 ; i <= totalFloor ; i++){
-            floorDetail = FXCollections.observableHashMap();
+            ObservableMap<String, String> floorDetail = FXCollections.observableHashMap();
             int numberOfApartment = 0;
 
             for(Apartment apartment : apartmentsToShowFloorList){
@@ -175,29 +185,12 @@ public class ApartmentListController {
         nAvailableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("nAAvailableApartments")));
         occupiedColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("oApartments")));
         residentsColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("totalResidents")));
-        floorTableView.setRowFactory(tv -> {
-            return new TableRow<ObservableMap<String, String>>() {
-                @Override
-                protected void updateItem(ObservableMap<String, String> item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (getIndex() % 2 == 0) {
-                        // Hàng chẵn
-                        setStyle("-fx-background-color: #fff;");
-                    } else {
-                        // Hàng lẻ
-                        setStyle("-fx-background-color: #f0f0f0;");
-                    }
-                }
-            };
-        });
         floorTableView.setItems(floorList);
     }
     public void initialize() throws IOException {
         List<Apartment> apartmentsToShowFloorList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
                 .getResultList());
         showFloorList(apartmentsToShowFloorList);
-        apartmentTableView.getSelectionModel().clearSelection();
     }
 
     public void selectedFloor() {
@@ -211,14 +204,13 @@ public class ApartmentListController {
             apartmentTableView.setVisible(false);
             backBtn.setVisible(false);
             filterBtn.setVisible(false);
-            addNewApartment.setVisible(false);
-        });
-        addNewApartment.setOnMouseClicked(e -> {
-            MenuViewManager.switchView(MenuView.APARTMENT_FORM);
         });
     }
+    public void handleAddNewApartment () {
+        MenuViewManager.switchView(MenuView.APARTMENT_FORM);
 
-    private void showFloorDetail(int floor) {
+    }
+    public void showFloorDetail(int floor) {
         List<Apartment> floorApartments = new ArrayList<>();
         List<Apartment> apartmentsToShowFloorList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
                 .getResultList());
@@ -237,7 +229,6 @@ public class ApartmentListController {
         apartmentTableView.setVisible(true);
         backBtn.setVisible(true);
         filterBtn.setVisible(true);
-        addNewApartment.setVisible(true);
     }
     public void toggleFilter(){
         if(filterBtn.visibleProperty().getValue()){
@@ -312,6 +303,42 @@ public class ApartmentListController {
         nationalID.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNationalID()));
         residentTableView.setItems(residentObservableList);
     }
+
+    public void updateCollectionListsInApartment(Apartment apartment){
+        List<ApartmentCollection> apartmentCollectionList = new ArrayList<>(apartment.getApartmentCollectionList());
+
+        collectionIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getId()));
+        nameCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getName()));
+        typeCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getType()));
+        amountCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getAmount()));
+        deadlinePaymentCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getTimeToPay()));
+        isPaidCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
+        isPaidCol.setCellFactory(column -> {
+            return new TextFieldTableCell<ApartmentCollection, Boolean>() {
+                @Override
+                public void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(item != null){
+                        if(item){
+                            getStyleClass().add("paid");
+                            getStyleClass().add("state-apartment-design");
+
+                        }else{
+                            getStyleClass().add("notPaid");
+                            getStyleClass().add("state-apartment-design");
+
+                        }
+                    }
+                }
+            };
+        });
+        collectionTableView.setOnMouseClicked(e -> {
+            if(e.getClickCount() >= 2){
+                MenuViewManager.switchViewToShowCollectionDetail(MenuView.COLLECTION_REPORT, collectionTableView.getSelectionModel().getSelectedItem(), selectedApartment);
+            }
+        });
+        collectionTableView.setItems(FXCollections.observableList(apartmentCollectionList));
+    }
     public void showApartments(ObservableList<Apartment> index){
         apartmentIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
         totalResidentsCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResidents().size()).asString());
@@ -375,28 +402,41 @@ public class ApartmentListController {
                         imageView1.setFitHeight(20);
                         editBtn.setGraphic(imageView);
                         deleteBtn.setGraphic(imageView1);
-                        editBtn.setStyle(
-                                " -fx-cursor: hand ;"
-                                        + "-fx-background-color: #ffff;"
-                        );
-                        deleteBtn.setStyle(
-                                " -fx-cursor: hand ;"
-                                        + "-fx-background-color: #ffff;"
-                        );
-                        editBtn.setOnMouseExited(e -> editBtn.setStyle(
-                                " -fx-cursor: hand ;"
-                                        + "-fx-background-color: #ffff;"
-                                        + "-fx-border-radius: 14;"
-                                        + "-fx-background-radius: 14;"
-                        ));
-                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"));
-                        editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #868686;"));
-                        deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #868686FF;"));
-                        deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
-                                " -fx-cursor: hand ;"
-                                        + "-fx-background-color: #ffff;"
-                        ));
-                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"));
+                        int rowIndex = getIndex();
+                        if(rowIndex % 2 == 0){
+                            editBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;" );
+                            deleteBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;" );
+                            editBtn.setOnMouseExited(e -> editBtn.setStyle(
+                                    " -fx-cursor: hand ;"
+                                            + "-fx-background-color: #ffff;"
+                            ));
+                            editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"));
+                            editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #868686;"));
+                            deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #868686FF;"));
+                            deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
+                                    " -fx-cursor: hand ;"
+                                            + "-fx-background-color: #ffff;"
+                            ));
+                            deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"));
+                        } else {
+                            editBtn.setStyle("-fx-background-color: #f0f0f0;" + "-fx-cursor:HAND;" );
+                            deleteBtn.setStyle("-fx-background-color: #f0f0f0;" + "-fx-cursor:HAND;" );
+                            editBtn.setOnMouseExited(e -> editBtn.setStyle(
+                                    " -fx-cursor: hand ;"
+                                            + "-fx-background-color: #f0f0f0;"
+                            ));
+                            editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #d7d7d7;"));
+                            editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #BDBDBDFF;"));
+                            deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #BDBDBDFF;"));
+                            deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
+                                    " -fx-cursor: hand ;"
+                                            + "-fx-background-color: #f0f0f0;"
+                            ));
+                            deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #d7d7d7;"));
+
+                        }
+
+
                         deleteBtn.setOnMouseClicked(e -> {
                             Apartment apartment = getTableView().getItems().get(getIndex());
                            apartmentService.remove(apartment);
@@ -410,6 +450,8 @@ public class ApartmentListController {
                                 apartmentInfoDialog.setVisible(false);
                             });
                             Apartment apartment = getTableView().getItems().get(getIndex());
+                            selectedApartment = apartment;
+                            updateCollectionListsInApartment(apartment);
                             apartmentIDFilter1.setText(apartment.getId());
                             stateMenu1.setText(String.valueOf(apartment.getState()));
                             typeMenu1.setText(String.valueOf(apartment.getType()));
@@ -426,6 +468,7 @@ public class ApartmentListController {
                                 floorList.clear();
                                 updateData();
                             });
+                            hostNameFilter1.getItems().clear();
                             for(Resident resident : apartment.getResidents()){
                                 MenuItem menuItem = new MenuItem(String.valueOf(resident.getId()));
                                 menuItem.setId(String.valueOf(resident.getId()));
@@ -442,25 +485,12 @@ public class ApartmentListController {
                             AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
                             residentTableView.setOnMouseClicked(e2 -> {
                                 resident.set(residentTableView.getSelectionModel().getSelectedItem());
-                                Resident selectedResident = residentTableView.getSelectionModel().getSelectedItem();
+                                if(e2.getClickCount() >= 2){
+                                    Resident resident1 = residentTableView.getSelectionModel().getSelectedItem();
+                                    MenuViewManager.switchViewToShowResidentDetails(MenuView.RESIDENT_LIST, resident1);
+                                }
                             });
-                            final TableRow<Resident>[] selectedRow = new TableRow[]{null};
-                            residentTableView.setRowFactory(tv -> {
-                                TableRow<Resident> row = new TableRow<>();
-                                row.setOnMouseClicked(event -> {
-                                    if (selectedRow[0] != null) {
-                                        selectedRow[0].setStyle("");
-                                    }
 
-                                    // Lưu trữ hàng được chọn hiện tại và thiết lập style cho nó
-                                    selectedRow[0] = row;
-                                    selectedRow[0].setStyle("-fx-background-color: darkgray;" + "-fx-border-radius: 14;" + "-fx-background-radius: 14;");
-                                    if(event.getClickCount() >= 2){
-                                        
-                                    }
-                                });
-                                return row;
-                            });
                             delResBtn.setOnMouseClicked(e2 -> {
                                 residentService.remove(resident.get());
                                 updateData();
@@ -486,22 +516,7 @@ public class ApartmentListController {
             return cell;
         };
         actionsCol.setCellFactory(cellFoctory);
-        apartmentTableView.setRowFactory(tv -> {
-            return new TableRow<Apartment>() {
-                @Override
-                protected void updateItem(Apartment item, boolean empty) {
-                    super.updateItem(item, empty);
 
-                    if (getIndex() % 2 == 0) {
-                        // Hàng chẵn
-                        setStyle("-fx-background-color: #fff;");
-                    } else {
-                        // Hàng lẻ
-                        setStyle("-fx-background-color: #f0f0f0;");
-                    }
-                }
-            };
-        });
         apartmentTableView.setItems(index);
     }
 }
