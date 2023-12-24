@@ -6,14 +6,13 @@ import com.example.demo.dao.CollectionType;
 import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.ApartmentRepository;
-import com.example.demo.repository.CollectionRepository;
-import com.example.demo.repository.ApartmentCollectionRepository;
-import com.example.demo.repository.ResidentRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.ApartmentService;
 import com.example.demo.service.CollectionService;
 import com.example.demo.service.ApartmentCollectionService;
 import com.example.demo.service.ResidentService;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -28,10 +27,25 @@ public class CollectionFormController {
     public TextField descriptionTextField;
     public TextField nameTextField;
     public DatePicker deadlineDate;
+    public TableColumn<Collection, Double> amountCol;
+    public TableView<Collection> collectionTableView;
+    public TableColumn<Collection, Date> deadlineCol;
+    public TableColumn<Collection, String> nameCol;
+    public TableColumn<Collection, CollectionType> typeCol;
 
     @FXML
     public void initialize() {
         collectionTypeChoiceBox.getItems().addAll(CollectionType.values());
+        updateCollectionTableView();
+    }
+    public void updateCollectionTableView(){
+        List<Collection> collectionList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Collection order by name", Collection.class)
+                .getResultList());
+        collectionTableView.setItems(FXCollections.observableList(collectionList));
+        nameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
+        typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
+        amountCol.setCellValueFactory(celldata -> new SimpleObjectProperty<>(celldata.getValue().getAmount()));
+        deadlineCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTimeToPay()));
     }
 
     public void submitButtonOnAction() {
@@ -54,6 +68,7 @@ public class CollectionFormController {
                     apartmentCollectionService.persist(apartment, collection);
                 }
             }
+            updateCollectionTableView();
             MenuViewManager.switchView(MenuView.COLLECTION_LIST);
         }
     }

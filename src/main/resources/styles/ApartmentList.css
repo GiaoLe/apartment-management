@@ -150,7 +150,7 @@
       -fx-start-margin: 20;
   }
   .input-design{
-      -fx-background-color: transparent;
+      -fx-background-color: white;
       -fx-border-width: 1px;
       -fx-border-color: gray;
       -fx-end-margin: 20;

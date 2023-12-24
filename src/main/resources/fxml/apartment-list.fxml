@@ -112,12 +112,12 @@
                            <children>
                               <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 600;" text="ApartmentID">
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="ApartmentID">
                                        <font>
                                           <Font size="23.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="apartmentIDFilter" prefHeight="34.0" prefWidth="355.0" />
+                                    <TextField fx:id="apartmentIDFilter" prefHeight="34.0" prefWidth="355.0" styleClass="input-design" />
                                  </children>
                                  <HBox.margin>
                                     <Insets left="20.0" />
@@ -125,12 +125,12 @@
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 600;" text="Host Name">
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="Host Name">
                                        <font>
                                           <Font size="23.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="hostNameFilter" prefHeight="34.0" prefWidth="355.0" />
+                                    <TextField fx:id="hostNameFilter" prefHeight="34.0" prefWidth="355.0" styleClass="input-design" />
                                  </children>
                                  <HBox.margin>
                                     <Insets left="80.0" />
@@ -142,12 +142,12 @@
                            <children>
                               <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 600;" text="State">
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="State">
                                        <font>
                                           <Font size="23.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="33.0" prefWidth="137.0" style="-fx-font-weight: 600; -fx-background-color: #d3dce5;" stylesheets="@../styles/ApartmentList.css" text="Choose State">
+                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="33.0" prefWidth="213.0" styleClass="input-design" stylesheets="@../styles/ApartmentList.css" text="Choose State">
                                        <items>
                                           <MenuItem fx:id="availableItem" mnemonicParsing="false" text="AVAILABLE" />
                                           <MenuItem fx:id="occupiedItem" mnemonicParsing="false" text="OCCUPIED" />
@@ -155,12 +155,8 @@
                                           <MenuItem fx:id="maintainingItem" mnemonicParsing="false" text="MAINTENANCE" />
                                        </items>
                                        <font>
-                                          <Font size="23.0" />
+                                          <Font size="18.0" />
                                        </font>
-                                       <styleClass>
-                                          <String fx:value="btn-design" />
-                                          <String fx:value="search-btn" />
-                                       </styleClass>
                                     </MenuButton>
                                  </children>
                                  <HBox.margin>
@@ -169,12 +165,12 @@
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" style="-fx-font-weight: 600;" text="Type">
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="Type">
                                        <font>
                                           <Font size="23.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="33.0" prefWidth="135.0" style="-fx-font-weight: 600; -fx-background-color: #d3dce5;" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
+                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="33.0" prefWidth="213.0" styleClass="input-design" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
                                        <items>
                                           <MenuItem fx:id="studioItem" mnemonicParsing="false" text="STUDIO" />
                                           <MenuItem fx:id="penthouseItem" mnemonicParsing="false" text="PENTHOUSE" />
@@ -182,12 +178,8 @@
                                           <MenuItem fx:id="triplexItem" mnemonicParsing="false" text="TRIPLEX" />
                                        </items>
                                        <font>
-                                          <Font size="23.0" />
+                                          <Font size="18.0" />
                                        </font>
-                                       <styleClass>
-                                          <String fx:value="btn-design" />
-                                          <String fx:value="search-btn" />
-                                       </styleClass>
                                     </MenuButton>
                                  </children>
                                  <HBox.margin>

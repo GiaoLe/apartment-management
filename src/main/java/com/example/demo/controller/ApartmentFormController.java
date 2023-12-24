@@ -77,6 +77,7 @@ public class ApartmentFormController {
     public TableView<Apartment> apartmentTableView;
     public TextField IDTextField;
     public DatePicker datePicker;
+
     @FXML
     public void initialize() {
 
@@ -86,8 +87,15 @@ public class ApartmentFormController {
             addNewResBtn.setDisable(isTextFieldEmpty);
         });
         updateApartmentTableView();
+        selectedGender(List.of(maleItem, femaleItem));
     }
-
+    public void selectedGender(List<MenuItem> list){
+        for (MenuItem menuItem : list){
+            menuItem.setOnAction(e -> {
+                genderMenuButton.setText(menuItem.getText());
+            });
+        }
+    }
     public void submitButtonOnAction() {
         ApartmentState apartmentStateToSet;
         if(residentlist.isEmpty()){

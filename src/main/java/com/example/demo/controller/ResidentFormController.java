@@ -7,6 +7,10 @@ import com.example.demo.dao.Apartment;
 import com.example.demo.dao.Resident;
 import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ResidentService;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -40,6 +44,13 @@ public class ResidentFormController {
     public MenuItem femaleItem;
     public MenuButton genderMenuButton;
     public Boolean switchViewFlag = false;
+    public TableColumn<Resident, String> apartmentCol;
+    public TableColumn<Resident, String>  firstNameCol;
+    public TableColumn<Resident, Boolean>  genderCol;
+    public TableColumn<Resident, String>  lastNameCol;
+    public TableColumn<Resident, String>  phoneNumberCol;
+    public TableColumn<Resident, Integer>  resIDCol;
+    public TableView<Resident> residentTableView;
     @FXML
     public void initialize() {
         textFieldWrappers = new ArrayList<>(List.of(
@@ -51,6 +62,8 @@ public class ResidentFormController {
                 new TextFieldWrapper(emailTextField, emailErrorLabel)
         ));
         residentService = new ResidentService(new ResidentRepository());
+        updateResidentTableView();
+        selectedGender(List.of(maleItem, femaleItem));
     }
 
     public void submitButtonOnAction() {
@@ -61,8 +74,37 @@ public class ResidentFormController {
         if (allFieldsAreFilled) {
             persistResident();
         }
+        updateResidentTableView();
     }
-
+    public void updateResidentTableView(){
+        List<Resident> residents = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Resident order by apartment.id", Resident.class)
+                .getResultList());
+        residentTableView.setItems(FXCollections.observableList(residents));
+        resIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
+        firstNameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFirstName()));
+        lastNameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getLastName()));
+        phoneNumberCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPhoneNumber()));
+        genderCol.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().getGender()));
+        genderCol.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Boolean isMale, boolean empty) {
+                super.updateItem(isMale, empty);
+                if (empty || isMale == null) {
+                    setText(null);
+                } else {
+                    setText(isMale ? "Female" : "Male");
+                }
+            }
+        });
+        apartmentCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartmentID()));
+    }
+    public void selectedGender(List<MenuItem> list){
+        for (MenuItem menuItem : list){
+            menuItem.setOnAction(e -> {
+                genderMenuButton.setText(menuItem.getText());
+            });
+        }
+    }
     private void persistResident() {
         Apartment apartment = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment where id = :id", Apartment.class)
                 .setParameter("id", apartmentTextField.getText())

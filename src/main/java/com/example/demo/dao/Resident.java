@@ -2,6 +2,8 @@ package com.example.demo.dao;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,6 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class Resident implements Serializable {
+
     @Id
     @Setter(AccessLevel.NONE)
     @GeneratedValue
@@ -41,8 +44,6 @@ public class Resident implements Serializable {
     @Setter(AccessLevel.NONE)
     @JoinColumn(name = "apartment_id")
     private Apartment apartment;
-
-
     public Resident(String IDNumber,String gender, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
         this.IDNumber = IDNumber;
         this.gender = !gender.equals("Male");
@@ -74,5 +75,6 @@ public class Resident implements Serializable {
     public String getApartmentID() {
         return apartment.getId();
     }
+
 
 }

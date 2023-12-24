@@ -1,3 +1,6 @@
+.container{
+    -fx-background-color:  #f6fdff;
+}
 .label-design{
     -fx-font-size: 20px;
     -fx-font-weight: 700;
