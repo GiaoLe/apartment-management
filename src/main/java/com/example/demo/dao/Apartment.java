@@ -36,6 +36,10 @@ public class Apartment {
     @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
     private List<ApartmentCollection> apartmentCollectionList;
+    @ManyToOne
+    @Getter
+    @Setter
+    private Resident hostname;
 
     public void addResident(Resident resident) {
         residents.add(resident);
@@ -43,12 +47,13 @@ public class Apartment {
             state = ApartmentState.OCCUPIED;
         }
     }
-    public Apartment(String id, double area, ApartmentType type, ApartmentState state, int roomCount){
+    public Apartment(String id, double area, ApartmentType type, ApartmentState state, int roomCount, Resident hostname){
         this.id = id;
         this.area = area;
         this.type = type;
         this.state = state;
         this.roomCount = roomCount;
+        this.hostname = hostname;
     }
     @Transient
     public int getFloor() {
@@ -60,10 +65,10 @@ public class Apartment {
                 "id='" + id + '\'' +
                 ", area=" + area +
                 ", type=" + type +
+                ", hostName=" + hostname.getId() +
                 ", state=" + state +
                 ", roomCount=" + roomCount +
                 ", residents=[");
-
         for (Resident resident : residents) {
             sb.append(resident.toString()).append(", ");
         }

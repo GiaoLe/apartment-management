@@ -23,6 +23,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +78,7 @@ public class ApartmentFormController {
     public TableView<Apartment> apartmentTableView;
     public TextField IDTextField;
     public DatePicker datePicker;
+    public DatePicker dobPicker;
 
     @FXML
     public void initialize() {
@@ -115,6 +117,7 @@ public class ApartmentFormController {
         for(ObservableMap<String, String> observableMap : residentlist){
             Resident resident = new Resident(
                     observableMap.get("ID"),
+                    Date.valueOf(observableMap.get("dob")),
                     observableMap.get("gender"),
                     observableMap.get("firstName"),
                     observableMap.get("lastName"),
@@ -177,6 +180,7 @@ public class ApartmentFormController {
         residents = FXCollections.observableHashMap();
         residents.put("ID", IDTextField.getText());
         residents.put("gender", genderMenuButton.getText());
+        residents.put("dob", Date.valueOf(dobPicker.getValue()).toString());
         residents.put("firstName", firstNameTextField.getText());
         residents.put("lastName", lastNameTextField.getText());
         residents.put("nationalID", nationalIDTextField.getText());
@@ -196,6 +200,8 @@ public class ApartmentFormController {
                 addNewResContainer.setVisible(true);
                 ObservableMap<String, String> selectedResident = residentTableView.getSelectionModel().getSelectedItem();
                 residentIDTextField.setText(selectedResident.get("ID"));
+                dobPicker.setValue(Date.valueOf(selectedResident.get("dob")).toLocalDate());
+                datePicker.setValue(LocalDate.parse(selectedResident.get("datePicker")));
                 firstNameTextField.setText(selectedResident.get("firstName"));
                 lastNameTextField.setText(selectedResident.get("lastName"));
                 apartmentTextField.setText(idTextField.getText());

@@ -2,11 +2,18 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -17,7 +24,7 @@
    <content>
       <AnchorPane fx:id="residentContainer" prefHeight="792.0" prefWidth="1156.0" styleClass="container" stylesheets="@../styles/ResidentList.css">
          <children>
-            <HBox layoutX="343.0" layoutY="600.0" prefHeight="33.0" prefWidth="278.0">
+            <HBox layoutX="343.0" layoutY="665.0" prefHeight="33.0" prefWidth="278.0">
                <children>
                   <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="New">
                      <styleClass>
@@ -45,7 +52,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="residentTableView" editable="true" layoutX="14.0" layoutY="45.0" prefHeight="530.0" prefWidth="607.0" stylesheets="@../styles/TableView.css">
+            <TableView fx:id="residentTableView" editable="true" layoutX="11.0" layoutY="124.0" prefHeight="530.0" prefWidth="607.0" stylesheets="@../styles/TableView.css">
                <columns>
                   <TableColumn fx:id="idTableColumn" prefWidth="91.5" text="ID" />
                   <TableColumn fx:id="firstNameTableColumn" prefWidth="139.5" text="First Name" />
@@ -53,7 +60,7 @@
                   <TableColumn fx:id="apartmentTableColumn" prefWidth="131.0" text="Apartment" />
                </columns>
             </TableView>
-            <VBox alignment="TOP_CENTER" layoutX="641.0" layoutY="45.0" prefHeight="530.0" prefWidth="334.0">
+            <VBox alignment="TOP_CENTER" layoutX="651.0" layoutY="131.0" prefHeight="530.0" prefWidth="334.0">
                <children>
                   <Label text="Details" textAlignment="CENTER">
                      <font>
@@ -69,6 +76,50 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
+            <MenuButton fx:id="residentMenuButton" layoutX="314.0" layoutY="70.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Search options">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <items>
+                  <MenuItem fx:id="residentIDitem" mnemonicParsing="false" text="Resident ID" />
+                  <MenuItem fx:id="firstNameItem" mnemonicParsing="false" text="First Name" />
+                  <MenuItem fx:id="lastNameItem" mnemonicParsing="false" text="Last Name" />
+                  <MenuItem fx:id="apartmentItem" mnemonicParsing="false" text="Apartment" />
+                  <MenuItem fx:id="genderItem" mnemonicParsing="false" text="Gender" />
+                  <MenuItem fx:id="IDNumberItem" mnemonicParsing="false" text="ID Number" />
+                  <MenuItem fx:id="moveInDateItem" mnemonicParsing="false" text="Move-in Date" />
+               </items>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+            <HBox fx:id="searchContainer" layoutX="14.0" layoutY="69.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14;" styleClass="input-design">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/search.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="8.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="216.0" promptText="Search..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <MenuButton fx:id="genderMenuButton" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Choose Gender" visible="false">
+              <items>
+                <MenuItem fx:id="maleItem" mnemonicParsing="false" text="Male" />
+                <MenuItem fx:id="femaleItem" mnemonicParsing="false" text="Female" />
+              </items>
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </MenuButton>
+            <DatePicker fx:id="dobPicker" layoutX="14.0" layoutY="69.0" prefHeight="47.0" prefWidth="260.0" styleClass="input-design" visible="false" />
          </children>
       </AnchorPane>
    </content>

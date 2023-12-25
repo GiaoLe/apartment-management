@@ -15,6 +15,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 //TODO Change Collection Report to each Apartment, not to each Resident
@@ -26,6 +27,8 @@ public class CollectionReportController {
     public TableColumn<ApartmentCollection, Integer> totalResCol;
     public TableColumn<ApartmentCollection, Double> amountTableColumn;
     public TableColumn<ApartmentCollection, Boolean> isPaidTableColumn;
+    public TableColumn<ApartmentCollection, Date> deadlinePayment;
+
     public TextField collectionName;
     public TextField searchTextField;
     public MenuItem amountItem;
@@ -45,8 +48,12 @@ public class CollectionReportController {
         collectionName.setText(collection.getName());
         selectedItem(new ArrayList<>(List.of(amountItem, apartmentIDItem, hostNameItem, isPaidItem)), residentMenuButton);
         selectedItem(new ArrayList<>(List.of(falseItem, trueItem)), isPaidMenuButton);
+        for (ApartmentCollection apartmentCollection : collection.getApartmentCollections()){
+            System.out.println(apartmentCollection.getApartment().getResidents().size());
+        }
         collectionReportTableView.setItems(FXCollections.observableList(collection.getApartmentCollections()));
         apartmentIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getId()));
+        deadlinePayment.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDeadlinePayment()));
         totalResCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getResidents().size()));
         amountTableColumn.setCellValueFactory(cellData -> {
             ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());

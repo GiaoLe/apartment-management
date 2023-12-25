@@ -1,15 +1,14 @@
 package com.example.demo.controller;
 import com.example.demo.dao.*;
-import com.example.demo.dao.Collection;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.ApartmentRepository;
-import com.example.demo.repository.CollectionRepository;
 import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ApartmentService;
-import com.example.demo.service.CollectionService;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -28,7 +27,6 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ApartmentListController {
@@ -57,23 +55,11 @@ public class ApartmentListController {
     public MenuItem studioItem;
     public MenuItem triplexItem;
     public MenuItem reservedItem;
-    public Button filterBtn;
     public TextField apartmentIDFilter;
     public TextField hostNameFilter;
     public MenuButton stateMenu;
     public MenuButton typeMenu;
 
-    private final ObservableMap<String, String> tenthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> eleventhFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> twelfthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> thirteenthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> fourteenthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> fifteenthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> sixteenthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> seventeenthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> eighteenthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> nineteenthFloor = FXCollections.observableHashMap();
-    private final ObservableMap<String, String> twentiethFloor = FXCollections.observableHashMap();
     public Button closeDialogBtn;
     public TableColumn<Apartment, String> actionsCol;
     public TableColumn<Apartment, String> apartmentIdCol;
@@ -109,8 +95,6 @@ public class ApartmentListController {
     public MenuItem triplexItem1;
     public MenuButton typeMenu1;
     private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
-    List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
-            .getResultList());
     private final int totalFloor = 50;
     private final ResidentService residentService = new ResidentService(new ResidentRepository());
     public Button addNewApartment;
@@ -121,9 +105,16 @@ public class ApartmentListController {
     public TableColumn<ApartmentCollection, Date> deadlinePaymentCollectionCol;
     public TableColumn<ApartmentCollection, String> nameCollectionCol;
     public TableColumn<ApartmentCollection, CollectionType> typeCollectionCol;
-    private final CollectionService collectionService = new CollectionService(new CollectionRepository());
     public TableColumn<ApartmentCollection, Boolean> isPaidCol;
     public Apartment selectedApartment;
+    public MenuItem apartmentIDItem;
+    public MenuButton apartmentMenuButton;
+    public MenuItem areaItem;
+    public MenuItem hostNameItem;
+    public TextField searchTextField;
+    public MenuItem typeItem;
+    public MenuItem stateItem;
+
     public void updateFloorDetails(List<Apartment> apartmentsToShowFloorList) {
         floorList = FXCollections.observableArrayList();
         for(int i = 1 ; i <= totalFloor ; i++){
@@ -191,8 +182,111 @@ public class ApartmentListController {
         List<Apartment> apartmentsToShowFloorList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
                 .getResultList());
         showFloorList(apartmentsToShowFloorList);
-    }
+        selectedType(List.of(apartmentIDItem, hostNameItem, stateItem, typeItem, areaItem), apartmentMenuButton);
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(apartmentMenuButton.visibleProperty().getValue()){
+               if(searchTextField.getText().isEmpty()){
+                   showFloorDetail(Integer.parseInt(selectedFloor.get("floor")));
+               }else {
+                   List<Apartment> filterList = new ArrayList<>();
+                   List<Apartment> secondFilterList = new ArrayList<>();
+                    for(Apartment apartment : apartmentsToShowFloorList){
+                        if(apartment.getFloor() == Integer.parseInt(selectedFloor.get("floor"))){
+                            filterList.add(apartment);
+                        }
+                    }
+                   handleFilter(secondFilterList, newValue, filterList);
+                   showApartments(FXCollections.observableList(secondFilterList));
+               }
+            } else {
+                if(searchTextField.getText().isEmpty()){
+                    floorTableView.setItems(FXCollections.observableList(floorList));
 
+                }else {
+                    ObservableList<ObservableMap<String, String>> filterList = FXCollections.observableArrayList();
+                    for(ObservableMap<String, String> floor : floorList){
+                        if(floor.get("floor").equals(searchTextField.getText())){
+                            filterList.add(floor);
+                        }
+                    }
+                    floorTableView.setItems(filterList);
+                }
+            }
+        });
+        apartmentMenuButton.showingProperty().addListener(e -> {
+            List<Apartment> filterList = new ArrayList<>();
+            List<Apartment> secondFilterList = new ArrayList<>();
+            if(searchTextField.getText().isEmpty()){
+                showFloorDetail(Integer.parseInt(selectedFloor.get("floor")));
+            }else {
+                for(Apartment apartment : apartmentsToShowFloorList){
+                    if(apartment.getFloor() == Integer.parseInt(selectedFloor.get("floor"))){
+                        filterList.add(apartment);
+                    }
+                }
+                handleFilter(secondFilterList, searchTextField.getText(), filterList);
+                showApartments(FXCollections.observableList(secondFilterList));;
+            }
+        });
+        floorTableView.visibleProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue){
+                    searchTextField.setPromptText("Floor...");
+                    apartmentMenuButton.setVisible(false);
+                    searchTextField.setText("");
+                }else {
+                    searchTextField.setPromptText("Search...");
+                    apartmentMenuButton.setVisible(true);
+                    searchTextField.setText("");
+
+                }
+            }
+        });
+    }
+    public void handleFilter(List<Apartment> filterList, String newValue, List<Apartment> apartments){
+        if(apartmentMenuButton.visibleProperty().get()){
+            switch (apartmentMenuButton.getText()){
+                case "Apartment ID":
+                    for(Apartment apartment : apartments){
+                        if(apartment.getId().contains(newValue)){
+                            filterList.add(apartment);
+                        }
+                    }
+                    break;
+                case "State":
+                    for(Apartment apartment : apartments){
+                        if(String.valueOf(apartment.getState()).toLowerCase().contains(newValue.toLowerCase())){
+                            filterList.add(apartment);
+                        }
+                    }
+                    break;
+                case "Type":
+                    for(Apartment apartment : apartments){
+                        if(String.valueOf(apartment.getType()).toLowerCase().contains(newValue.toLowerCase())){
+                            filterList.add(apartment);
+                        }
+                    }
+                    break;
+                case "Area":
+                    for(Apartment apartment : apartments){
+                        if(apartment.getArea() == Double.parseDouble(newValue)){
+                            filterList.add(apartment);
+                        }
+                    }
+                    break;
+                default:
+                    filterList.addAll(apartments);
+                    break;
+            }
+        }else {
+            for(Apartment apartment : apartments){
+                if(apartment.getId().contains(newValue)){
+                    filterList.add(apartment);
+                }
+            }
+        }
+    }
     public void selectedFloor() {
         floorTableView.setOnMouseClicked(event -> {
             selectedFloor = floorTableView.getSelectionModel().getSelectedItem();
@@ -203,7 +297,6 @@ public class ApartmentListController {
             floorTableView.setVisible(true);
             apartmentTableView.setVisible(false);
             backBtn.setVisible(false);
-            filterBtn.setVisible(false);
         });
     }
     public void handleAddNewApartment () {
@@ -228,48 +321,9 @@ public class ApartmentListController {
         floorTableView.setVisible(false);
         apartmentTableView.setVisible(true);
         backBtn.setVisible(true);
-        filterBtn.setVisible(true);
+
     }
     public void toggleFilter(){
-        if(filterBtn.visibleProperty().getValue()){
-            filterBtn.setOnMouseClicked(event -> {
-                dialogContainer.setVisible(true);
-                dialogBox.setVisible(true);
-            });
-            List<MenuItem> typeItems = FXCollections.observableArrayList(studioItem, penthouseItem, duplexItem, triplexItem);
-            List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem, occupiedItem, reservedItem, maintainingItem);
-            selectedType(typeItems, typeMenu);
-            selectedState(stateItems, stateMenu);
-            List<Apartment> selectedFloorForFilter = new ArrayList<>() ;
-            List<Apartment> apartmentsToShowFloorList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
-                    .getResultList());
-            for(Apartment apartment : apartmentsToShowFloorList){
-                if(apartment.getFloor() == Integer.parseInt(selectedFloor.get("floor"))){
-                    selectedFloorForFilter.add(apartment);
-                }
-            }
-            submitFilter.setOnMouseClicked(e -> {
-                ApartmentFilter apartmentFilter = new ApartmentFilter(apartmentIDFilter, hostNameFilter, stateMenu, typeMenu, submitFilter, typeItems, stateItems, selectedFloorForFilter);
-                List<Apartment> filteredApartment = apartmentFilter.handleFilter();
-                if (filteredApartment.isEmpty()){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Không tìm thấy kết quả");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Không tìm thấy căn hộ " +apartmentIDFilter.getText());
-                    alert.showAndWait();
-                }
-                else {
-                    dialogContainer.setVisible(false);
-                    dialogBox.setVisible(false);
-                    apartmentIDFilter.clear();
-                    hostNameFilter.clear();
-                    stateMenu.setText("Choose State");
-                    typeMenu.setText("Choose Type");
-                    ObservableList<Apartment> apartmentObservableList = FXCollections.observableList(filteredApartment);
-                    showApartments(apartmentObservableList);
-                }
-            });
-        }
         if (closeDialogBtn.visibleProperty().getValue()){
             closeDialogBtn.setOnMouseClicked(event -> {
                 dialogContainer.setVisible(false);
@@ -280,11 +334,6 @@ public class ApartmentListController {
     public void selectedType(List<MenuItem> listItems, MenuButton typeMenu){
         for (MenuItem selectedItems : listItems){
             selectedItems.setOnAction(event -> typeMenu.setText(selectedItems.getText()));
-        }
-    }
-    public void selectedState(List<MenuItem> listItems, MenuButton stateMenu){
-        for (MenuItem selectedItems : listItems){
-            selectedItems.setOnAction(event -> stateMenu.setText(selectedItems.getText()));
         }
     }
     public void updateData(){
@@ -311,7 +360,6 @@ public class ApartmentListController {
         nameCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getName()));
         typeCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getType()));
         amountCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getAmount()));
-        deadlinePaymentCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getTimeToPay()));
         isPaidCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
         isPaidCol.setCellFactory(column -> {
             return new TextFieldTableCell<ApartmentCollection, Boolean>() {
@@ -342,6 +390,7 @@ public class ApartmentListController {
     public void showApartments(ObservableList<Apartment> index){
         apartmentIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
         totalResidentsCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResidents().size()).asString());
+        hostNameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getHostname() == null  ? "Unknown" : cellData.getValue().getHostname().getLastName()));
         stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()).asString());
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()).asString());
         areaCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getArea()));
@@ -386,12 +435,8 @@ public class ApartmentListController {
                         Button deleteBtn = new Button();
                         ImageView imageView = new ImageView();
                         ImageView imageView1 = new ImageView();
-
-                        // Lấy đường dẫn đầy đủ của tệp ảnh từ thư mục resources/images
                         String imagePath = getClass().getResource("/images/pencil.png").toExternalForm();
                         String imagePath1 = getClass().getResource("/images/delete.png").toExternalForm();
-
-                        // Tạo một đối tượng Image từ đường dẫn
                         Image image = new Image(imagePath);
                         Image image1 = new Image(imagePath1);
                         imageView.setImage(image);
@@ -455,30 +500,32 @@ public class ApartmentListController {
                             apartmentIDFilter1.setText(apartment.getId());
                             stateMenu1.setText(String.valueOf(apartment.getState()));
                             typeMenu1.setText(String.valueOf(apartment.getType()));
+                            hostNameFilter1.setText(apartment.getHostname() == null ? "" : apartment.getHostname().getLastName());
                             List<MenuItem> typeItems = FXCollections.observableArrayList(studioItem1, penthouseItem1, duplexItem1, triplexItem1);
                             selectedType(typeItems, typeMenu1);
                             List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem1, occupiedItem1, reservedItem1, maintainingItem1);
                             selectedType(stateItems, stateMenu1);
                             updateResidentListsInApartment(apartment);
+                            AtomicReference<Resident> selectedToBeHost = new AtomicReference<>(new Resident());
+                            hostNameFilter1.getItems().clear();
+                            for(Resident resident : apartment.getResidents()){
+                                MenuItem menuItem = new MenuItem(String.valueOf(resident.getLastName()));
+                                menuItem.setId(String.valueOf(resident.getId()));
+                                menuItem.setOnAction(event -> {
+                                    selectedToBeHost.set(resident);
+                                    hostNameFilter1.setText(menuItem.getText());
+                                });
+                                hostNameFilter1.getItems().add(menuItem);
+                                menuItem.setStyle("-fx-border-radius: 14;" + "-fx-pref-width: 80px;");
+                            }
                             editResBtn.setOnMouseClicked(e2 -> {
-                                Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), ApartmentState.valueOf(stateMenu1.getText()), apartment.getRoomCount());
+                                Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), ApartmentState.valueOf(stateMenu1.getText()), apartment.getRoomCount(), selectedToBeHost.get());
                                 apartmentService.merge(updateApartment);
                                 apartmentInfoDialog.setVisible(false);
                                 dialogContainer.setVisible(false);
                                 floorList.clear();
                                 updateData();
                             });
-                            hostNameFilter1.getItems().clear();
-                            for(Resident resident : apartment.getResidents()){
-                                MenuItem menuItem = new MenuItem(String.valueOf(resident.getId()));
-                                menuItem.setId(String.valueOf(resident.getId()));
-                                menuItem.setOnAction(event -> {
-                                    hostNameFilter1.setText(menuItem.getText());
-                                });
-                                hostNameFilter1.getItems().add(menuItem);
-                                menuItem.setStyle("-fx-border-radius: 14;" + "-fx-pref-width: 80px;");
-
-                            }
                             addResBtn.setOnMouseClicked(e2 -> {
                                 MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment);
                             });

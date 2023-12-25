@@ -16,15 +16,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="collectionReportContainer" prefHeight="709.0" prefWidth="1031.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionReportController">
+<AnchorPane fx:id="collectionReportContainer" prefHeight="758.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionReportController">
     <HBox layoutX="25.0" layoutY="603.0" />
-    <TableView fx:id="collectionReportTableView" layoutX="25.0" layoutY="110.0" prefHeight="503.0" prefWidth="895.0" stylesheets="@../styles/TableView.css">
+    <TableView fx:id="collectionReportTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="1004.0" stylesheets="@../styles/TableView.css">
         <columns>
             <TableColumn fx:id="apartmentIDCol" prefWidth="173.0" text="ApartmentID" />
             <TableColumn fx:id="hostNameCol" prefWidth="201.0" text="Host name" />
             <TableColumn fx:id="totalResCol" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
-         <TableColumn fx:id="amountTableColumn" prefWidth="183.0" text="Amount" />
-            <TableColumn fx:id="isPaidTableColumn" prefWidth="119.0" text="Is Paid" />
+         <TableColumn fx:id="amountTableColumn" prefWidth="123.0" text="Amount" />
+         <TableColumn fx:id="deadlinePayment" prefWidth="196.0" text="Deadline Payment" />
+            <TableColumn fx:id="isPaidTableColumn" prefWidth="92.0" text="Is Paid" />
         </columns>
     </TableView>
       <HBox prefHeight="38.0" prefWidth="644.0">
@@ -55,7 +56,7 @@
          </TextField>
       </children>
    </HBox>
-     <Button fx:id="backBtn" layoutX="860.0" layoutY="636.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefWidth="60.0" stylesheets="@../styles/CollectionReport.css" text="Back">
+     <Button fx:id="backBtn" layoutX="952.0" layoutY="636.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefWidth="60.0" stylesheets="@../styles/CollectionReport.css" text="Back">
       <styleClass>
          <String fx:value="btn-design" />
          <String fx:value="search-btn" />

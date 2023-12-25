@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -34,20 +35,32 @@ public class CollectionListController {
 
     public MenuItem typeCollectionItem;
     public MenuItem amountCollectionItem;
-    public MenuItem deadlinePaymentItem;
 
-    public TableColumn<Collection, Date> deadlinePaymentCol;
+    public TableColumn<Collection, Integer> totalAppsPartCol;
     private final List<Collection> collectionList = collectionService.findAll();
+    public HBox searchContainer;
+    public DatePicker deadlinePicker;
+
     @FXML
     public void initialize() {
         fillTableViewWithData(collectionService.findAll());
         enableDoubleClickForViewDetails();
-        wrapMenuItem(new ArrayList<>(List.of(nameCollectionItem, typeCollectionItem, amountCollectionItem, deadlinePaymentItem)));
+        wrapMenuItem(new ArrayList<>(List.of(nameCollectionItem, typeCollectionItem, amountCollectionItem)));
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             List<Collection> filterList = new ArrayList<>();
             handleFilter(filterList, newValue);
             fillTableViewWithData(filterList);
+        });
+        collectionTypeMenuButton.showingProperty().addListener((observable, oldValue, newValue) -> {
+            if(collectionTypeMenuButton.getText().equals("Deadline Payment")){
+                searchContainer.setVisible(false);
+                searchTextField.setText("");
+                deadlinePicker.setVisible(true);
+                for (Collection collection : collectionList){
+                }
+            }else {
 
+            }
         });
     }
     public void wrapMenuItem(List<MenuItem> list){
@@ -60,7 +73,6 @@ public class CollectionListController {
                         fillTableViewWithData(collectionList);
                     }
                     else {
-                        System.out.println(searchTextField.getText());
                         List<Collection> filterList = new ArrayList<>();
                         handleFilter(filterList, searchTextField.getText());
                         fillTableViewWithData(filterList);
@@ -75,7 +87,6 @@ public class CollectionListController {
                 for(Collection collection : collectionList){
                     if(collection.getName().contains(newValue)){
                         filterList.add(collection);
-                        System.out.println(collection);
                     }
                 }
                 break;
@@ -103,7 +114,7 @@ public class CollectionListController {
         collectionsTableView.setItems(FXCollections.observableList(collectToShow));
         nameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         typeTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
-        deadlinePaymentCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTimeToPay()));
+        totalAppsPartCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartmentCollections().size()));
         amountTableColumn.setCellValueFactory(cellData -> switch (cellData.getValue().getType()) {
             case SERVICE_FEE, MANAGEMENT_FEE -> new SimpleObjectProperty<>(cellData.getValue().getAmount() + "/m2");
             default -> new SimpleObjectProperty<>(cellData.getValue().getAmount().toString());

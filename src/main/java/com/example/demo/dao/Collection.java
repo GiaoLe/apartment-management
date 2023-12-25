@@ -35,13 +35,10 @@ public class Collection {
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", amount=" + amount +
-                ", timeToPay=" + timeToPay +
                 ", description='" + description + '\'' +
                 '}';
     }
 
-    @NotNull
-    private Date timeToPay;
 
     private String description;
 

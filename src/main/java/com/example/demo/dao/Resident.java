@@ -26,7 +26,7 @@ public class Resident implements Serializable {
     @NotNull
     private String firstName;
     @NotNull
-    private Date timeMoveIn;
+    private Date moveInDate;
     @NotNull
     private String lastName;
     @NotNull
@@ -39,37 +39,48 @@ public class Resident implements Serializable {
     private String email;
 
     private String nationalID;
+    @NotNull
+    private Date dateOfBirth;
+    @OneToMany(mappedBy = "hostname", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Getter
+    @Setter
+    private List<Apartment> ownApartments;
     @ManyToOne
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @JoinColumn(name = "apartment_id")
     private Apartment apartment;
-    public Resident(String IDNumber,String gender, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
+
+    public Resident(String IDNumber, Date dateOfBirth, String gender, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
         this.IDNumber = IDNumber;
-        this.gender = !gender.equals("Male");
+        this.dateOfBirth = dateOfBirth;
+        if(gender.equals("Female")){
+            this.gender = true;
+        } else {
+            this.gender = false;
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.apartment = apartment;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.nationalID = nationalID;
-        this.timeMoveIn = date;
+        this.moveInDate = date;
     }
 
     @Override
     public String toString() {
-        return "Resident{" +
-                "id=" + id +
-                ", gender='" + gender +'\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", IDNumber='" + IDNumber + '\'' +
-                ", timeMoveIn=" + timeMoveIn +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", nationalID='" + nationalID + '\'' +
-                ", apartment=" + "id=" + apartment.getId() +
-                '}';
+         return "Apartment{" +
+                "id='" + id + '\'' +
+                ", firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender=" + gender +
+                ", phoneNumber=" + phoneNumber +
+                ", email=" + email +
+                ", nationalID= " + nationalID +
+                ", moveInDate=" + moveInDate +
+                ", apartment=" + apartment.getId();
     }
 
     public String getApartmentID() {

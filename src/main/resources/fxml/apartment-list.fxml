@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -20,11 +21,43 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="apartmentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="764.0" prefWidth="1111.0" style="-fx-background-color: #f2edf3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
+<ScrollPane fx:id="apartmentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="833.0" prefWidth="1163.0" style="-fx-background-color: #f2edf3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
    <content>
-      <AnchorPane prefHeight="776.0" prefWidth="1160.0" style="-fx-background-color: #f6fdff;" styleClass="container" stylesheets="@../styles/ApartmentList.css">
+      <AnchorPane prefHeight="860.0" prefWidth="1169.0" style="-fx-background-color: #f6fdff;" styleClass="container" stylesheets="@../styles/ApartmentList.css">
          <children>
-            <TableView fx:id="floorTableView" layoutX="14.0" layoutY="75.0" onMouseClicked="#selectedFloor" prefHeight="576.0" prefWidth="1022.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="75.0">
+            <MenuButton fx:id="apartmentMenuButton" layoutX="340.0" layoutY="74.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Search options" visible="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <items>
+                  <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="Apartment ID" />
+                  <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Host Name" />
+                  <MenuItem fx:id="stateItem" mnemonicParsing="false" text="State" />
+                  <MenuItem fx:id="typeItem" mnemonicParsing="false" text="Type" />
+                  <MenuItem fx:id="areaItem" mnemonicParsing="false" text="Area" />
+               </items>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+            <HBox layoutX="24.0" layoutY="73.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14;" styleClass="input-design">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/search.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="8.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="216.0" promptText="Floor..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <TableView fx:id="floorTableView" layoutX="23.0" layoutY="130.0" onMouseClicked="#selectedFloor" prefHeight="560.0" prefWidth="1022.0" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="130.0">
                <columns>
                   <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Floor" />
                   <TableColumn fx:id="totalColumn" prefWidth="150.0" text="Total Apartments " />
@@ -46,14 +79,14 @@
                   <Insets bottom="20.0" />
                </padding>
             </Label>
-            <TableView fx:id="apartmentTableView" layoutX="24.0" layoutY="150.0" prefHeight="501.0" prefWidth="1026.0" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <TableView fx:id="apartmentTableView" layoutX="22.0" layoutY="131.0" prefHeight="556.0" prefWidth="1022.0" stylesheets="@../styles/ApartmentList.css" visible="false">
                <columns>
-                  <TableColumn fx:id="apartmentIdCol" prefWidth="154.0" text="ApartmentID" />
+                  <TableColumn fx:id="apartmentIdCol" prefWidth="154.0" text="Apartment ID" />
                   <TableColumn fx:id="hostNameCol" prefWidth="165.0" text="Host Name" />
                   <TableColumn fx:id="totalResidentsCol" prefWidth="158.0" text="Total Residents" />
-                  <TableColumn fx:id="stateCol" prefWidth="141.0" text="State" />
+                  <TableColumn fx:id="stateCol" prefWidth="162.0" text="State" />
                   <TableColumn fx:id="typeCol" prefWidth="143.0" text="Type" />
-                  <TableColumn fx:id="areaCol" prefWidth="111.0" text="Area" />
+                  <TableColumn fx:id="areaCol" prefWidth="90.0" text="Area" />
                   <TableColumn fx:id="actionsCol" prefWidth="178.0" text="Actions" />
                </columns>
                <padding>
@@ -73,16 +106,7 @@
                   <String fx:value="search-btn" />
                </styleClass>
             </Button>
-            <Button fx:id="filterBtn" alignment="TOP_LEFT" layoutX="14.0" layoutY="82.0" mnemonicParsing="false" onAction="#toggleFilter" prefHeight="44.0" prefWidth="262.0" styleClass="filter-design" stylesheets="@../styles/ApartmentList.css" text="     Apartment Filter...." visible="false">
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/search.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="addNewApartment" layoutX="862.0" layoutY="669.0" mnemonicParsing="false" onAction="#handleAddNewApartment" prefHeight="44.0" prefWidth="174.0" stylesheets="@../styles/ApartmentList.css" text="Add new apartment">
+            <Button fx:id="addNewApartment" layoutX="871.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleAddNewApartment" prefHeight="44.0" prefWidth="174.0" stylesheets="@../styles/ApartmentList.css" text="Add new apartment">
                <styleClass>
                   <String fx:value="btn-design" />
                   <String fx:value="search-btn" />

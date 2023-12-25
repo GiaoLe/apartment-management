@@ -7,16 +7,20 @@ import com.example.demo.dao.ApartmentCollection;
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.Resident;
 import com.example.demo.repository.HibernateUtility;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MenuViewManager {
 
@@ -41,6 +45,8 @@ public class MenuViewManager {
             borderPane.setCenter(root);
             ResidentListController residentListController = loader.getController();
             residentListController.showResidentDetailFromAnotherView(resident);
+            residentListController.searchTextField.setText(resident.getId().toString());
+            residentListController.residentMenuButton.setText("Resident ID");
             return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -58,7 +64,11 @@ public class MenuViewManager {
             apartmentListController.floorTableView.setVisible(false);
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.backBtn.setVisible(true);
-            apartmentListController.filterBtn.setVisible(true);
+            apartmentListController.backBtn.setOnMouseClicked(event -> {
+                apartmentListController.floorTableView.setVisible(true);
+                apartmentListController.apartmentTableView.setVisible(false);
+                apartmentListController.backBtn.setVisible(false);
+            });
 
             return loader.getController();
         } catch (IOException e) {
@@ -93,13 +103,11 @@ public class MenuViewManager {
                 apartmentListController.floorTableView.setVisible(true);
                 apartmentListController.apartmentTableView.setVisible(false);
                 apartmentListController.backBtn.setVisible(false);
-                apartmentListController.filterBtn.setVisible(false);
             });
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.floorTableView.setVisible(false);
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.backBtn.setVisible(true);
-            apartmentListController.filterBtn.setVisible(true);
             borderPane.setCenter(root);
             return loader.getController();
         } catch (IOException e) {

@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.Apartment;
-import com.example.demo.dao.Collection;
-import com.example.demo.dao.CollectionType;
-import com.example.demo.dao.Resident;
+import com.example.demo.dao.*;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.*;
@@ -17,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionFormController {
@@ -24,14 +23,13 @@ public class CollectionFormController {
     public TextField amountTextField;
     public ChoiceBox<CollectionType> collectionTypeChoiceBox;
     public Button submitButton;
-    public TextField descriptionTextField;
+    public TextArea descriptionTextArea;
     public TextField nameTextField;
-    public DatePicker deadlineDate;
     public TableColumn<Collection, Double> amountCol;
     public TableView<Collection> collectionTableView;
-    public TableColumn<Collection, Date> deadlineCol;
     public TableColumn<Collection, String> nameCol;
     public TableColumn<Collection, CollectionType> typeCol;
+    public TableColumn<Collection, String> descriptionCol;
 
     @FXML
     public void initialize() {
@@ -45,7 +43,7 @@ public class CollectionFormController {
         nameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
         amountCol.setCellValueFactory(celldata -> new SimpleObjectProperty<>(celldata.getValue().getAmount()));
-        deadlineCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTimeToPay()));
+        descriptionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescription()));
     }
 
     public void submitButtonOnAction() {
@@ -55,7 +53,7 @@ public class CollectionFormController {
             alert.setContentText("There are no residents. Please create them first.");
             alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> MenuViewManager.switchView(MenuView.RESIDENT_FORM));
         } else {
-            Collection collection = Collection.builder().name(nameTextField.getText()).type(collectionTypeChoiceBox.getValue()).description(descriptionTextField.getText()).timeToPay(Date.valueOf(deadlineDate.getValue())).build();
+            Collection collection = Collection.builder().name(nameTextField.getText()).type(collectionTypeChoiceBox.getValue()).description(descriptionTextArea.getText()).build();
             if (!amountTextField.getText().isEmpty()) {
                 collection.setAmount(Double.parseDouble(amountTextField.getText()));
             }
@@ -65,7 +63,13 @@ public class CollectionFormController {
 
             if (!collectionTypeChoiceBox.getValue().equals(CollectionType.DONATION)){
                 for (Apartment apartment : apartments) {
-                    apartmentCollectionService.persist(apartment, collection);
+                    if(!apartment.getResidents().isEmpty() && apartment.getHostname() != null){
+                        LocalDate residentMoveInDate = apartment.getHostname().getMoveInDate().toLocalDate();
+                        System.out.println(residentMoveInDate.plusDays(30));
+                        residentMoveInDate = residentMoveInDate.plusMonths(1);
+                        System.out.println(residentMoveInDate);
+                        apartmentCollectionService.persist(apartment, collection, Date.valueOf(residentMoveInDate));
+                    }
                 }
             }
             updateCollectionTableView();

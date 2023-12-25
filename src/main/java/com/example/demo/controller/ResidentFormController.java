@@ -51,6 +51,7 @@ public class ResidentFormController {
     public TableColumn<Resident, String>  phoneNumberCol;
     public TableColumn<Resident, Integer>  resIDCol;
     public TableView<Resident> residentTableView;
+    public DatePicker dobPicker;
     @FXML
     public void initialize() {
         textFieldWrappers = new ArrayList<>(List.of(
@@ -119,13 +120,14 @@ public class ResidentFormController {
         } else {
             Resident resident = new Resident(
                     IDTextField.getText(),
+                    Date.valueOf(dobPicker.getValue()),
                     genderMenuButton.getText(),
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
                     apartment,
-                    nationalIDTextField.getText(),
                     phoneNumberTextField.getText(),
                     emailTextField.getText(),
+                    nationalIDTextField.getText(),
                     Date.valueOf(datePicker.getValue())
             );
             residentService.persist(resident);
