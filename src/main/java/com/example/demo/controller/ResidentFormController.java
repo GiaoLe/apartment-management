@@ -65,7 +65,7 @@ public class ResidentFormController {
                 new TextFieldWrapper(emailTextField, emailErrorLabel)
         ));
         residentService = new ResidentService(new ResidentRepository());
-        updateResidentTableView();
+        initializeResidentTableView();
         selectedGender(List.of(maleItem, femaleItem));
     }
 
@@ -77,9 +77,9 @@ public class ResidentFormController {
         if (allFieldsAreFilled) {
             persistResident();
         }
-        updateResidentTableView();
+        residentTableView.refresh();
     }
-    public void updateResidentTableView(){
+    public void initializeResidentTableView(){
         List<Resident> residents = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Resident order by apartment.id", Resident.class)
                 .getResultList());
         residentTableView.setItems(FXCollections.observableList(residents));

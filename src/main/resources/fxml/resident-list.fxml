@@ -81,7 +81,7 @@
                   <Font size="18.0" />
                </font>
                <items>
-                  <MenuItem fx:id="residentIDitem" mnemonicParsing="false" text="Resident ID" />
+                  <MenuItem fx:id="residentIDItem" mnemonicParsing="false" text="Resident ID" />
                   <MenuItem fx:id="firstNameItem" mnemonicParsing="false" text="First Name" />
                   <MenuItem fx:id="lastNameItem" mnemonicParsing="false" text="Last Name" />
                   <MenuItem fx:id="apartmentItem" mnemonicParsing="false" text="Apartment" />

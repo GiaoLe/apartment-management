@@ -510,11 +510,11 @@ public class ApartmentListController {
                             floorList.clear();
                             updateData();
                         });
-                        addResBtn.setOnMouseClicked(e2 -> MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment));
+                        addResBtn.setOnMouseClicked(mouseEvent -> MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment));
                         AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
-                        residentTableView.setOnMouseClicked(e2 -> {
+                        residentTableView.setOnMouseClicked(mouseEvent -> {
                             resident.set(residentTableView.getSelectionModel().getSelectedItem());
-                            if (e2.getClickCount() >= 2) {
+                            if (mouseEvent.getClickCount() >= 2) {
                                 Resident resident1 = residentTableView.getSelectionModel().getSelectedItem();
                                 MenuViewManager.switchViewToShowResidentDetails(MenuView.RESIDENT_LIST, resident1);
                             }

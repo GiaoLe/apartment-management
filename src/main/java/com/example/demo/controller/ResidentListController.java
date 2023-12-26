@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.Apartment;
-import com.example.demo.dao.Collection;
 import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
@@ -9,13 +7,14 @@ import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.BeanPropertyUtils;
+import org.controlsfx.property.editor.DefaultPropertyEditorFactory;
+import org.controlsfx.property.editor.PropertyEditor;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class ResidentListController {
     public MenuItem firstNameItem;
     public MenuItem genderItem;
     public MenuItem lastNameItem;
-    public MenuItem residentIDitem;
+    public MenuItem residentIDItem;
     public TextField searchTextField;
     public MenuButton residentMenuButton;
     public MenuButton genderMenuButton;
@@ -56,10 +55,10 @@ public class ResidentListController {
 
     @FXML
     public void initialize() {
-        List <Resident> residents = new ArrayList<>(residentService.findAll());
+        List<Resident> residents = new ArrayList<>(residentService.findAll());
         fillTableViewWithResidentData(residents);
         enableDoubleClickForResidentDetails();
-        wrapMenuItem(List.of(IDNumberItem, apartmentItem, moveInDateItem, genderItem, firstNameItem, lastNameItem, residentIDitem), residentMenuButton);
+        wrapMenuItem(List.of(IDNumberItem, apartmentItem, moveInDateItem, genderItem, firstNameItem, lastNameItem, residentIDItem), residentMenuButton);
         wrapMenuItem(List.of(maleItem, femaleItem), genderMenuButton);
         searchTextField.textProperty().addListener((observable, oldValue, newVale) -> {
             List<Resident> filterList = new ArrayList<>();
@@ -67,29 +66,29 @@ public class ResidentListController {
             fillTableViewWithResidentData(filterList);
         });
         residentMenuButton.showingProperty().addListener((observable, oldValue, newValue) -> {
-            if(residentMenuButton.getText().equals("Gender")){
+            if (residentMenuButton.getText().equals("Gender")) {
                 genderMenuButton.setVisible(true);
                 searchContainer.setVisible(false);
                 dobPicker.setVisible(false);
                 searchTextField.setText("");
                 genderMenuButton.textProperty().addListener((observable1, oldValue1, newValue1) -> {
                     List<Resident> filterList = new ArrayList<>();
-                    if(newValue1.equals("Female")){
-                        for (Resident resident : residents){
-                            if (resident.getGender()){
+                    if (newValue1.equals("Female")) {
+                        for (Resident resident : residents) {
+                            if (resident.getGender()) {
                                 filterList.add(resident);
                             }
                         }
-                    }else {
-                        for (Resident resident : residents){
-                            if (!resident.getGender()){
+                    } else {
+                        for (Resident resident : residents) {
+                            if (!resident.getGender()) {
                                 filterList.add(resident);
                             }
                         }
                     }
                     fillTableViewWithResidentData(filterList);
                 });
-            } else if(residentMenuButton.getText().equals("Move-in Date")){
+            } else if (residentMenuButton.getText().equals("Move-in Date")) {
                 dobPicker.setVisible(true);
                 searchContainer.setVisible(false);
                 genderMenuButton.setVisible(false);
@@ -97,18 +96,18 @@ public class ResidentListController {
 
                 dobPicker.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
                     List<Resident> filterList = new ArrayList<>();
-                    for (Resident resident : residents){
-                        if(Objects.equals(resident.getMoveInDate(), Date.valueOf(newValue1))){
+                    for (Resident resident : residents) {
+                        if (Objects.equals(resident.getMoveInDate(), Date.valueOf(newValue1))) {
                             filterList.add(resident);
                         }
                     }
                     fillTableViewWithResidentData(filterList);
                 });
-            }else {
+            } else {
                 dobPicker.setVisible(false);
                 searchContainer.setVisible(true);
                 genderMenuButton.setVisible(false);
-                if(searchTextField.getText().isEmpty()){
+                if (searchTextField.getText().isEmpty()) {
                     fillTableViewWithResidentData(FXCollections.observableList(residents));
                 } else {
                     List<Resident> filterList = new ArrayList<>();
@@ -118,21 +117,21 @@ public class ResidentListController {
             }
         });
     }
-    public void showResidentDetailFromAnotherView(Resident resident){
+
+    public void showResidentDetailFromAnotherView(Resident resident) {
         residentToShow = resident;
         residentPropertySheet.getItems().clear();
         residentPropertySheet.getItems().addAll(BeanPropertyUtils.getProperties(residentToShow));
         switchViewFlag = true;
     }
-    public void wrapMenuItem(List<MenuItem> list, MenuButton menuButton){
-        for(MenuItem menuItem : list){
-            menuItem.setOnAction(e -> {
-                menuButton.setText(menuItem.getText());
-            });
+
+    public void wrapMenuItem(List<MenuItem> list, MenuButton menuButton) {
+        for (MenuItem menuItem : list) {
+            menuItem.setOnAction(e -> menuButton.setText(menuItem.getText()));
         }
     }
-    private void fillTableViewWithResidentData(List<Resident> residentList) {
 
+    private void fillTableViewWithResidentData(List<Resident> residentList) {
         residentTableView.setItems(FXCollections.observableList(residentList));
         idTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getId()));
         firstNameTableColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getFirstName()));
@@ -168,40 +167,51 @@ public class ResidentListController {
         residentPropertySheet.getItems().clear();
         Resident resident = residentTableView.getSelectionModel().getSelectedItem();
         residentPropertySheet.getItems().addAll(BeanPropertyUtils.getProperties(resident));
+        SimpleObjectProperty<Callback<PropertySheet.Item, PropertyEditor<?>>> propertyEditorFactory = new SimpleObjectProperty<>(this, null, new DefaultPropertyEditorFactory());
+        residentPropertySheet.setPropertyEditorFactory(getItemPropertyEditorCallback(propertyEditorFactory));
     }
-    public void handleFilter(List<Resident> filterList, String newValue, List<Resident> residents){
-        switch (residentMenuButton.getText()){
+
+    private Callback<PropertySheet.Item, PropertyEditor<?>> getItemPropertyEditorCallback(SimpleObjectProperty<Callback<PropertySheet.Item, PropertyEditor<?>>> propertyEditorFactory) {
+        return param -> {
+            PropertyEditor<?> editor = propertyEditorFactory.get().call(param);
+            editor.getEditor().focusedProperty().addListener(event -> updateButton.setDisable(false));
+            return editor;
+        };
+    }
+
+    public void handleFilter(List<Resident> filterList, String newValue, List<Resident> residents) {
+        switch (residentMenuButton.getText()) {
             case "Resident ID":
-                for(Resident resident : residents){
-                    if(String.valueOf(resident.getId()).contains(newValue)){
+                for (Resident resident : residents) {
+                    if (String.valueOf(resident.getId()).contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
                 break;
             case "First Name":
-                for(Resident resident : residents){
-                    if(resident.getFirstName().contains(newValue)){
+                for (Resident resident : residents) {
+                    if (resident.getFirstName().contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
                 break;
             case "Last Name":
-                for(Resident resident : residents){
-                    if(resident.getLastName().contains(newValue)){
+                for (Resident resident : residents) {
+                    if (resident.getLastName().contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
                 break;
             case "Apartment":
-                for(Resident resident : residents){
-                    if(resident.getApartmentID().contains(newValue)){
+                for (Resident resident : residents) {
+                    if (resident.getApartmentID().contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
                 break;
             case "ID Number":
-                for(Resident resident : residents){
-                    if(resident.getIDNumber().contains(newValue)){
+                for (Resident resident : residents) {
+                    if (resident.getIDNumber().contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
@@ -211,19 +221,17 @@ public class ResidentListController {
                 break;
         }
     }
+
     public void updateButtonOnAction() {
         Resident resident = residentTableView.getSelectionModel().getSelectedItem();
         if (resident != null) {
             updateButton.setDisable(true);
             residentService.merge(resident);
             residentTableView.refresh();
-        }
-        else{
-            if(switchViewFlag){
-                residentService.merge(residentToShow);
-                residentTableView.refresh();
-                MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, residentToShow);
-            }
+        } else if (switchViewFlag) {
+            residentService.merge(residentToShow);
+            residentTableView.refresh();
+            MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, residentToShow);
         }
     }
 
