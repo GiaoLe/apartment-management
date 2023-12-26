@@ -5,6 +5,7 @@ import com.example.demo.gui.MenuViewManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -48,8 +49,11 @@ public class MenuController {
                     break;
                 case "collectionContainer", "collectionReportContainer":
                     clearUnderline();
-
                     collectionsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
+                    break;
+                case "dashboardContainer":
+                    clearUnderline();
+                    dashboardButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
                     break;
             }
         });

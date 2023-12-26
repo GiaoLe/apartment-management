@@ -1,20 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.controller.DashboardController">
-   <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <center>
-         <Label text="Current page is in development, please come back later." BorderPane.alignment="CENTER">
-            <font>
-               <Font size="24.0"/>
-            </font>
-         </Label>
-      </center>
-   </BorderPane>
-</AnchorPane>
+<ScrollPane fx:id="dashboardContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="811.0" prefWidth="1127.0" styleClass="container" stylesheets="@../styles/Dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.DashboardController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="841.0" prefWidth="1147.0">
+         <children>
+            <AnchorPane fx:id="infoContainer" layoutY="62.0" prefHeight="780.0" prefWidth="1147.0">
+               <children>
+                  <Label fx:id="appsStateLabel" layoutX="140.0" layoutY="49.0" styleClass="label-design" text="Apartment's State" />
+                  <PieChart fx:id="stateChart" layoutX="14.0" prefHeight="420.0" prefWidth="483.0" />
+                  <Label fx:id="appsTypeLabel" layoutX="762.0" layoutY="49.0" styleClass="label-design" text="Apartment's Type" />
+                  <PieChart fx:id="typeChart" layoutX="616.0" layoutY="14.0" prefHeight="409.0" prefWidth="483.0" />
+                  <Label fx:id="appsTypeLabel1" layoutX="472.0" layoutY="405.0" styleClass="label-design" text="Total Residents" />
+                  <PieChart fx:id="residentChart" layoutX="332.0" layoutY="352.0" prefHeight="389.0" prefWidth="483.0" />
+               </children>
+            </AnchorPane>
+            <MenuButton fx:id="selectedMenuButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="303.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Information of Apartment">
+              <items>
+                <MenuItem fx:id="menuItem1" mnemonicParsing="false" text="Information of Apartment" />
+                <MenuItem fx:id="menuItem2" mnemonicParsing="false" text="Action 2" />
+              </items>
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </MenuButton>
+            <AnchorPane fx:id="feeContainer" layoutY="72.0" prefHeight="780.0" prefWidth="1157.0" visible="false">
+               <children>
+                  <TableView fx:id="feeTableView" layoutX="14.0" layoutY="86.0" prefHeight="420.0" prefWidth="967.0" stylesheets="@../styles/TableView.css">
+                    <columns>
+                      <TableColumn fx:id="monthCol" prefWidth="150.0" text="Month" />
+                        <TableColumn fx:id="expCol" prefWidth="184.0" text="Amount To Be Received" />
+                        <TableColumn fx:id="curCol" prefWidth="212.0" text="Amount Currently Received" />
+                        <TableColumn fx:id="paidCol" prefWidth="150.0" text="Total Paid" />
+                        <TableColumn fx:id="unpaidCol" prefWidth="150.0" text="Total Unpaid" />
+                        <TableColumn fx:id="totalResCol" prefWidth="120.0" text="Total Resident" />
+                    </columns>
+                  </TableView>
+                  <MenuButton fx:id="typeFeeButton" layoutX="345.0" layoutY="14.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="302.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Management Fee">
+                    <items>
+                      <MenuItem fx:id="manageItem" mnemonicParsing="false" text="Mangement Fee" />
+                      <MenuItem fx:id="serviceItem" mnemonicParsing="false" text="Service Fee" />
+                        <MenuItem fx:id="donateItem" mnemonicParsing="false" text="Donation Fee" />
+                    </items>
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </MenuButton>
+                  <MenuButton fx:id="chooseFeeButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="302.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Choose Fee">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </MenuButton>
+               </children>
+            </AnchorPane>
+         </children>
+         <styleClass>
+            <String fx:value="container" />
+            <String fx:value="input-design" />
+            <String fx:value="container" />
+         </styleClass></AnchorPane>
+  </content>
+</ScrollPane>

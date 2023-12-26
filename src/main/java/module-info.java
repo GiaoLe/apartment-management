@@ -9,6 +9,7 @@ module com.example.demo {
     requires jakarta.validation;
     requires org.hibernate.validator;
     requires org.controlsfx.controls;
+    requires org.apache.commons.collections4;
 
     opens com.example.demo to javafx.fxml, org.hibernate.orm.core, jakarta.persistence, org.hibernate.validator;
     exports com.example.demo;
