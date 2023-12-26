@@ -13,4 +13,8 @@ public class ApartmentCollectionService {
     public void persist(ApartmentCollection apartmentCollection) {
         apartmentCollectionRepository.persist(apartmentCollection);
     }
+
+    public void merge(ApartmentCollection apartmentCollection) {
+        apartmentCollectionRepository.merge(apartmentCollection);
+    }
 }

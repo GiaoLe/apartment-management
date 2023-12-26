@@ -12,13 +12,11 @@ import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ApartmentService;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 
@@ -26,13 +24,11 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ApartmentFormController {
     private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
     public TextField idTextField;
     public TextField areaTextField;
-    public Button submitButton;
     public TextField roomCountTextField;
     public ChoiceBox<ApartmentType> apartmentTypeChoiceBox;
     public TableColumn<ObservableMap<String, String>, String> firstNameCol;
@@ -42,8 +38,7 @@ public class ApartmentFormController {
     public TableColumn<ObservableMap<String, String>, String> resIDCol;
     public TableView<ObservableMap<String, String>> residentTableView;
     public Button addNewResBtn;
-    private ObservableMap<String, String> residents;
-    private final ObservableList<ObservableMap<String, String>> residentlist = FXCollections.observableArrayList();
+    private final ObservableList<ObservableMap<String, String>> residentList = FXCollections.observableArrayList();
 
     public AnchorPane addNewResContainer;
     public AnchorPane dialogContainer;
@@ -69,6 +64,10 @@ public class ApartmentFormController {
     public MenuItem maleItem;
     public MenuItem femaleItem;
     public MenuButton genderMenuButton;
+    public Button residentSubmissionButton;
+    public Button backButton;
+    public Button apartmentSubmissionButton;
+    public Label apartmentTextFieldErrorLabel;
     ResidentService residentService = new ResidentService(new ResidentRepository());
     public TableColumn<Apartment, String> apartmentIdCol;
     public TableColumn<Apartment, String> stateCol;
@@ -82,7 +81,6 @@ public class ApartmentFormController {
 
     @FXML
     public void initialize() {
-
         apartmentTypeChoiceBox.getItems().addAll(ApartmentType.values());
         idTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             boolean isTextFieldEmpty = newValue.trim().isEmpty();
@@ -91,18 +89,18 @@ public class ApartmentFormController {
         updateApartmentTableView();
         selectedGender(List.of(maleItem, femaleItem));
     }
-    public void selectedGender(List<MenuItem> list){
-        for (MenuItem menuItem : list){
-            menuItem.setOnAction(e -> {
-                genderMenuButton.setText(menuItem.getText());
-            });
+
+    public void selectedGender(List<MenuItem> list) {
+        for (MenuItem menuItem : list) {
+            menuItem.setOnAction(e -> genderMenuButton.setText(menuItem.getText()));
         }
     }
+
     public void submitButtonOnAction() {
         ApartmentState apartmentStateToSet;
-        if(residentlist.isEmpty()){
+        if (residentList.isEmpty()) {
             apartmentStateToSet = ApartmentState.AVAILABLE;
-        }else {
+        } else {
             apartmentStateToSet = ApartmentState.OCCUPIED;
         }
         List<Resident> residentList = new ArrayList<>();
@@ -114,7 +112,7 @@ public class ApartmentFormController {
                 .state(apartmentStateToSet)
                 .build();
         apartmentService.persist(apartment);
-        for(ObservableMap<String, String> observableMap : residentlist){
+        for (ObservableMap<String, String> observableMap : this.residentList) {
             Resident resident = new Resident(
                     observableMap.get("ID"),
                     Date.valueOf(observableMap.get("dob")),
@@ -132,52 +130,52 @@ public class ApartmentFormController {
         }
         apartment.setResidents(residentList);
         MenuViewManager.switchView(MenuView.APARTMENT_LIST);
-        clearTextField(new ArrayList<>(List.of(IDTextField, firstNameTextField, lastNameTextField, nationalIDTextField, phoneNumberTextField, emailTextField)));
     }
+
     public void handleAddNewRes() {
         dialogContainer.setVisible(true);
         addNewResContainer.setVisible(true);
         apartmentTextField.setText(idTextField.getText());
         apartmentTextField.setDisable(true);
     }
-    public void updateApartmentTableView () {
+
+    public void updateApartmentTableView() {
         List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
                 .getResultList());
         totalResidentsCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResidents().size()).asString());
         apartmentIdCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
         stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()).asString());
-        stateCol.setCellFactory(column -> {
-            return new TextFieldTableCell<Apartment, String>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(item != null){
-                        if(item.equals(ApartmentState.AVAILABLE.toString())){
-                            getStyleClass().add("state-apartment-design");
-                            getStyleClass().add("available-state");
+        stateCol.setCellFactory(column -> new TextFieldTableCell<>() {
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    if (item.equals(ApartmentState.AVAILABLE.toString())) {
+                        getStyleClass().add("state-apartment-design");
+                        getStyleClass().add("available-state");
 
-                        }else if(item.equals(ApartmentState.OCCUPIED.toString())){
-                            getStyleClass().add("state-apartment-design");
-                            getStyleClass().add("occupied-state");
+                    } else if (item.equals(ApartmentState.OCCUPIED.toString())) {
+                        getStyleClass().add("state-apartment-design");
+                        getStyleClass().add("occupied-state");
 
-                        }else if(item.equals(ApartmentState.MAINTENANCE.toString())) {
-                            getStyleClass().add("state-apartment-design");
-                            getStyleClass().add("maintenance-state");
+                    } else if (item.equals(ApartmentState.MAINTENANCE.toString())) {
+                        getStyleClass().add("state-apartment-design");
+                        getStyleClass().add("maintenance-state");
 
-                        }else if(item.equals(ApartmentState.RESERVED.toString())){
-                            getStyleClass().add("state-apartment-design");
-                            getStyleClass().add("reserved-state");
-                        }
+                    } else if (item.equals(ApartmentState.RESERVED.toString())) {
+                        getStyleClass().add("state-apartment-design");
+                        getStyleClass().add("reserved-state");
                     }
                 }
-            };
+            }
         });
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
         ObservableList<Apartment> apartmentObservableList = FXCollections.observableList(apartments);
         apartmentTableView.setItems(apartmentObservableList);
     }
+
     public void handleSubmitAddRes() {
-        residents = FXCollections.observableHashMap();
+        ObservableMap<String, String> residents = FXCollections.observableHashMap();
         residents.put("ID", IDTextField.getText());
         residents.put("gender", genderMenuButton.getText());
         residents.put("dob", Date.valueOf(dobPicker.getValue()).toString());
@@ -188,14 +186,14 @@ public class ApartmentFormController {
         residents.put("email", emailTextField.getText());
         residents.put("datePicker", Date.valueOf(datePicker.getValue()).toString());
         residentTableView.setVisible(true);
-        residentlist.add(residents);
+        residentList.add(residents);
         resIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("ID")));
         firstNameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("firstName")));
         lastNameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("lastName")));
         phoneNumberCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("phoneNumber")));
         nationalIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("nationalID")));
         residentTableView.setOnMouseClicked(event -> {
-            if(event.getClickCount() >= 2){
+            if (event.getClickCount() >= 2) {
                 dialogContainer.setVisible(true);
                 addNewResContainer.setVisible(true);
                 ObservableMap<String, String> selectedResident = residentTableView.getSelectionModel().getSelectedItem();
@@ -210,18 +208,19 @@ public class ApartmentFormController {
                 emailTextField.setText(selectedResident.get("email"));
             }
         });
-        residentTableView.setItems(residentlist);
+        residentTableView.setItems(residentList);
         dialogContainer.setVisible(false);
         addNewResContainer.setVisible(false);
         clearTextField(new ArrayList<>(List.of(residentIDTextField, lastNameTextField, firstNameTextField, phoneNumberTextField, nationalIDTextField, emailTextField)));
     }
 
-    public void handleCloseAddNewRes(){
+    public void handleCloseAddNewRes() {
         dialogContainer.setVisible(false);
         addNewResContainer.setVisible(false);
     }
-    public void clearTextField(List<TextField> listTextFields){
-        for (TextField textField : listTextFields){
+
+    public void clearTextField(List<TextField> listTextFields) {
+        for (TextField textField : listTextFields) {
             textField.setText("");
         }
     }

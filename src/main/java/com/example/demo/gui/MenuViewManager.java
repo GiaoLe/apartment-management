@@ -4,23 +4,14 @@ import com.example.demo.Main;
 import com.example.demo.controller.*;
 import com.example.demo.dao.Apartment;
 import com.example.demo.dao.ApartmentCollection;
-import com.example.demo.dao.Collection;
 import com.example.demo.dao.Resident;
-import com.example.demo.repository.HibernateUtility;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import lombok.Setter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MenuViewManager {
 
@@ -84,7 +75,7 @@ public class MenuViewManager {
             collectionFormController.residentMenuButton.setText("ApartmentID");
             collectionFormController.searchTextField.setText(selectedApartment.getId());
             collectionFormController.switchViewFlag = true;
-            collectionFormController.apartmentCollectionAfterUpdate = apartmentCollection;
+            collectionFormController.apartmentCollection = apartmentCollection;
             borderPane.setCenter(root);
             return loader.getController();
         } catch (IOException e) {

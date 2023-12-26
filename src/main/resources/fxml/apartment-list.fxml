@@ -119,7 +119,7 @@
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/circle-xmark.png" />
+                              <Image url="@../images/circle-x-mark.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -234,7 +234,7 @@
                      <graphic>
                         <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/circle-xmark.png" />
+                              <Image url="@../images/circle-x-mark.png" />
                            </image>
                         </ImageView>
                      </graphic>

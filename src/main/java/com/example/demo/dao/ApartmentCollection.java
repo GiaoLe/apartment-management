@@ -28,6 +28,10 @@ public class ApartmentCollection {
 
     @NotNull
     private Date deadlinePayment;
+
+    @NotNull
+    private boolean isPaid;
+
     @Override
     public String toString() {
         return "ResidentCollection{" +
@@ -37,7 +41,6 @@ public class ApartmentCollection {
                 ", isPaid=" + isPaid +
                 '}';
     }
-    private boolean isPaid;
 
     public ApartmentCollection(Apartment apartment, Collection collection, Date deadlinePayment) {
         id = new ApartmentCollectionID(Integer.parseInt(apartment.getId()), collection.getId());

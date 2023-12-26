@@ -4,7 +4,9 @@ import com.example.demo.dao.ApartmentCollection;
 import com.example.demo.dao.Collection;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
+import com.example.demo.repository.ApartmentCollectionRepository;
 import com.example.demo.repository.ApartmentRepository;
+import com.example.demo.service.ApartmentCollectionService;
 import com.example.demo.service.ApartmentService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -26,7 +28,6 @@ public class CollectionReportController {
     public TableColumn<ApartmentCollection, Boolean> isPaidTableColumn;
     public TableColumn<ApartmentCollection, Date> deadlinePayment;
 
-    public TextField collectionName;
     public TextField searchTextField;
     public MenuItem amountItem;
     public MenuItem apartmentIDItem;
@@ -39,10 +40,12 @@ public class CollectionReportController {
     public HBox searchContainer;
     public Button backBtn;
     public Boolean switchViewFlag = false;
-    public ApartmentCollection apartmentCollectionAfterUpdate;
+    public ApartmentCollection apartmentCollection;
+    public Button markAsPaidButton;
+    public Label reportNameLabel;
 
     public void initializeData(Collection collection) {
-        collectionName.setText(collection.getName());
+        reportNameLabel.setText(collection.getName());
         selectedItem(new ArrayList<>(List.of(amountItem, apartmentIDItem, hostNameItem, isPaidItem)), residentMenuButton);
         selectedItem(new ArrayList<>(List.of(falseItem, trueItem)), isPaidMenuButton);
         for (ApartmentCollection apartmentCollection : collection.getApartmentCollections()){
@@ -134,7 +137,7 @@ public class CollectionReportController {
     }
     public void backButtonOnAction() {
         if(switchViewFlag){
-            MenuViewManager.switchViewFromCollectionReportToApartmentDetail(MenuView.APARTMENT_LIST, apartmentCollectionAfterUpdate);
+            MenuViewManager.switchViewFromCollectionReportToApartmentDetail(MenuView.APARTMENT_LIST, apartmentCollection);
         }else {
             MenuViewManager.switchView(MenuView.COLLECTION_LIST);
         }
@@ -188,5 +191,15 @@ public class CollectionReportController {
                 filterList.addAll(apartmentCollectionList);
                 break;
         }
+    }
+
+    public void markAsPaidButtonOnAction() {
+        apartmentCollection = collectionReportTableView.getSelectionModel().getSelectedItem();
+        apartmentCollection.setPaid(true);
+        ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
+        apartmentCollectionService.merge(apartmentCollection);
+        collectionReportTableView.refresh();
+        switchViewFlag = true;
+        MenuViewManager.switchViewFromCollectionReportToApartmentDetail(MenuView.COLLECTION_REPORT, apartmentCollection);
     }
 }
