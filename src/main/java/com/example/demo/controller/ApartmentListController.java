@@ -527,7 +527,7 @@ public class ApartmentListController {
                                 updateData();
                             });
                             addResBtn.setOnMouseClicked(e2 -> {
-                                MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment);
+                                MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment, selectedFloor);
                             });
                             AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
                             residentTableView.setOnMouseClicked(e2 -> {

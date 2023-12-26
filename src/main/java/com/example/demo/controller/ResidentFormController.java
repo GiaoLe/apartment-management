@@ -11,6 +11,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -52,6 +53,8 @@ public class ResidentFormController {
     public TableColumn<Resident, Integer>  resIDCol;
     public TableView<Resident> residentTableView;
     public DatePicker dobPicker;
+    public ObservableMap<String, String> selectedFloor = FXCollections.observableHashMap();
+
     @FXML
     public void initialize() {
         textFieldWrappers = new ArrayList<>(List.of(
@@ -133,7 +136,7 @@ public class ResidentFormController {
             residentService.persist(resident);
             apartment.addResident(resident);
             if(switchViewFlag){
-                MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, resident);
+                MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, resident, selectedFloor);
             }else {
                 MenuViewManager.switchView(MenuView.RESIDENT_LIST);
             }

@@ -52,7 +52,7 @@ public class MenuViewManager {
             throw new RuntimeException(e);
         }
     }
-    public static Object switchViewFromResidentListToShowApartmentDetail(MenuView menuView, Resident resident){
+    public static Object switchViewFromResidentListToShowApartmentDetail(MenuView menuView, Resident resident, ObservableMap<String, String> selectedFloor){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             Parent root = loader.load();
@@ -60,6 +60,7 @@ public class MenuViewManager {
             ApartmentListController apartmentListController = loader.getController();
             String floor = resident.getApartmentID().substring(0, 1);
             apartmentListController.showFloorDetail(Integer.parseInt(floor));
+            apartmentListController.selectedFloor = selectedFloor;
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.floorTableView.setVisible(false);
             apartmentListController.apartmentTableView.setVisible(true);
@@ -114,13 +115,14 @@ public class MenuViewManager {
             throw new RuntimeException(e);
         }
     }
-    public static Object switchViewToAddNewRes(MenuView menuView, Apartment apartment){
+    public static Object switchViewToAddNewRes(MenuView menuView, Apartment apartment,  ObservableMap<String, String> selectedFloor){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             Parent root = loader.load();
             ResidentFormController residentFormController = loader.getController();
             residentFormController.apartmentTextField.setText(apartment.getId());
             residentFormController.switchViewFlag = true;
+            residentFormController.selectedFloor = selectedFloor;
             borderPane.setCenter(root);
             return loader.getController();
         } catch (IOException e) {
