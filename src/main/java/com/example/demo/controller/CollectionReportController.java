@@ -64,24 +64,22 @@ public class CollectionReportController {
         });
 
         isPaidTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
-        isPaidTableColumn.setCellFactory(column -> {
-            return new TextFieldTableCell<>() {
-                @Override
-                public void updateItem(Boolean item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item != null) {
-                        if (item) {
-                            getStyleClass().add("paid");
-                            getStyleClass().add("state-apartment-design");
+        isPaidTableColumn.setCellFactory(column -> new TextFieldTableCell<>() {
+            @Override
+            public void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    if (item) {
+                        getStyleClass().add("paid");
+                        getStyleClass().add("state-apartment-design");
 
-                        } else {
-                            getStyleClass().add("notPaid");
-                            getStyleClass().add("state-apartment-design");
+                    } else {
+                        getStyleClass().add("notPaid");
+                        getStyleClass().add("state-apartment-design");
 
-                        }
                     }
                 }
-            };
+            }
         });
         residentMenuButton.showingProperty().addListener(e -> {
             if (residentMenuButton.getText().equals("Is paid")){
@@ -131,9 +129,7 @@ public class CollectionReportController {
     }
     public void selectedItem(List<MenuItem> menuItemList, MenuButton menuButton){
         for(MenuItem menuItem : menuItemList){
-            menuItem.setOnAction(e -> {
-                menuButton.setText(menuItem.getText());
-            });
+            menuItem.setOnAction(e -> menuButton.setText(menuItem.getText()));
         }
     }
     public void backButtonOnAction() {

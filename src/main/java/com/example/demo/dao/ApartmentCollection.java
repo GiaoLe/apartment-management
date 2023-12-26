@@ -25,6 +25,7 @@ public class ApartmentCollection {
 
     @ManyToOne
     private Collection collection;
+
     @NotNull
     private Date deadlinePayment;
     @Override

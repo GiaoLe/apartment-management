@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.Apartment;
+import com.example.demo.dao.ApartmentCollection;
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
 import com.example.demo.gui.MenuView;
@@ -39,7 +40,8 @@ public class CollectionFormController {
         collectionTypeChoiceBox.getItems().addAll(CollectionType.values());
         updateCollectionTableView();
     }
-    public void updateCollectionTableView(){
+
+    public void updateCollectionTableView() {
         List<Collection> collectionList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Collection order by name", Collection.class)
                 .getResultList());
         collectionTableView.setItems(FXCollections.observableList(collectionList));
@@ -51,33 +53,21 @@ public class CollectionFormController {
 
     public void submitButtonOnAction() {
         List<Apartment> apartments = new ApartmentService(new ApartmentRepository()).findAll();
-        if (apartments.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("There is no resident. Please create them first.");
-            alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> MenuViewManager.switchView(MenuView.RESIDENT_FORM));
-        } else {
-            Collection collection = Collection.builder().name(nameTextField.getText()).type(collectionTypeChoiceBox.getValue()).description(descriptionTextArea.getText()).build();
-            if (!amountTextField.getText().isEmpty()) {
-                collection.setAmount(Double.parseDouble(amountTextField.getText()));
-            }
-            CollectionService collectionService = new CollectionService(new CollectionRepository());
-            collectionService.persist(collection);
-            ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
+        Collection collection = Collection.builder()
+                .name(nameTextField.getText())
+                .type(collectionTypeChoiceBox.getValue())
+                .description(descriptionTextArea.getText())
+                .amount(Double.parseDouble(amountTextField.getText()))
+                .build();
 
-            if (!collectionTypeChoiceBox.getValue().equals(CollectionType.DONATION)){
-                for (Apartment apartment : apartments) {
-                    if(!apartment.getResidents().isEmpty() && apartment.getHostname() != null){
-                        LocalDate residentMoveInDate = apartment.getHostname().getMoveInDate().toLocalDate();
-                        System.out.println(residentMoveInDate.plusDays(30));
-                        residentMoveInDate = residentMoveInDate.plusMonths(1);
-                        System.out.println(residentMoveInDate);
-                        apartmentCollectionService.persist(apartment, collection, Date.valueOf(residentMoveInDate));
-                    }
-                }
-            }
-            updateCollectionTableView();
-            MenuViewManager.switchView(MenuView.COLLECTION_LIST);
+        CollectionService collectionService = new CollectionService(new CollectionRepository());
+        collectionService.persist(collection);
+
+        ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
+        for (Apartment apartment : apartments) {
+            apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, Date.valueOf(LocalDate.now())));
         }
+        updateCollectionTableView();
+        MenuViewManager.switchView(MenuView.COLLECTION_LIST);
     }
-
 }

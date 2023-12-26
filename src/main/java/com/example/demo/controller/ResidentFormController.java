@@ -1,13 +1,15 @@
 package com.example.demo.controller;
 
-import com.example.demo.repository.HibernateUtility;
+import com.example.demo.dao.Apartment;
+import com.example.demo.dao.ApartmentState;
+import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.dao.Apartment;
-import com.example.demo.dao.Resident;
+import com.example.demo.repository.ApartmentRepository;
+import com.example.demo.repository.HibernateUtility;
 import com.example.demo.repository.ResidentRepository;
+import com.example.demo.service.ApartmentService;
 import com.example.demo.service.ResidentService;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -101,9 +103,7 @@ public class ResidentFormController {
     }
     public void selectedGender(List<MenuItem> list){
         for (MenuItem menuItem : list){
-            menuItem.setOnAction(e -> {
-                genderMenuButton.setText(menuItem.getText());
-            });
+            menuItem.setOnAction(e -> genderMenuButton.setText(menuItem.getText()));
         }
     }
     private void persistResident() {
@@ -132,6 +132,9 @@ public class ResidentFormController {
             );
             residentService.persist(resident);
             apartment.addResident(resident);
+            apartment.setState(ApartmentState.OCCUPIED);
+            ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
+            apartmentService.merge(apartment);
             if(switchViewFlag){
                 MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, resident);
             }else {

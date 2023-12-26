@@ -10,7 +10,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApartmentCollectionID implements Serializable {
-    private Integer aparmentID;
-
+    private Integer apartmentID;
     private Integer collectionID;
 }

@@ -7,8 +7,6 @@ import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ApartmentService;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -24,7 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -95,7 +92,7 @@ public class ApartmentListController {
     public MenuItem triplexItem1;
     public MenuButton typeMenu1;
     private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
-    private final int totalFloor = 50;
+    private static final int TOTAL_FLOOR = 50;
     private final ResidentService residentService = new ResidentService(new ResidentRepository());
     public Button addNewApartment;
     public TableColumn<ApartmentCollection, Double> amountCollectionCol;
@@ -117,10 +114,9 @@ public class ApartmentListController {
 
     public void updateFloorDetails(List<Apartment> apartmentsToShowFloorList) {
         floorList = FXCollections.observableArrayList();
-        for(int i = 1 ; i <= totalFloor ; i++){
+        for(int i = 1; i <= TOTAL_FLOOR; i++){
             ObservableMap<String, String> floorDetail = FXCollections.observableHashMap();
-            int numberOfApartment = 0;
-
+            int numberOfApartment;
             for(Apartment apartment : apartmentsToShowFloorList){
                 if(apartment.getFloor() == i){
                     if(floorDetail.get("floor") == null){
@@ -143,8 +139,6 @@ public class ApartmentListController {
                             floorDetail.put("nAAvailableApartments", String.valueOf(Integer.parseInt(floorDetail.get("nAAvailableApartments")) + 1));
                         }
                     }
-                }
-                else {
                 }
             }
             if(!floorDetail.isEmpty()){
@@ -178,7 +172,7 @@ public class ApartmentListController {
         residentsColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("totalResidents")));
         floorTableView.setItems(floorList);
     }
-    public void initialize() throws IOException {
+    public void initialize() {
         List<Apartment> apartmentsToShowFloorList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id asc ", Apartment.class)
                 .getResultList());
         showFloorList(apartmentsToShowFloorList);
@@ -225,22 +219,19 @@ public class ApartmentListController {
                     }
                 }
                 handleFilter(secondFilterList, searchTextField.getText(), filterList);
-                showApartments(FXCollections.observableList(secondFilterList));;
+                showApartments(FXCollections.observableList(secondFilterList));
             }
         });
-        floorTableView.visibleProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(newValue){
-                    searchTextField.setPromptText("Floor...");
-                    apartmentMenuButton.setVisible(false);
-                    searchTextField.setText("");
-                }else {
-                    searchTextField.setPromptText("Search...");
-                    apartmentMenuButton.setVisible(true);
-                    searchTextField.setText("");
+        floorTableView.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue){
+                searchTextField.setPromptText("Floor...");
+                apartmentMenuButton.setVisible(false);
+                searchTextField.setText("");
+            }else {
+                searchTextField.setPromptText("Search...");
+                apartmentMenuButton.setVisible(true);
+                searchTextField.setText("");
 
-                }
             }
         });
     }
@@ -361,24 +352,22 @@ public class ApartmentListController {
         typeCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getType()));
         amountCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getAmount()));
         isPaidCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
-        isPaidCol.setCellFactory(column -> {
-            return new TextFieldTableCell<ApartmentCollection, Boolean>() {
-                @Override
-                public void updateItem(Boolean item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(item != null){
-                        if(item){
-                            getStyleClass().add("paid");
-                            getStyleClass().add("state-apartment-design");
+        isPaidCol.setCellFactory(column -> new TextFieldTableCell<>() {
+            @Override
+            public void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    if (item) {
+                        getStyleClass().add("paid");
+                        getStyleClass().add("state-apartment-design");
 
-                        }else{
-                            getStyleClass().add("notPaid");
-                            getStyleClass().add("state-apartment-design");
+                    } else {
+                        getStyleClass().add("notPaid");
+                        getStyleClass().add("state-apartment-design");
 
-                        }
                     }
                 }
-            };
+            }
         });
         collectionTableView.setOnMouseClicked(e -> {
             if(e.getClickCount() >= 2){
@@ -390,179 +379,169 @@ public class ApartmentListController {
     public void showApartments(ObservableList<Apartment> index){
         apartmentIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
         totalResidentsCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResidents().size()).asString());
-        hostNameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getHostname() == null  ? "Unknown" : cellData.getValue().getHostname().getLastName()));
         stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()).asString());
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()).asString());
         areaCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getArea()));
-        stateCol.setCellFactory(column -> {
-            return new TextFieldTableCell<Apartment, String>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(item != null){
-                        if(item.equals(ApartmentState.AVAILABLE.toString())){
-                            getStyleClass().add("state-apartment-design");
-                            getStyleClass().add("available-state");
+        stateCol.setCellFactory(column -> new TextFieldTableCell<>() {
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    if (item.equals(ApartmentState.AVAILABLE.toString())) {
+                        getStyleClass().add("state-apartment-design");
+                        getStyleClass().add("available-state");
 
-                        }else if(item.equals(ApartmentState.OCCUPIED.toString())){
-                            getStyleClass().add("state-apartment-design");
-                            getStyleClass().add("occupied-state");
+                    } else if (item.equals(ApartmentState.OCCUPIED.toString())) {
+                        getStyleClass().add("state-apartment-design");
+                        getStyleClass().add("occupied-state");
 
-                        }else if(item.equals(ApartmentState.MAINTENANCE.toString())) {
-                            getStyleClass().add("state-apartment-design");
-                            getStyleClass().add("maintenance-state");
+                    } else if (item.equals(ApartmentState.MAINTENANCE.toString())) {
+                        getStyleClass().add("state-apartment-design");
+                        getStyleClass().add("maintenance-state");
 
-                        }else if(item.equals(ApartmentState.RESERVED.toString())){
-                            getStyleClass().add("state-apartment-design");
-                            getStyleClass().add("reserved-state");
+                    } else if (item.equals(ApartmentState.RESERVED.toString())) {
+                        getStyleClass().add("state-apartment-design");
+                        getStyleClass().add("reserved-state");
 
 
-                        }
                     }
                 }
-            };
+            }
         });
-        Callback<TableColumn<Apartment, String>, TableCell<Apartment, String>> cellFoctory = (TableColumn<Apartment, String> param) -> {
-            final TableCell<Apartment, String> cell = new TableCell<Apartment, String>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-
+        Callback<TableColumn<Apartment, String>, TableCell<Apartment, String>> cellFactory = (TableColumn<Apartment, String> param) -> new TableCell<>() {
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Button editBtn = new Button();
+                    Button deleteBtn = new Button();
+                    ImageView imageView = new ImageView();
+                    ImageView imageView1 = new ImageView();
+                    String imagePath = Objects.requireNonNull(getClass().getResource("/images/pencil.png")).toExternalForm();
+                    String imagePath1 = Objects.requireNonNull(getClass().getResource("/images/delete.png")).toExternalForm();
+                    Image image = new Image(imagePath);
+                    Image image1 = new Image(imagePath1);
+                    imageView.setImage(image);
+                    imageView1.setImage(image1);
+                    imageView.setFitWidth(20);
+                    imageView.setFitHeight(20);
+                    imageView1.setFitWidth(20);
+                    imageView1.setFitHeight(20);
+                    editBtn.setGraphic(imageView);
+                    deleteBtn.setGraphic(imageView1);
+                    int rowIndex = getIndex();
+                    if (rowIndex % 2 == 0) {
+                        editBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;");
+                        deleteBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;");
+                        editBtn.setOnMouseExited(e -> editBtn.setStyle(
+                                " -fx-cursor: hand ;"
+                                        + "-fx-background-color: #ffff;"
+                        ));
+                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"));
+                        editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #868686;"));
+                        deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #868686FF;"));
+                        deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
+                                " -fx-cursor: hand ;"
+                                        + "-fx-background-color: #ffff;"
+                        ));
+                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"));
                     } else {
-                        Button editBtn = new Button();
-                        Button deleteBtn = new Button();
-                        ImageView imageView = new ImageView();
-                        ImageView imageView1 = new ImageView();
-                        String imagePath = getClass().getResource("/images/pencil.png").toExternalForm();
-                        String imagePath1 = getClass().getResource("/images/delete.png").toExternalForm();
-                        Image image = new Image(imagePath);
-                        Image image1 = new Image(imagePath1);
-                        imageView.setImage(image);
-                        imageView1.setImage(image1);
-                        imageView.setFitWidth(20);
-                        imageView.setFitHeight(20);
-                        imageView1.setFitWidth(20);
-                        imageView1.setFitHeight(20);
-                        editBtn.setGraphic(imageView);
-                        deleteBtn.setGraphic(imageView1);
-                        int rowIndex = getIndex();
-                        if(rowIndex % 2 == 0){
-                            editBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;" );
-                            deleteBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;" );
-                            editBtn.setOnMouseExited(e -> editBtn.setStyle(
-                                    " -fx-cursor: hand ;"
-                                            + "-fx-background-color: #ffff;"
-                            ));
-                            editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"));
-                            editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #868686;"));
-                            deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #868686FF;"));
-                            deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
-                                    " -fx-cursor: hand ;"
-                                            + "-fx-background-color: #ffff;"
-                            ));
-                            deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"));
-                        } else {
-                            editBtn.setStyle("-fx-background-color: #f0f0f0;" + "-fx-cursor:HAND;" );
-                            deleteBtn.setStyle("-fx-background-color: #f0f0f0;" + "-fx-cursor:HAND;" );
-                            editBtn.setOnMouseExited(e -> editBtn.setStyle(
-                                    " -fx-cursor: hand ;"
-                                            + "-fx-background-color: #f0f0f0;"
-                            ));
-                            editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #d7d7d7;"));
-                            editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #BDBDBDFF;"));
-                            deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #BDBDBDFF;"));
-                            deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
-                                    " -fx-cursor: hand ;"
-                                            + "-fx-background-color: #f0f0f0;"
-                            ));
-                            deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #d7d7d7;"));
-
-                        }
-
-
-                        deleteBtn.setOnMouseClicked(e -> {
-                            Apartment apartment = getTableView().getItems().get(getIndex());
-                           apartmentService.remove(apartment);
-                           updateData();
-                        });
-                        editBtn.setOnMouseClicked(e -> {
-                            dialogContainer.setVisible(true);
-                            apartmentInfoDialog.setVisible(true);
-                            apartmentInfoClosebtn.setOnMouseClicked(e1 -> {
-                                dialogContainer.setVisible(false);
-                                apartmentInfoDialog.setVisible(false);
-                            });
-                            Apartment apartment = getTableView().getItems().get(getIndex());
-                            selectedApartment = apartment;
-                            updateCollectionListsInApartment(apartment);
-                            apartmentIDFilter1.setText(apartment.getId());
-                            stateMenu1.setText(String.valueOf(apartment.getState()));
-                            typeMenu1.setText(String.valueOf(apartment.getType()));
-                            hostNameFilter1.setText(apartment.getHostname() == null ? "" : apartment.getHostname().getLastName());
-                            List<MenuItem> typeItems = FXCollections.observableArrayList(studioItem1, penthouseItem1, duplexItem1, triplexItem1);
-                            selectedType(typeItems, typeMenu1);
-                            List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem1, occupiedItem1, reservedItem1, maintainingItem1);
-                            selectedType(stateItems, stateMenu1);
-                            updateResidentListsInApartment(apartment);
-                            AtomicReference<Resident> selectedToBeHost = new AtomicReference<>(new Resident());
-                            hostNameFilter1.getItems().clear();
-                            for(Resident resident : apartment.getResidents()){
-                                MenuItem menuItem = new MenuItem(String.valueOf(resident.getLastName()));
-                                menuItem.setId(String.valueOf(resident.getId()));
-                                menuItem.setOnAction(event -> {
-                                    selectedToBeHost.set(resident);
-                                    hostNameFilter1.setText(menuItem.getText());
-                                });
-                                hostNameFilter1.getItems().add(menuItem);
-                                menuItem.setStyle("-fx-border-radius: 14;" + "-fx-pref-width: 80px;");
-                            }
-                            editResBtn.setOnMouseClicked(e2 -> {
-                                Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), ApartmentState.valueOf(stateMenu1.getText()), apartment.getRoomCount(), selectedToBeHost.get());
-                                apartmentService.merge(updateApartment);
-                                apartmentInfoDialog.setVisible(false);
-                                dialogContainer.setVisible(false);
-                                floorList.clear();
-                                updateData();
-                            });
-                            addResBtn.setOnMouseClicked(e2 -> {
-                                MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment);
-                            });
-                            AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
-                            residentTableView.setOnMouseClicked(e2 -> {
-                                resident.set(residentTableView.getSelectionModel().getSelectedItem());
-                                if(e2.getClickCount() >= 2){
-                                    Resident resident1 = residentTableView.getSelectionModel().getSelectedItem();
-                                    MenuViewManager.switchViewToShowResidentDetails(MenuView.RESIDENT_LIST, resident1);
-                                }
-                            });
-
-                            delResBtn.setOnMouseClicked(e2 -> {
-                                residentService.remove(resident.get());
-                                updateData();
-                                Apartment apartmentAftetUpdate = HibernateUtility.getSessionFactory().fromSession(session -> session.createQuery("from Apartment  where id = :id", Apartment.class)
-                                        .setParameter("id", apartment.getId())
-                                        .uniqueResult());
-                                updateResidentListsInApartment(apartmentAftetUpdate);
-                            });
-                        });
-
-                        HBox managebtn = new HBox(editBtn, deleteBtn);
-                        managebtn.setStyle("-fx-alignment:center");
-                        HBox.setMargin(deleteBtn, new Insets(2, 2, 0, 3));
-                        HBox.setMargin(editBtn, new Insets(2, 3, 0, 2));
-                        setGraphic(managebtn);
+                        editBtn.setStyle("-fx-background-color: #f0f0f0;" + "-fx-cursor:HAND;");
+                        deleteBtn.setStyle("-fx-background-color: #f0f0f0;" + "-fx-cursor:HAND;");
+                        editBtn.setOnMouseExited(e -> editBtn.setStyle(
+                                " -fx-cursor: hand ;"
+                                        + "-fx-background-color: #f0f0f0;"
+                        ));
+                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #d7d7d7;"));
+                        editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #BDBDBDFF;"));
+                        deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #BDBDBDFF;"));
+                        deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
+                                " -fx-cursor: hand ;"
+                                        + "-fx-background-color: #f0f0f0;"
+                        ));
+                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #d7d7d7;"));
 
                     }
-                    setText(null);
+
+
+                    deleteBtn.setOnMouseClicked(e -> {
+                        Apartment apartment = getTableView().getItems().get(getIndex());
+                        apartmentService.remove(apartment);
+                        updateData();
+                    });
+                    editBtn.setOnMouseClicked(e -> {
+                        dialogContainer.setVisible(true);
+                        apartmentInfoDialog.setVisible(true);
+                        apartmentInfoClosebtn.setOnMouseClicked(e1 -> {
+                            dialogContainer.setVisible(false);
+                            apartmentInfoDialog.setVisible(false);
+                        });
+                        Apartment apartment = getTableView().getItems().get(getIndex());
+                        selectedApartment = apartment;
+                        updateCollectionListsInApartment(apartment);
+                        apartmentIDFilter1.setText(apartment.getId());
+                        stateMenu1.setText(String.valueOf(apartment.getState()));
+                        typeMenu1.setText(String.valueOf(apartment.getType()));
+                        hostNameFilter1.setText(apartment.getHost() == null ? "" : apartment.getHost().getLastName());
+                        List<MenuItem> typeItems = FXCollections.observableArrayList(studioItem1, penthouseItem1, duplexItem1, triplexItem1);
+                        selectedType(typeItems, typeMenu1);
+                        List<MenuItem> stateItems = FXCollections.observableArrayList(availableItem1, occupiedItem1, reservedItem1, maintainingItem1);
+                        selectedType(stateItems, stateMenu1);
+                        updateResidentListsInApartment(apartment);
+                        AtomicReference<Resident> selectedToBeHost = new AtomicReference<>(new Resident());
+                        hostNameFilter1.getItems().clear();
+                        for (Resident resident : apartment.getResidents()) {
+                            MenuItem menuItem = new MenuItem(String.valueOf(resident.getLastName()));
+                            menuItem.setId(String.valueOf(resident.getId()));
+                            menuItem.setOnAction(event -> {
+                                selectedToBeHost.set(resident);
+                                hostNameFilter1.setText(menuItem.getText());
+                            });
+                            hostNameFilter1.getItems().add(menuItem);
+                            menuItem.setStyle("-fx-border-radius: 14;" + "-fx-pref-width: 80px;");
+                        }
+                        editResBtn.setOnMouseClicked(e2 -> {
+                            Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), ApartmentState.valueOf(stateMenu1.getText()), apartment.getRoomCount(), selectedToBeHost.get());
+                            apartmentService.merge(updateApartment);
+                            apartmentInfoDialog.setVisible(false);
+                            dialogContainer.setVisible(false);
+                            floorList.clear();
+                            updateData();
+                        });
+                        addResBtn.setOnMouseClicked(e2 -> MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment));
+                        AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
+                        residentTableView.setOnMouseClicked(e2 -> {
+                            resident.set(residentTableView.getSelectionModel().getSelectedItem());
+                            if (e2.getClickCount() >= 2) {
+                                Resident resident1 = residentTableView.getSelectionModel().getSelectedItem();
+                                MenuViewManager.switchViewToShowResidentDetails(MenuView.RESIDENT_LIST, resident1);
+                            }
+                        });
+
+                        delResBtn.setOnMouseClicked(e2 -> {
+                            residentService.remove(resident.get());
+                            updateData();
+                            Apartment apartmentAfterUpdate = HibernateUtility.getSessionFactory().fromSession(session -> session.createQuery("from Apartment  where id = :id", Apartment.class)
+                                    .setParameter("id", apartment.getId())
+                                    .uniqueResult());
+                            updateResidentListsInApartment(apartmentAfterUpdate);
+                        });
+                    });
+
+                    HBox managingButton = new HBox(editBtn, deleteBtn);
+                    managingButton.setStyle("-fx-alignment:center");
+                    HBox.setMargin(deleteBtn, new Insets(2, 2, 0, 3));
+                    HBox.setMargin(editBtn, new Insets(2, 3, 0, 2));
+                    setGraphic(managingButton);
+
                 }
+                setText(null);
+            }
 
-            };
-
-            return cell;
         };
-        actionsCol.setCellFactory(cellFoctory);
+        actionsCol.setCellFactory(cellFactory);
 
         apartmentTableView.setItems(index);
     }

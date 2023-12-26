@@ -36,10 +36,11 @@ public class Apartment {
     @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
     private List<ApartmentCollection> apartmentCollectionList;
+
     @ManyToOne
     @Getter
     @Setter
-    private Resident hostname;
+    private Resident host;
 
     public void addResident(Resident resident) {
         residents.add(resident);
@@ -47,13 +48,13 @@ public class Apartment {
             state = ApartmentState.OCCUPIED;
         }
     }
-    public Apartment(String id, double area, ApartmentType type, ApartmentState state, int roomCount, Resident hostname){
+    public Apartment(String id, double area, ApartmentType type, ApartmentState state, int roomCount, Resident host){
         this.id = id;
         this.area = area;
         this.type = type;
         this.state = state;
         this.roomCount = roomCount;
-        this.hostname = hostname;
+        this.host = host;
     }
     @Transient
     public int getFloor() {
@@ -65,7 +66,7 @@ public class Apartment {
                 "id='" + id + '\'' +
                 ", area=" + area +
                 ", type=" + type +
-                ", hostName=" + hostname.getId() +
+                ", hostName=" + host.getId() +
                 ", state=" + state +
                 ", roomCount=" + roomCount +
                 ", residents=[");

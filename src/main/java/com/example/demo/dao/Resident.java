@@ -1,15 +1,14 @@
 package com.example.demo.dao;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
-import java.util.Objects;
 
 @Data
 @Entity
@@ -39,26 +38,20 @@ public class Resident implements Serializable {
     private String email;
 
     private String nationalID;
+
     @NotNull
     private Date dateOfBirth;
-    @OneToMany(mappedBy = "hostname", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Getter
-    @Setter
-    private List<Apartment> ownApartments;
+
+
     @ManyToOne
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    @JoinColumn(name = "apartment_id")
     private Apartment apartment;
 
     public Resident(String IDNumber, Date dateOfBirth, String gender, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
         this.IDNumber = IDNumber;
         this.dateOfBirth = dateOfBirth;
-        if(gender.equals("Female")){
-            this.gender = true;
-        } else {
-            this.gender = false;
-        }
+        this.gender = gender.equals("Female");
         this.firstName = firstName;
         this.lastName = lastName;
         this.apartment = apartment;

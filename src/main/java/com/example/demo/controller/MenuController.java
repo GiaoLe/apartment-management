@@ -3,13 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -20,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuController {
-    public ImageView toggleIcon;
     public Button dashboardButton;
     public Button residentsButton;
     public BorderPane borderPane;

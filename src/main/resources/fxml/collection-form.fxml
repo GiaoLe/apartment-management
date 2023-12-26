@@ -14,61 +14,54 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="852.0" prefWidth="1134.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionFormController">
-   <content>
-      <AnchorPane prefHeight="896.0" prefWidth="1143.0" styleClass="container" stylesheets="@../styles/CollectionForm.css">
-         <children>
-            <VBox layoutX="47.0" layoutY="116.0" prefHeight="338.0" prefWidth="402.0">
-               <children>
-                  <VBox layoutX="10.0" layoutY="10.0">
-                     <children>
-                        <Label styleClass="label-design" text="Name" />
-                        <TextField fx:id="nameTextField" prefHeight="13.0" prefWidth="200.0" styleClass="input-design" />
-                     </children>
-                  </VBox>
-                  <VBox>
-                     <children>
-                        <Label styleClass="label-design" text="Type of Collection" />
-                        <ChoiceBox fx:id="collectionTypeChoiceBox" prefHeight="27.0" prefWidth="200.0" styleClass="input-design" />
-                     </children>
-                  </VBox>
-                  <VBox>
-                     <children>
-                        <Label styleClass="label-design" text="Amount" />
-                        <TextField fx:id="amountTextField" styleClass="input-design" />
-                        <VBox>
-                           <children>
-                              <Label styleClass="label-design" text="Description" />
-                              <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0" styleClass="input-design" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <HBox>
-                     <children>
-                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" prefHeight="33.0" prefWidth="123.0" text="Submit">
-                           <styleClass>
-                              <String fx:value="search-btn" />
-                              <String fx:value="btn-design" />
-                           </styleClass>
-                           <HBox.margin>
-                              <Insets left="280.0" top="20.0" />
-                           </HBox.margin></Button>
-                     </children>
-                  </HBox>
-               </children>
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="852.0"
+            prefWidth="1134.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.controller.CollectionFormController">
+   <AnchorPane prefHeight="896.0" prefWidth="1143.0" styleClass="container" stylesheets="@../styles/CollectionForm.css">
+      <VBox layoutX="47.0" layoutY="116.0" prefHeight="338.0" prefWidth="402.0">
+         <VBox layoutX="10.0" layoutY="10.0">
+            <Label styleClass="label-design" text="Name"/>
+            <TextField fx:id="nameTextField" prefHeight="13.0" prefWidth="200.0" styleClass="input-design"/>
+         </VBox>
+         <VBox>
+            <Label styleClass="label-design" text="Type of Collection"/>
+            <ChoiceBox fx:id="collectionTypeChoiceBox" prefHeight="27.0" prefWidth="200.0"
+                       styleClass="input-design"/>
+         </VBox>
+         <VBox>
+            <Label styleClass="label-design" text="Amount"/>
+            <TextField fx:id="amountTextField" styleClass="input-design"/>
+            <VBox>
+               <Label styleClass="label-design" text="Description"/>
+               <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="200.0"
+                         styleClass="input-design"/>
             </VBox>
-            <TableView fx:id="collectionTableView" layoutX="491.0" layoutY="116.0" prefHeight="498.0" prefWidth="603.0" stylesheets="@../styles/TableView.css">
-              <columns>
-                <TableColumn fx:id="nameCol" prefWidth="182.0" text="Name" />
-                  <TableColumn fx:id="typeCol" prefWidth="185.0" text="Type" />
-                  <TableColumn fx:id="amountCol" prefWidth="109.0" text="Amount(USD)" />
-                  <TableColumn fx:id="descriptionCol" prefWidth="126.0" text="Description" />
-              </columns>
-            </TableView>
-            <Label layoutX="143.0" layoutY="45.0" prefHeight="39.0" prefWidth="211.0" styleClass="label-design" text="Create New Collection" />
-            <Label layoutX="687.0" layoutY="45.0" prefHeight="39.0" prefWidth="211.0" styleClass="label-design" text="Existing Collections" />
-         </children>
-      </AnchorPane>
-   </content>
+         </VBox>
+         <HBox>
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction"
+                    prefHeight="33.0" prefWidth="123.0" text="Submit">
+               <styleClass>
+                  <String fx:value="search-btn"/>
+                  <String fx:value="btn-design"/>
+               </styleClass>
+               <HBox.margin>
+                  <Insets left="280.0" top="20.0"/>
+               </HBox.margin>
+            </Button>
+         </HBox>
+      </VBox>
+      <TableView fx:id="collectionTableView" layoutX="491.0" layoutY="116.0" prefHeight="498.0" prefWidth="603.0"
+                 stylesheets="@../styles/TableView.css">
+         <columns>
+            <TableColumn fx:id="nameCol" prefWidth="182.0" text="Name"/>
+            <TableColumn fx:id="typeCol" prefWidth="185.0" text="Type"/>
+            <TableColumn fx:id="amountCol" prefWidth="109.0" text="Amount(USD)"/>
+            <TableColumn fx:id="descriptionCol" prefWidth="126.0" text="Description"/>
+         </columns>
+      </TableView>
+      <Label layoutX="143.0" layoutY="45.0" prefHeight="39.0" prefWidth="211.0" styleClass="label-design"
+             text="Create New Collection"/>
+      <Label layoutX="687.0" layoutY="45.0" prefHeight="39.0" prefWidth="211.0" styleClass="label-design"
+             text="Existing Collections"/>
+   </AnchorPane>
 </ScrollPane>
