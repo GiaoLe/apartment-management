@@ -1,15 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.Collection;
 import com.example.demo.dao.ApartmentCollection;
+import com.example.demo.dao.Collection;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.service.ApartmentService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//TODO Change Collection Report to each Apartment, not to each Resident
 public class CollectionReportController {
 
     public TableView<ApartmentCollection> collectionReportTableView;
@@ -68,16 +65,16 @@ public class CollectionReportController {
 
         isPaidTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
         isPaidTableColumn.setCellFactory(column -> {
-            return new TextFieldTableCell<ApartmentCollection, Boolean>() {
+            return new TextFieldTableCell<>() {
                 @Override
                 public void updateItem(Boolean item, boolean empty) {
                     super.updateItem(item, empty);
-                    if(item != null){
-                        if(item){
+                    if (item != null) {
+                        if (item) {
                             getStyleClass().add("paid");
                             getStyleClass().add("state-apartment-design");
 
-                        }else{
+                        } else {
                             getStyleClass().add("notPaid");
                             getStyleClass().add("state-apartment-design");
 
