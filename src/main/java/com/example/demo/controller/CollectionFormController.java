@@ -20,6 +20,7 @@ import javafx.scene.control.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class CollectionFormController {
@@ -64,8 +65,12 @@ public class CollectionFormController {
         collectionService.persist(collection);
 
         ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
-        for (Apartment apartment : apartments) {
-            apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, Date.valueOf(LocalDate.now())));
+        if (collectionTypeChoiceBox.getValue() != CollectionType.DONATION){
+            for (Apartment apartment : apartments) {
+                Date deadlinePayment = apartment.getHost().getMoveInDate();
+                deadlinePayment = Date.valueOf(deadlinePayment.toLocalDate().plusDays(30));
+                apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, deadlinePayment));
+            }
         }
         updateCollectionTableView();
         MenuViewManager.switchView(MenuView.COLLECTION_LIST);

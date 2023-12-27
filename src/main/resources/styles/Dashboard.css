@@ -1,5 +1,6 @@
 .container{
-    -fx-background-color:  #f6fdff;
+    -fx-background-color:   #f6fdff;
+
 }
 .header{
     -fx-background-color: linear-gradient(to right, #f87000, #fd0026);
@@ -27,10 +28,11 @@
     -fx-cursor: HAND;
 }
 .sidebar-button:hover{
-    -fx-background-color: #dcdcdc;
-}
-.sidebar-button:pressed{
-    -fx-background-color: #b7b7b7;
+    -fx-background-color: #e0e0e0;
+    -fx-font-size: 25px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #484848;
+    -fx-cursor: HAND;
 }
 .header-title{
     -fx-text-fill: linear-gradient(to right, #f87000, #fd0026);
@@ -64,15 +66,4 @@
     -fx-border-color: gray;
     -fx-end-margin: 20;
     -fx-start-margin: 20;
-}
-.total-apartment-label{
-    -fx-text-fill: #4e73df;
-    -fx-font-size: 20px;
-    -fx-font-weight: 700;
-}
-.total-apartment-card{
-    -fx-border-width: 1px 1px 1px 5px;
-    -fx-border-color: #d5d5d5 #d5d5d5 #d5d5d5 #4e73df;
-    -fx-border-radius: 5;
-    -fx-background-color: white;
 }

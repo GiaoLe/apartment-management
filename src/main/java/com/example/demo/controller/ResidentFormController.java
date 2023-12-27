@@ -1,14 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.Apartment;
-import com.example.demo.dao.ApartmentState;
-import com.example.demo.dao.Resident;
+import com.example.demo.dao.*;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.ApartmentRepository;
-import com.example.demo.repository.HibernateUtility;
-import com.example.demo.repository.ResidentRepository;
+import com.example.demo.repository.*;
+import com.example.demo.service.ApartmentCollectionService;
 import com.example.demo.service.ApartmentService;
+import com.example.demo.service.CollectionService;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -56,6 +54,9 @@ public class ResidentFormController {
     public TableView<Resident> residentTableView;
     public DatePicker dobPicker;
     public ObservableMap<String, String> selectedFloor = FXCollections.observableHashMap();
+    private CollectionService collectionService = new CollectionService(new CollectionRepository());
+    private ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
+
 
     @FXML
     public void initialize() {
@@ -133,11 +134,22 @@ public class ResidentFormController {
                     nationalIDTextField.getText(),
                     Date.valueOf(datePicker.getValue())
             );
+            if (apartment.getResidents().isEmpty()){
+                List<Collection> collections = collectionService.findAll();
+                Date moveInDate = Date.valueOf(datePicker.getValue());
+                Date deadlinePayment = Date.valueOf(moveInDate.toLocalDate().plusDays(30));
+                for (Collection collection : collections){
+                    if (collection.getType() == CollectionType.MANAGEMENT_FEE || collection.getType() == CollectionType.SERVICE_FEE){
+                        apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, deadlinePayment));
+                    }
+                }
+            }
             residentService.persist(resident);
             apartment.addResident(resident);
             apartment.setState(ApartmentState.OCCUPIED);
             ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
             apartmentService.merge(apartment);
+
             if(switchViewFlag){
                 MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, resident, selectedFloor);
             }else {

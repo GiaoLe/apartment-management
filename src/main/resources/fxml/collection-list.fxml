@@ -53,11 +53,11 @@
             </HBox>
             <TableView fx:id="collectionsTableView" editable="true" layoutX="57.0" layoutY="115.0" prefHeight="581.0" prefWidth="1002.0" stylesheets="@../styles/TableView.css">
                <columns>
-                  <TableColumn fx:id="nameTableColumn" prefWidth="160.0" text="Name" />
-                  <TableColumn fx:id="typeTableColumn" prefWidth="169.0" text="Type" />
-                  <TableColumn fx:id="amountTableColumn" prefWidth="198.0" text="Amount (USD)" />
-                  <TableColumn fx:id="totalAppsPartCol" prefWidth="244.0" text="Total Apartments Participating" />
-                  <TableColumn fx:id="descriptionTableColumn" minWidth="0.0" prefWidth="230.0" text="Description" />
+                  <TableColumn fx:id="nameTableColumn" prefWidth="218.0" text="Name" />
+                  <TableColumn fx:id="typeTableColumn" prefWidth="166.0" text="Type" />
+                  <TableColumn fx:id="amountTableColumn" prefWidth="193.0" text="Amount (USD)" />
+                  <TableColumn fx:id="totalAppsPartCol" prefWidth="257.0" text="Total Apartments Participating" />
+                  <TableColumn fx:id="descriptionTableColumn" minWidth="0.0" prefWidth="167.0" text="Description" />
                </columns>
             </TableView>
             <Label layoutX="407.0" text="Collection List ">

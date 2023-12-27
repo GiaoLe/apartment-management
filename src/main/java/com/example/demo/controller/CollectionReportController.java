@@ -43,13 +43,15 @@ public class CollectionReportController {
     public ApartmentCollection apartmentCollection;
     public Button markAsPaidButton;
     public Label reportNameLabel;
+    public Button addAppsBtn;
 
     public void initializeData(Collection collection) {
-        reportNameLabel.setText(collection.getName());
+        reportNameLabel.setText("Collection's Report: " + collection.getName());
         selectedItem(new ArrayList<>(List.of(amountItem, apartmentIDItem, hostNameItem, isPaidItem)), residentMenuButton);
         selectedItem(new ArrayList<>(List.of(falseItem, trueItem)), isPaidMenuButton);
+        System.out.println(collection.getApartmentCollections().size());
         for (ApartmentCollection apartmentCollection : collection.getApartmentCollections()){
-            System.out.println(apartmentCollection.getApartment().getResidents().size());
+            System.out.println(apartmentCollection);
         }
         collectionReportTableView.setItems(FXCollections.observableList(collection.getApartmentCollections()));
         apartmentIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getId()));
@@ -200,6 +202,5 @@ public class CollectionReportController {
         apartmentCollectionService.merge(apartmentCollection);
         collectionReportTableView.refresh();
         switchViewFlag = true;
-        MenuViewManager.switchViewFromCollectionReportToApartmentDetail(MenuView.COLLECTION_REPORT, apartmentCollection);
     }
 }

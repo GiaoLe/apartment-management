@@ -5,6 +5,7 @@ import com.example.demo.controller.*;
 import com.example.demo.dao.Apartment;
 import com.example.demo.dao.ApartmentCollection;
 import com.example.demo.dao.Resident;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;

@@ -4,6 +4,10 @@
     -fx-end-margin: 20;
     -fx-start-margin: 20;
 }
+.container{
+    -fx-background-color:   #f6fdff;
+
+}
 .input-design{
     -fx-background-color: white;
     -fx-border-width: 1px;

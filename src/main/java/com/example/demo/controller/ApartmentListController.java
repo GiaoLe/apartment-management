@@ -381,6 +381,7 @@ public class ApartmentListController {
         totalResidentsCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResidents().size()).asString());
         stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()).asString());
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()).asString());
+        hostNameCol.setCellValueFactory(cellData -> cellData.getValue().getHost() == null ? new SimpleObjectProperty<>("Unknown") : new SimpleObjectProperty<>(cellData.getValue().getHost().getLastName()));
         areaCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getArea()));
         stateCol.setCellFactory(column -> new TextFieldTableCell<>() {
             @Override
@@ -492,16 +493,21 @@ public class ApartmentListController {
                         updateResidentListsInApartment(apartment);
                         AtomicReference<Resident> selectedToBeHost = new AtomicReference<>(new Resident());
                         hostNameFilter1.getItems().clear();
-                        for (Resident resident : apartment.getResidents()) {
-                            MenuItem menuItem = new MenuItem(String.valueOf(resident.getLastName()));
-                            menuItem.setId(String.valueOf(resident.getId()));
-                            menuItem.setOnAction(event -> {
-                                selectedToBeHost.set(resident);
-                                hostNameFilter1.setText(menuItem.getText());
-                            });
-                            hostNameFilter1.getItems().add(menuItem);
-                            menuItem.setStyle("-fx-border-radius: 14;" + "-fx-pref-width: 80px;");
+                        if (apartment.getHost() == null){
+                            for (Resident resident : apartment.getResidents()) {
+                                MenuItem menuItem = new MenuItem(String.valueOf(resident.getLastName()));
+                                menuItem.setId(String.valueOf(resident.getId()));
+                                menuItem.setOnAction(event -> {
+                                    selectedToBeHost.set(resident);
+                                    hostNameFilter1.setText(menuItem.getText());
+                                });
+                                hostNameFilter1.getItems().add(menuItem);
+                                menuItem.setStyle("-fx-border-radius: 14;" + "-fx-pref-width: 80px;");
+                            }
+                        }else {
+                            selectedToBeHost.set(apartment.getHost());
                         }
+
                         editResBtn.setOnMouseClicked(e2 -> {
                             Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), ApartmentState.valueOf(stateMenu1.getText()), apartment.getRoomCount(), selectedToBeHost.get());
                             apartmentService.merge(updateApartment);
@@ -510,7 +516,7 @@ public class ApartmentListController {
                             floorList.clear();
                             updateData();
                         });
-                        addResBtn.setOnMouseClicked(mouseEvent -> MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment));
+                        addResBtn.setOnMouseClicked(mouseEvent -> MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment, null));
                         AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
                         residentTableView.setOnMouseClicked(mouseEvent -> {
                             resident.set(residentTableView.getSelectionModel().getSelectedItem());

@@ -231,7 +231,7 @@ public class ResidentListController {
         } else if (switchViewFlag) {
             residentService.merge(residentToShow);
             residentTableView.refresh();
-            MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, residentToShow);
+            MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, residentToShow, null);
         }
     }
 

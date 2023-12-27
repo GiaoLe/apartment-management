@@ -147,6 +147,7 @@ public class CollectionListController {
     }
     public void detailsButtonOnAction() {
         Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
+        System.out.println(collection);
         if (collection != null) {
             CollectionReportController collectionReportController
                     = (CollectionReportController) MenuViewManager.switchView(MenuView.COLLECTION_REPORT);

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -16,80 +17,102 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="collectionReportContainer" prefHeight="758.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionReportController">
-    <HBox layoutX="25.0" layoutY="603.0" />
-    <TableView fx:id="collectionReportTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="1004.0" stylesheets="@../styles/TableView.css">
-        <columns>
-            <TableColumn fx:id="apartmentIDCol" prefWidth="173.0" text="ApartmentID" />
-            <TableColumn fx:id="hostNameCol" prefWidth="201.0" text="Host name" />
-            <TableColumn fx:id="totalResCol" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
-         <TableColumn fx:id="amountTableColumn" prefWidth="123.0" text="Amount" />
-         <TableColumn fx:id="deadlinePayment" prefWidth="196.0" text="Deadline Payment" />
-            <TableColumn fx:id="isPaidTableColumn" prefWidth="92.0" text="Is Paid" />
-        </columns>
-    </TableView>
-      <HBox prefHeight="38.0" prefWidth="644.0">
-          <Label fx:id="reportNameLabel" text="Report Name">
-              <font>
-                  <Font name="System Bold" size="24.0" />
-              </font>
-         <HBox.margin>
-            <Insets left="30.0" />
-         </HBox.margin>
-          </Label>
-      </HBox>
-   <HBox fx:id="searchContainer" layoutX="33.0" layoutY="52.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14;">
-      <children>
-         <ImageView fitHeight="23.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../images/search.png" />
-            </image>
-            <HBox.margin>
-               <Insets top="8.0" />
-            </HBox.margin>
-         </ImageView>
-         <TextField fx:id="searchTextField" prefHeight="46.0" prefWidth="318.0" promptText="Search..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
-            <font>
-               <Font name="System Bold" size="16.0" />
-            </font>
-         </TextField>
-      </children>
-   </HBox>
-     <Button fx:id="backBtn" layoutX="962.0" layoutY="59.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefWidth="60.0" stylesheets="@../styles/CollectionReport.css" text="Back">
-      <styleClass>
-         <String fx:value="btn-design" />
-         <String fx:value="search-btn" />
-      </styleClass></Button>
-   <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14;" text="Search options">
-      <font>
-         <Font size="18.0" />
-      </font>
-      <items>
-         <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="ApartmentID" />
-         <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Host name" />
-         <MenuItem fx:id="amountItem" mnemonicParsing="false" text="Amount" />
-         <MenuItem fx:id="isPaidItem" mnemonicParsing="false" text="Is paid" />
-      </items>
-      <cursor>
-         <Cursor fx:constant="HAND" />
-      </cursor>
-   </MenuButton>
-   <MenuButton fx:id="isPaidMenuButton" layoutX="55.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14;" text="Choose option" visible="false">
-      <font>
-         <Font size="18.0" />
-      </font>
-      <items>
-         <MenuItem fx:id="trueItem" mnemonicParsing="false" text="True" />
-         <MenuItem fx:id="falseItem" mnemonicParsing="false" text="False" />
-      </items>
-      <cursor>
-         <Cursor fx:constant="HAND" />
-      </cursor>
-   </MenuButton>
-   <Button fx:id="markAsPaidButton" layoutX="45.0" layoutY="638.0" mnemonicParsing="false" onAction="#markAsPaidButtonOnAction" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Mark as paid">
-      <styleClass>
-         <String fx:value="btn-design" />
-         <String fx:value="search-btn" />
-      </styleClass>
-   </Button>
-</AnchorPane>
+<ScrollPane fx:id="collectionReportContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1092.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionReportController">
+   <content>
+      <AnchorPane prefHeight="758.0" prefWidth="1091.0" styleClass="container" stylesheets="@../styles/CollectionReport.css">
+         <children>
+            <HBox layoutX="25.0" layoutY="603.0" />
+            <TableView fx:id="collectionReportTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="1004.0" stylesheets="@../styles/TableView.css">
+               <columns>
+                  <TableColumn fx:id="apartmentIDCol" prefWidth="173.0" text="ApartmentID" />
+                  <TableColumn fx:id="hostNameCol" prefWidth="201.0" text="Host name" />
+                  <TableColumn fx:id="totalResCol" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
+                  <TableColumn fx:id="amountTableColumn" prefWidth="123.0" text="Amount" />
+                  <TableColumn fx:id="deadlinePayment" prefWidth="196.0" text="Deadline Payment" />
+                  <TableColumn fx:id="isPaidTableColumn" prefWidth="92.0" text="Is Paid" />
+               </columns>
+            </TableView>
+            <HBox prefHeight="38.0" prefWidth="1041.0">
+               <children>
+                  <Label fx:id="reportNameLabel" text="Report Name">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fx:id="searchContainer" layoutX="33.0" layoutY="52.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14; -fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="23.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/search.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="8.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <TextField fx:id="searchTextField" prefHeight="46.0" prefWidth="318.0" promptText="Search..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14; -fx-background-color: white;" text="Search options">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <items>
+                  <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="ApartmentID" />
+                  <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Host name" />
+                  <MenuItem fx:id="amountItem" mnemonicParsing="false" text="Amount" />
+                  <MenuItem fx:id="isPaidItem" mnemonicParsing="false" text="Is paid" />
+               </items>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+            <MenuButton fx:id="isPaidMenuButton" layoutX="55.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14;" text="Choose option" visible="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <items>
+                  <MenuItem fx:id="trueItem" mnemonicParsing="false" text="True" />
+                  <MenuItem fx:id="falseItem" mnemonicParsing="false" text="False" />
+               </items>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+            <Button fx:id="markAsPaidButton" layoutX="45.0" layoutY="638.0" mnemonicParsing="false" onAction="#markAsPaidButtonOnAction" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Mark as paid">
+               <styleClass>
+                  <String fx:value="btn-design" />
+                  <String fx:value="search-btn" />
+               </styleClass>
+            </Button>
+            <Button fx:id="backBtn" layoutX="964.0" layoutY="52.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="44.0" prefWidth="46.0" stylesheets="@../styles/ApartmentList.css">
+               <graphic>
+                  <ImageView fitHeight="36.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/angle-small-left.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="btn-design" />
+                  <String fx:value="search-btn" />
+               </styleClass>
+            </Button>
+            <Button fx:id="addAppsBtn" layoutX="208.0" layoutY="638.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Add Apartment">
+               <styleClass>
+                  <String fx:value="btn-design" />
+                  <String fx:value="search-btn" />
+               </styleClass>
+            </Button>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

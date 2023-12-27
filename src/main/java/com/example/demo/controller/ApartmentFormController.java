@@ -1,15 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.Apartment;
-import com.example.demo.dao.ApartmentState;
-import com.example.demo.dao.ApartmentType;
-import com.example.demo.dao.Resident;
+import com.example.demo.dao.*;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.ApartmentRepository;
-import com.example.demo.repository.HibernateUtility;
-import com.example.demo.repository.ResidentRepository;
+import com.example.demo.repository.*;
+import com.example.demo.service.ApartmentCollectionService;
 import com.example.demo.service.ApartmentService;
+import com.example.demo.service.CollectionService;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -24,6 +21,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ApartmentFormController {
     private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
@@ -78,6 +76,7 @@ public class ApartmentFormController {
     public TextField IDTextField;
     public DatePicker datePicker;
     public DatePicker dobPicker;
+    private CollectionService collectionService = new CollectionService(new CollectionRepository());
 
     @FXML
     public void initialize() {
@@ -102,6 +101,18 @@ public class ApartmentFormController {
             apartmentStateToSet = ApartmentState.AVAILABLE;
         } else {
             apartmentStateToSet = ApartmentState.OCCUPIED;
+            List<Collection> collections = collectionService.findAll();
+            for(Collection collection : collections){
+                if (collection.getType() == CollectionType.SERVICE_FEE || collection.getType() == CollectionType.MANAGEMENT_FEE){
+                    ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
+                    List<Apartment> apartments = apartmentService.findAll();
+                    LocalDate localDate = LocalDate.now();
+                    localDate = localDate.plusDays(30);
+                    for (Apartment apartment : apartments){
+                        apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, Date.valueOf(localDate)));
+                    }
+                }
+            }
         }
         List<Resident> residentList = new ArrayList<>();
         Apartment apartment = Apartment.builder()

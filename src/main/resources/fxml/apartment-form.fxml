@@ -22,293 +22,268 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="858.0"
-            prefWidth="1365.0" style="-fx-background-color: #ff83a9;" xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentFormController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="858.0" prefWidth="1365.0" style="-fx-background-color: #ff83a9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentFormController">
    <AnchorPane prefHeight="869.0" prefWidth="1382.0" style="-fx-background-color: #f6fdff;">
       <Label layoutX="588.0" layoutY="27.0" prefHeight="49.0" prefWidth="247.0" text="Existing apartments">
          <font>
-            <Font name="System Bold" size="20.0"/>
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
       <VBox layoutX="52.0" layoutY="26.0" prefHeight="365.0" prefWidth="450.0">
          <Label prefHeight="49.0" prefWidth="247.0" text="Create a new apartment">
             <font>
-               <Font name="System Bold" size="20.0"/>
+               <Font name="System Bold" size="20.0" />
             </font>
          </Label>
          <VBox prefHeight="56.0" prefWidth="277.0">
-            <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Name"/>
-            <TextField fx:id="idTextField" prefHeight="27.0" prefWidth="277.0" styleClass="input-design"
-                       stylesheets="@../styles/ApartmentForm.css">
+            <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Name" />
+            <TextField fx:id="idTextField" prefHeight="27.0" prefWidth="277.0" styleClass="input-design" stylesheets="@../styles/ApartmentForm.css">
                <VBox.margin>
-                  <Insets top="10.0"/>
+                  <Insets top="10.0" />
                </VBox.margin>
             </TextField>
          </VBox>
          <VBox prefHeight="65.0" prefWidth="442.0">
-            <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Area"/>
-            <TextField fx:id="areaTextField" prefHeight="25.0" prefWidth="283.0" styleClass="input-design"
-                       stylesheets="@../styles/ApartmentForm.css">
+            <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Area" />
+            <TextField fx:id="areaTextField" prefHeight="25.0" prefWidth="283.0" styleClass="input-design" stylesheets="@../styles/ApartmentForm.css">
                <VBox.margin>
-                  <Insets top="10.0"/>
+                  <Insets top="10.0" />
                </VBox.margin>
             </TextField>
          </VBox>
          <VBox layoutX="10.0" layoutY="352.0" prefHeight="59.0" prefWidth="277.0">
-            <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Number of rooms"/>
-            <TextField fx:id="roomCountTextField" styleClass="input-design"
-                       stylesheets="@../styles/ApartmentForm.css">
+            <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Number of rooms" />
+            <TextField fx:id="roomCountTextField" styleClass="input-design" stylesheets="@../styles/ApartmentForm.css">
                <VBox.margin>
-                  <Insets top="10.0"/>
+                  <Insets top="10.0" />
                </VBox.margin>
             </TextField>
          </VBox>
          <VBox prefHeight="89.0" prefWidth="277.0">
-            <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Type"/>
-            <ChoiceBox fx:id="apartmentTypeChoiceBox" prefHeight="33.0" prefWidth="144.0"
-                       styleClass="input-design" stylesheets="@../styles/ApartmentForm.css">
+            <Label style="-fx-font-weight: 800; -fx-font-size: 20px;" text="Type" />
+            <ChoiceBox fx:id="apartmentTypeChoiceBox" prefHeight="33.0" prefWidth="144.0" styleClass="input-design" stylesheets="@../styles/ApartmentForm.css">
                <VBox.margin>
-                  <Insets top="10.0"/>
+                  <Insets top="10.0" />
                </VBox.margin>
                <cursor>
-                  <Cursor fx:constant="HAND"/>
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </ChoiceBox>
          </VBox>
          <HBox prefHeight="50.0" prefWidth="257.0">
-            <Button fx:id="addNewResBtn" disable="true" mnemonicParsing="false" onAction="#handleAddNewRes"
-                    prefHeight="25.0" prefWidth="118.0" styleClass="btn-design"
-                    stylesheets="@../styles/ApartmentForm.css" text="Add residents">
+            <Button fx:id="addNewResBtn" disable="true" mnemonicParsing="false" onAction="#handleAddNewRes" prefHeight="25.0" prefWidth="118.0" styleClass="btn-design" stylesheets="@../styles/ApartmentForm.css" text="Add residents">
                <HBox.margin>
-                  <Insets left="240.0"/>
+                  <Insets left="240.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="apartmentSubmissionButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT"
-                    mnemonicParsing="false" onAction="#submitButtonOnAction" prefHeight="33.0" prefWidth="74.0"
-                    styleClass="btn-design" stylesheets="@../styles/ApartmentForm.css" text="Submit">
+            <Button fx:id="apartmentSubmissionButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#submitButtonOnAction" prefHeight="33.0" prefWidth="74.0" styleClass="btn-design" stylesheets="@../styles/ApartmentForm.css" text="Submit">
                <cursor>
-                  <Cursor fx:constant="HAND"/>
+                  <Cursor fx:constant="HAND" />
                </cursor>
                <effect>
-                  <Blend/>
+                  <Blend />
                </effect>
                <HBox.margin>
-                  <Insets left="10.0"/>
+                  <Insets left="10.0" />
                </HBox.margin>
             </Button>
          </HBox>
       </VBox>
-      <TableView fx:id="residentTableView" layoutX="54.0" layoutY="393.0" prefHeight="377.0" prefWidth="476.0"
-                 stylesheets="@../styles/ApartmentList.css" visible="false">
+      <TableView fx:id="residentTableView" layoutX="54.0" layoutY="393.0" prefHeight="377.0" prefWidth="476.0" stylesheets="@../styles/ApartmentList.css" visible="false">
          <columns>
-            <TableColumn fx:id="resIDCol" prefWidth="75.0" text="ID"/>
-            <TableColumn fx:id="firstNameCol" prefWidth="95.0" text="First name"/>
-            <TableColumn fx:id="lastNameCol" prefWidth="93.0" text="Last name"/>
-            <TableColumn fx:id="phoneNumberCol" prefWidth="120.0" text="Phone number"/>
-            <TableColumn fx:id="nationalIDCol" prefWidth="91.0" text="NationalID"/>
+            <TableColumn fx:id="resIDCol" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="firstNameCol" prefWidth="95.0" text="First name" />
+            <TableColumn fx:id="lastNameCol" prefWidth="93.0" text="Last name" />
+            <TableColumn fx:id="phoneNumberCol" prefWidth="120.0" text="Phone number" />
+            <TableColumn fx:id="nationalIDCol" prefWidth="91.0" text="NationalID" />
          </columns>
       </TableView>
-      <TableView fx:id="apartmentTableView" layoutX="588.0" layoutY="98.0" prefHeight="625.0" prefWidth="460.0"
-                 stylesheets="@../styles/ApartmentList.css">
+      <TableView fx:id="apartmentTableView" layoutX="588.0" layoutY="98.0" prefHeight="625.0" prefWidth="460.0" stylesheets="@../styles/ApartmentList.css">
          <columns>
-            <TableColumn fx:id="apartmentIdCol" prefWidth="87.0" text="ID"/>
-            <TableColumn fx:id="totalResidentsCol" prefWidth="117.0" text="Total Residents"/>
-            <TableColumn fx:id="stateCol" prefWidth="131.0" text="State"/>
-            <TableColumn fx:id="typeCol" prefWidth="124.0" text="Type"/>
+            <TableColumn fx:id="apartmentIdCol" prefWidth="87.0" text="ID" />
+            <TableColumn fx:id="totalResidentsCol" prefWidth="117.0" text="Total Residents" />
+            <TableColumn fx:id="stateCol" prefWidth="131.0" text="State" />
+            <TableColumn fx:id="typeCol" prefWidth="124.0" text="Type" />
          </columns>
          <padding>
-            <Insets bottom="40.0"/>
+            <Insets bottom="40.0" />
          </padding>
       </TableView>
-      <AnchorPane fx:id="dialogContainer" opacity="0.2" prefHeight="839.0" prefWidth="1047.0"
-                  style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0"
-                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-      <AnchorPane fx:id="addNewResContainer" layoutX="123.0" layoutY="51.0" prefHeight="639.0" prefWidth="871.0"
-                  style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 14; -fx-background-radius: 14;"
-                  stylesheets="@../styles/ApartmentForm.css" visible="false">
-         <Button fx:id="addNewRedCloseBtn" layoutX="807.0" layoutY="14.0" mnemonicParsing="false"
-                 onAction="#handleCloseAddNewRes" prefHeight="37.0" prefWidth="40.0"
-                 stylesheets="@../styles/ApartmentList.css">
+      <AnchorPane fx:id="dialogContainer" opacity="0.2" prefHeight="839.0" prefWidth="1047.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="addNewResContainer" layoutX="123.0" layoutY="51.0" prefHeight="639.0" prefWidth="871.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 14; -fx-background-radius: 14;" stylesheets="@../styles/ApartmentForm.css" visible="false">
+         <Button fx:id="addNewRedCloseBtn" layoutX="807.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCloseAddNewRes" prefHeight="37.0" prefWidth="40.0" stylesheets="@../styles/ApartmentList.css">
             <graphic>
                <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@../images/circle-x-mark.png"/>
+                  <Image url="@../images/circle-x-mark.png" />
                </ImageView>
             </graphic>
             <styleClass>
-               <String fx:value="btn-design"/>
-               <String fx:value="search-btn"/>
+               <String fx:value="btn-design" />
+               <String fx:value="search-btn" />
             </styleClass>
          </Button>
          <HBox layoutX="86.0" layoutY="100.0" prefHeight="275.0" prefWidth="700.0">
             <VBox prefHeight="577.0" prefWidth="337.0">
                <Label layoutX="10.0" layoutY="10.0" styleClass="label-design" text="ID Number">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                </Label>
-               <TextField fx:id="IDTextField" layoutX="10.0" layoutY="27.0" prefHeight="25.0"
-                          prefWidth="288.0" promptText="ID" styleClass="input-design">
+               <TextField fx:id="IDTextField" layoutX="10.0" layoutY="27.0" prefHeight="25.0" prefWidth="288.0" promptText="ID" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                </TextField>
                <Label styleClass="label-design" text="Date of birth">
                   <VBox.margin>
-                     <Insets left="20.0" top="18.0"/>
+                     <Insets left="20.0" top="18.0" />
                   </VBox.margin>
                </Label>
                <DatePicker fx:id="dobPicker" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0"/>
+                     <Insets left="20.0" />
                   </VBox.margin>
                </DatePicker>
-               <Label fx:id="firstNameErrorLabel"/>
+               <Label fx:id="firstNameErrorLabel" />
                <Label layoutX="10.0" layoutY="10.0" styleClass="label-design" text="Last Name">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                </Label>
-               <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0" promptText="Last name"
-                          styleClass="input-design">
+               <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="27.0" promptText="Last name" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                </TextField>
                <Label styleClass="label-design" text="Gender">
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0" top="18.0"/>
+                     <Insets left="20.0" right="20.0" top="18.0" />
                   </VBox.margin>
                </Label>
-               <MenuButton fx:id="genderMenuButton" mnemonicParsing="false" styleClass="input-design"
-                           text="Gender">
+               <MenuButton fx:id="genderMenuButton" mnemonicParsing="false" styleClass="input-design" text="Gender">
                   <items>
-                     <MenuItem fx:id="maleItem" mnemonicParsing="false" text="Male"/>
-                     <MenuItem fx:id="femaleItem" mnemonicParsing="false" text="Female"/>
+                     <MenuItem fx:id="maleItem" mnemonicParsing="false" text="Male" />
+                     <MenuItem fx:id="femaleItem" mnemonicParsing="false" text="Female" />
                   </items>
                   <VBox.margin>
-                     <Insets left="20.0"/>
+                     <Insets left="20.0" />
                   </VBox.margin>
                </MenuButton>
-               <Label fx:id="lastNameErrorLabel" layoutX="10.0" layoutY="52.0"/>
+               <Label fx:id="lastNameErrorLabel" layoutX="10.0" layoutY="52.0" />
                <Label layoutX="10.0" layoutY="212.0" styleClass="label-design" text="Phone number">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                </Label>
-               <TextField fx:id="phoneNumberTextField" layoutX="10.0" layoutY="229.0"
-                          promptText="Phone number" styleClass="input-design">
+               <TextField fx:id="phoneNumberTextField" layoutX="10.0" layoutY="229.0" promptText="Phone number" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                </TextField>
-               <Label fx:id="apartmentTextFieldErrorLabel"/>
-               <Label fx:id="nationalIDErrorLabel" layoutX="10.0" layoutY="170.0"/>
-               <Label fx:id="phoneNumberErrorLabel" layoutX="10.0" layoutY="254.0"/>
-               <Label fx:id="emailErrorLabel" layoutX="10.0" layoutY="313.0"/>
+               <Label fx:id="apartmentTextFieldErrorLabel" />
+               <Label fx:id="nationalIDErrorLabel" layoutX="10.0" layoutY="170.0" />
+               <Label fx:id="phoneNumberErrorLabel" layoutX="10.0" layoutY="254.0" />
+               <Label fx:id="emailErrorLabel" layoutX="10.0" layoutY="313.0" />
             </VBox>
             <VBox prefHeight="436.0" prefWidth="365.0">
                <Label styleClass="label-design" text="First Name">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                </Label>
                <TextField fx:id="firstNameTextField" promptText="First name" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                </TextField>
                <Label styleClass="label-design" text="Apartment">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0" top="18.0"/>
+                     <Insets left="20.0" right="20.0" top="18.0" />
                   </VBox.margin>
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                </Label>
-               <TextField fx:id="apartmentTextField" promptText="Existing apartment ID"
-                          styleClass="input-design">
+               <TextField fx:id="apartmentTextField" promptText="Existing apartment ID" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                </TextField>
                <Label styleClass="label-design" text="National ID">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0" top="18.0"/>
+                     <Insets left="20.0" right="20.0" top="18.0" />
                   </VBox.margin>
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                </Label>
                <TextField fx:id="nationalIDTextField" promptText="National ID" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                </TextField>
                <Label styleClass="label-design" text="Email">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0" top="18.0"/>
+                     <Insets left="20.0" right="20.0" top="18.0" />
                   </VBox.margin>
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                </Label>
                <TextField fx:id="emailTextField" promptText="Email" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                </TextField>
                <Label styleClass="label-design" text="Move-in Date">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0" top="18.0"/>
+                     <Insets left="20.0" right="20.0" top="18.0" />
                   </VBox.margin>
                   <font>
-                     <Font size="18.0"/>
+                     <Font size="18.0" />
                   </font>
                </Label>
                <DatePicker fx:id="datePicker" styleClass="input-design">
                   <VBox.margin>
-                     <Insets left="20.0" right="20.0"/>
+                     <Insets left="20.0" right="20.0" />
                   </VBox.margin>
                </DatePicker>
             </VBox>
          </HBox>
          <HBox layoutX="524.0" layoutY="505.0" prefHeight="26.0" prefWidth="201.0">
-            <Button fx:id="residentSubmissionButton" mnemonicParsing="false" onAction="#handleSubmitAddRes"
-                    prefHeight="33.0" prefWidth="108.0" text="Submit">
+            <Button fx:id="residentSubmissionButton" mnemonicParsing="false" onAction="#handleSubmitAddRes" prefHeight="33.0" prefWidth="108.0" text="Submit">
                <styleClass>
-                  <String fx:value="btn-design"/>
-                  <String fx:value="search-btn"/>
+                  <String fx:value="btn-design" />
+                  <String fx:value="search-btn" />
                </styleClass>
             </Button>
             <Button fx:id="backButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="98.0" text="Back">
                <styleClass>
-                  <String fx:value="btn-design"/>
-                  <String fx:value="search-btn"/>
+                  <String fx:value="btn-design" />
+                  <String fx:value="search-btn" />
                </styleClass>
                <HBox.margin>
-                  <Insets left="20.0"/>
+                  <Insets left="20.0" />
                </HBox.margin>
             </Button>
          </HBox>
-         <Label layoutX="272.0" layoutY="19.0" prefHeight="30.0" prefWidth="283.0" styleClass="label-design"
-                text="Add new residents for  "/>
-         <Separator layoutX="1.0" layoutY="71.0" prefHeight="0.0" prefWidth="866.0"/>
+         <Label layoutX="272.0" layoutY="19.0" prefHeight="30.0" prefWidth="283.0" styleClass="label-design" text="Add new residents for  " />
+         <Separator layoutX="1.0" layoutY="71.0" prefHeight="0.0" prefWidth="866.0" />
       </AnchorPane>
    </AnchorPane>
 </ScrollPane>

@@ -4,6 +4,7 @@ import com.example.demo.dao.*;
 import com.example.demo.dao.Collection;
 import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.repository.CollectionRepository;
+import com.example.demo.repository.HibernateUtility;
 import com.example.demo.repository.ResidentRepository;
 import com.example.demo.service.ApartmentService;
 import com.example.demo.service.CollectionService;
@@ -33,6 +34,15 @@ public class DashboardController {
     private final List<Apartment> apartments = new ArrayList<>(apartmentService.findAll());
     private final List<Resident> residents = new ArrayList<>(residentService.findAll());
     private final List<Collection> collections = new ArrayList<>(collectionService.findAll());
+    private final List<Collection> serviceCollections = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Collection where type = :type", Collection.class)
+            .setParameter("type", CollectionType.SERVICE_FEE)
+            .getResultList());
+    private final List<Collection> manageCollections = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Collection where type = :type", Collection.class)
+            .setParameter("type", CollectionType.MANAGEMENT_FEE)
+            .getResultList());
+    private final List<Collection> donateCollections = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Collection where type = :type", Collection.class)
+            .setParameter("type", CollectionType.DONATION)
+            .getResultList());
     public PieChart residentChart;
     public MenuButton selectedMenuButton;
     public MenuItem menuItem1;
@@ -59,11 +69,10 @@ public class DashboardController {
         handleTypeChart();
         handleResidentChart();
         selectItem(List.of(menuItem1, menuItem2));
-        setItemForFeeMenuButton();
+        handleSelectedTypeCollection(List.of(serviceItem, manageItem, donateItem));
         chooseFeeButton.textProperty().addListener((observable, oldValue, newValue) -> {
             monthPaid.clear();
             handleUpdateDateTableView(newValue);
-
         });
     }
     public void handleStateChart(){
@@ -80,7 +89,7 @@ public class DashboardController {
         );
         totalAppsData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
-                        data.getName(), " amount: ", data.pieValueProperty()
+                        data.getName(), ": ", data.pieValueProperty()
                 )
         ));
         stateChart.setLegendVisible(false);
@@ -101,6 +110,39 @@ public class DashboardController {
             });
         }
     }
+    public void handleSelectedTypeCollection (List <MenuItem> menuItemList){
+        for (MenuItem menuItem : menuItemList){
+            menuItem.setOnAction(e -> {
+                typeFeeButton.setText(menuItem.getText());
+                chooseFeeButton.getItems().clear();
+                if (typeFeeButton.getText().equals("Service Fee")){
+                    for (Collection collection : serviceCollections){
+                        chooseFeeButton.getItems().add(
+                                new MenuItem(collection.getName())
+                        );
+                    }
+                } else if (typeFeeButton.getText().equals("Management Fee")){
+                    for (Collection collection : manageCollections){
+                        chooseFeeButton.getItems().add(
+                                new MenuItem(collection.getName())
+                        );
+                    }
+                } else {
+                    for (Collection collection : donateCollections){
+                        chooseFeeButton.getItems().add(
+                                new MenuItem(collection.getName())
+                        );
+                    }
+                }
+                List<MenuItem> menuItemList1 = chooseFeeButton.getItems();
+                for (MenuItem menuItem1 : menuItemList1){
+                    menuItem1.setOnAction(e1 -> {
+                        chooseFeeButton.setText(menuItem1.getText());
+                    });
+                }
+            });
+        }
+    }
     public void handleTypeChart(){
         int penthouseCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.PENTHOUSE.equals(apartment.getType()));
         int studioCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.STUDIO.equals(apartment.getType()));
@@ -114,7 +156,7 @@ public class DashboardController {
         );
         totalAppsData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
-                        data.getName(), " amount: ", data.pieValueProperty()
+                        data.getName(), ": ", data.pieValueProperty()
                 )
         ));
         typeChart.setLegendVisible(false);
@@ -129,24 +171,11 @@ public class DashboardController {
         );
         totalAppsData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
-                        data.getName(), " amount: ", data.pieValueProperty()
+                        data.getName(), ": ", data.pieValueProperty()
                 )
         ));
         residentChart.setLegendVisible(false);
         residentChart.getData().addAll(totalAppsData);
-    }
-    public void setItemForFeeMenuButton(){
-        for (Collection collection : collections){
-            chooseFeeButton.getItems().add(
-                    new MenuItem(collection.getName())
-            );
-        }
-        List<MenuItem> menuItemList = chooseFeeButton.getItems();
-        for (MenuItem menuItem : menuItemList){
-            menuItem.setOnAction(e -> {
-                chooseFeeButton.setText(menuItem.getText());
-            });
-        }
     }
     public void handleUpdateDateTableView(String collectionName){
         updateData(collectionName);
