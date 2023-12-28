@@ -108,7 +108,7 @@ public class ApartmentFormController {
                     LocalDate localDate = LocalDate.now();
                     localDate = localDate.plusDays(30);
                     for (Apartment apartment : apartments) {
-                        apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, Date.valueOf(localDate)));
+                        apartmentCollectionService.merge(new ApartmentCollection(apartment, collection, Date.valueOf(localDate)));
                     }
                 }
             }
