@@ -20,107 +20,109 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.PropertySheet?>
 
-<ScrollPane fx:id="residentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="1132.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ResidentListController">
-   <content>
-      <AnchorPane fx:id="residentContainer" prefHeight="792.0" prefWidth="1156.0" styleClass="container" stylesheets="@../styles/ResidentList.css">
-         <children>
-            <HBox layoutX="343.0" layoutY="665.0" prefHeight="33.0" prefWidth="278.0">
-               <children>
-                  <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="New">
-                     <styleClass>
-                        <String fx:value="btn-design" />
-                        <String fx:value="search-btn" />
-                     </styleClass>
-                  </Button>
-                  <Button fx:id="deleteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="Delete">
-                     <styleClass>
-                        <String fx:value="btn-design" />
-                        <String fx:value="search-btn" />
-                     </styleClass>
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="Details">
-                     <styleClass>
-                        <String fx:value="btn-design" />
-                        <String fx:value="search-btn" />
-                     </styleClass>
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <TableView fx:id="residentTableView" editable="true" layoutX="11.0" layoutY="124.0" prefHeight="530.0" prefWidth="607.0" stylesheets="@../styles/TableView.css">
-               <columns>
-                  <TableColumn fx:id="idTableColumn" prefWidth="91.5" text="ID" />
-                  <TableColumn fx:id="firstNameTableColumn" prefWidth="139.5" text="First Name" />
-                  <TableColumn fx:id="lastNameTableColumn" prefWidth="243.0" text="Last Name" />
-                  <TableColumn fx:id="apartmentTableColumn" prefWidth="131.0" text="Apartment" />
-               </columns>
-            </TableView>
-            <VBox alignment="TOP_CENTER" layoutX="651.0" layoutY="131.0" prefHeight="530.0" prefWidth="334.0">
-               <children>
-                  <Label text="Details" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <PropertySheet fx:id="residentPropertySheet" onKeyTyped="#enableUpdateButton" />
-                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButtonOnAction" text="Update" />
-               </children>
-            </VBox>
-            <Label layoutX="410.0" text="Resident List">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Label>
-            <MenuButton fx:id="residentMenuButton" layoutX="314.0" layoutY="70.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Search options">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <items>
-                  <MenuItem fx:id="residentIDItem" mnemonicParsing="false" text="Resident ID" />
-                  <MenuItem fx:id="firstNameItem" mnemonicParsing="false" text="First Name" />
-                  <MenuItem fx:id="lastNameItem" mnemonicParsing="false" text="Last Name" />
-                  <MenuItem fx:id="apartmentItem" mnemonicParsing="false" text="Apartment" />
-                  <MenuItem fx:id="genderItem" mnemonicParsing="false" text="Gender" />
-                  <MenuItem fx:id="IDNumberItem" mnemonicParsing="false" text="ID Number" />
-                  <MenuItem fx:id="moveInDateItem" mnemonicParsing="false" text="Move-in Date" />
-               </items>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </MenuButton>
-            <HBox fx:id="searchContainer" layoutX="14.0" layoutY="69.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14;" styleClass="input-design">
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/search.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets top="8.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="216.0" promptText="Search..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </TextField>
-               </children>
-            </HBox>
-            <MenuButton fx:id="genderMenuButton" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Choose Gender" visible="false">
-              <items>
-                <MenuItem fx:id="maleItem" mnemonicParsing="false" text="Male" />
-                <MenuItem fx:id="femaleItem" mnemonicParsing="false" text="Female" />
-              </items>
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </MenuButton>
-            <DatePicker fx:id="dobPicker" layoutX="14.0" layoutY="69.0" prefHeight="47.0" prefWidth="260.0" styleClass="input-design" visible="false" />
-         </children>
-      </AnchorPane>
-   </content>
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0"
+            prefWidth="1132.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.controller.ResidentListController">
+   <AnchorPane prefHeight="792.0" prefWidth="1156.0" styleClass="container"
+               stylesheets="@../styles/ResidentList.css">
+      <HBox layoutX="343.0" layoutY="665.0" prefHeight="33.0" prefWidth="278.0">
+         <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="33.0"
+                 prefWidth="90.0" text="New">
+            <styleClass>
+               <String fx:value="btn-design"/>
+               <String fx:value="search-btn"/>
+            </styleClass>
+         </Button>
+         <Button fx:id="deleteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                 onAction="#deleteButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="Delete">
+            <styleClass>
+               <String fx:value="btn-design"/>
+               <String fx:value="search-btn"/>
+            </styleClass>
+            <HBox.margin>
+               <Insets left="20.0"/>
+            </HBox.margin>
+         </Button>
+         <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false"
+                 onAction="#detailsButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="Details">
+            <styleClass>
+               <String fx:value="btn-design"/>
+               <String fx:value="search-btn"/>
+            </styleClass>
+            <HBox.margin>
+               <Insets left="20.0"/>
+            </HBox.margin>
+         </Button>
+      </HBox>
+      <TableView fx:id="residentTableView" editable="true" layoutX="11.0" layoutY="124.0" prefHeight="530.0"
+                 prefWidth="607.0" stylesheets="@../styles/TableView.css">
+         <columns>
+            <TableColumn fx:id="idTableColumn" prefWidth="91.5" text="ID"/>
+            <TableColumn fx:id="firstNameTableColumn" prefWidth="139.5" text="First Name"/>
+            <TableColumn fx:id="lastNameTableColumn" prefWidth="243.0" text="Last Name"/>
+            <TableColumn fx:id="apartmentTableColumn" prefWidth="131.0" text="Apartment"/>
+         </columns>
+      </TableView>
+      <VBox alignment="TOP_CENTER" layoutX="651.0" layoutY="131.0" prefHeight="530.0" prefWidth="334.0">
+         <Label text="Details" textAlignment="CENTER">
+            <font>
+               <Font name="System Bold" size="24.0"/>
+            </font>
+         </Label>
+         <PropertySheet fx:id="residentPropertySheet" onKeyTyped="#enableUpdateButton"/>
+         <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButtonOnAction" text="Update"/>
+      </VBox>
+      <Label layoutX="410.0" text="Resident List">
+         <font>
+            <Font name="System Bold" size="30.0"/>
+         </font>
+      </Label>
+      <MenuButton fx:id="residentMenuButton" layoutX="314.0" layoutY="70.0" mnemonicParsing="false" prefHeight="45.0"
+                  prefWidth="193.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design"
+                  text="Search options">
+         <font>
+            <Font size="18.0"/>
+         </font>
+         <items>
+            <MenuItem fx:id="residentIDItem" mnemonicParsing="false" text="Resident ID"/>
+            <MenuItem fx:id="firstNameItem" mnemonicParsing="false" text="First Name"/>
+            <MenuItem fx:id="lastNameItem" mnemonicParsing="false" text="Last Name"/>
+            <MenuItem fx:id="apartmentItem" mnemonicParsing="false" text="Apartment"/>
+            <MenuItem fx:id="genderItem" mnemonicParsing="false" text="Gender"/>
+            <MenuItem fx:id="IDNumberItem" mnemonicParsing="false" text="ID Number"/>
+            <MenuItem fx:id="moveInDateItem" mnemonicParsing="false" text="Move-in Date"/>
+         </items>
+         <cursor>
+            <Cursor fx:constant="HAND"/>
+         </cursor>
+      </MenuButton>
+      <HBox fx:id="searchContainer" layoutX="14.0" layoutY="69.0" prefHeight="34.0" prefWidth="260.0"
+            style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14;" styleClass="input-design">
+         <ImageView fitHeight="30.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+            <HBox.margin>
+               <Insets top="8.0"/>
+            </HBox.margin>
+            <Image url="@../images/search.png"/>
+         </ImageView>
+         <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="216.0" promptText="Search..."
+                    style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+            <font>
+               <Font name="System Bold" size="16.0"/>
+            </font>
+         </TextField>
+      </HBox>
+      <MenuButton fx:id="genderMenuButton" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" prefHeight="47.0"
+                  prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design"
+                  text="Choose Gender" visible="false">
+         <items>
+            <MenuItem fx:id="maleItem" mnemonicParsing="false" text="Male"/>
+            <MenuItem fx:id="femaleItem" mnemonicParsing="false" text="Female"/>
+         </items>
+         <font>
+            <Font size="19.0"/>
+         </font>
+      </MenuButton>
+      <DatePicker fx:id="dobPicker" layoutX="14.0" layoutY="69.0" prefHeight="47.0" prefWidth="260.0"
+                  styleClass="input-design" visible="false"/>
+   </AnchorPane>
 </ScrollPane>
