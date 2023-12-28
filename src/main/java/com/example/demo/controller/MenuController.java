@@ -16,8 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Fix Dashboard button size
-//TODO: Fix NullPointerException when switching to dashboard
 public class MenuController {
     public Button dashboardButton;
     public Button residentsButton;
@@ -34,6 +32,10 @@ public class MenuController {
         MenuViewManager.setBorderPane(borderPane);
         displayLiveTime();
         initializeUIDDisplay();
+        initializeListOfMenuButtons();
+    }
+
+    private void initializeListOfMenuButtons() {
         buttonList = new ArrayList<>(List.of(dashboardButton, apartmentsButton, collectionsButton, residentsButton));
     }
 
@@ -42,7 +44,9 @@ public class MenuController {
     }
 
     private void displayLiveTime() {
-        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> dateTimeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")))),
+        Timeline clock = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        e -> dateTimeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")))),
                 new KeyFrame(Duration.seconds(1))
         );
         clock.setCycleCount(Timeline.INDEFINITE);
@@ -50,11 +54,9 @@ public class MenuController {
     }
 
     public void setButtonStyleAndSwitchView(Button button, MenuView menuView) {
-        button.setOnAction(e -> {
-            clearAllButtonStyles();
-            button.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-            MenuViewManager.switchView(menuView);
-        });
+        clearAllButtonStyles();
+        button.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
+        MenuViewManager.switchView(menuView);
     }
 
     public void clearAllButtonStyles() {

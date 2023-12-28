@@ -32,7 +32,6 @@
                   </font>
                   <styleClass>
                      <String fx:value="sidebar-button" />
-                     <String fx:value="navigation-bar" />
                   </styleClass>
                   <graphic>
                      <ImageView fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -190,6 +189,5 @@
    </BorderPane>
    <stylesheets>
       <URL value="@../styles/Dashboard.css" />
-      <URL value="@../styles/Menu.css" />
    </stylesheets>
 </AnchorPane>
