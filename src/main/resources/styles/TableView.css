@@ -64,3 +64,6 @@
     -fx-background-color: #ffe4e5;
     -fx-text-fill: #ff4c51;
 }
+.table-row-cell:selected {
+    -fx-background-color: steelblue;
+}
