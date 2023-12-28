@@ -5,7 +5,6 @@ import com.example.demo.gui.MenuViewManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -17,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: Fix Dashboard button size
+//TODO: Fix NullPointerException when switching to dashboard
 public class MenuController {
     public Button dashboardButton;
     public Button residentsButton;
@@ -26,37 +27,18 @@ public class MenuController {
     public Label dateTimeLabel;
     public VBox sideBar;
     public Label userIDLabel;
+    private List<Button> buttonList;
 
     @FXML
     public void initialize() {
         MenuViewManager.setBorderPane(borderPane);
         displayLiveTime();
-        userIDLabel.setText("UID: " + LoginController.getCurrentUserID());
-        setSelectedBtn(dashboardButton, MenuView.DASHBOARD);
-        setSelectedBtn(apartmentsButton, MenuView.APARTMENT_LIST);
-        setSelectedBtn(collectionsButton, MenuView.COLLECTION_LIST);
-        setSelectedBtn(residentsButton, MenuView.RESIDENT_LIST);
-        borderPane.centerProperty().addListener(e -> {
-            switch (borderPane.centerProperty().get().getId()){
-                case "apartmentContainer":
-                    clearUnderline();
-                    apartmentsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-                    break;
-                case "residentContainer":
-                    clearUnderline();
+        initializeUIDDisplay();
+        buttonList = new ArrayList<>(List.of(dashboardButton, apartmentsButton, collectionsButton, residentsButton));
+    }
 
-                    residentsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-                    break;
-                case "collectionContainer", "collectionReportContainer":
-                    clearUnderline();
-                    collectionsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-                    break;
-                case "dashboardContainer":
-                    clearUnderline();
-                    dashboardButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-                    break;
-            }
-        });
+    private void initializeUIDDisplay() {
+        userIDLabel.setText("UID: " + LoginController.getCurrentUserID());
     }
 
     private void displayLiveTime() {
@@ -67,17 +49,33 @@ public class MenuController {
         clock.play();
     }
 
-    public void setSelectedBtn (Button button, MenuView menuView){
+    public void setButtonStyleAndSwitchView(Button button, MenuView menuView) {
         button.setOnAction(e -> {
-            clearUnderline();
+            clearAllButtonStyles();
             button.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
             MenuViewManager.switchView(menuView);
         });
     }
-    public void clearUnderline(){
-        List<Button> buttonList = new ArrayList<>(List.of(dashboardButton, apartmentsButton, collectionsButton, residentsButton));
-        for (Button button : buttonList){
+
+    public void clearAllButtonStyles() {
+        for (Button button : buttonList) {
             button.setStyle("");
         }
+    }
+
+    public void apartmentsButtonOnAction() {
+        setButtonStyleAndSwitchView(apartmentsButton, MenuView.APARTMENT_LIST);
+    }
+
+    public void dashboardButtonOnAction() {
+        setButtonStyleAndSwitchView(dashboardButton, MenuView.DASHBOARD);
+    }
+
+    public void residentsButtonOnAction() {
+        setButtonStyleAndSwitchView(residentsButton, MenuView.RESIDENT_LIST);
+    }
+
+    public void collectionsButtonOnAction() {
+        setButtonStyleAndSwitchView(collectionsButton, MenuView.COLLECTION_LIST);
     }
 }

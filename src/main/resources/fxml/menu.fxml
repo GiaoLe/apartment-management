@@ -26,7 +26,7 @@
                <Insets />
             </BorderPane.margin>
             <VBox fx:id="sideBar" prefHeight="702.0" prefWidth="274.0" style="-fx-background-color: #fff;" styleClass="sidebar">
-               <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="42.0" prefWidth="280.0" stylesheets="@../styles/Dashboard.css" text="Dashboard" textFill="RED">
+               <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#dashboardButtonOnAction" prefHeight="60.0" prefWidth="274.0" stylesheets="@../styles/Dashboard.css" text="Dashboard" textFill="RED">
                   <font>
                      <Font size="22.0" />
                   </font>
@@ -35,10 +35,8 @@
                      <String fx:value="navigation-bar" />
                   </styleClass>
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../images/dashboard.png" />
-                        </image>
+                     <ImageView fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/dashboard.png" />
                      </ImageView>
                   </graphic>
                   <padding>
@@ -46,41 +44,35 @@
                   </padding>
                </Button>
                <Separator prefWidth="200.0" />
-               <Button fx:id="apartmentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="274.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Apartments" textFill="#979191">
+               <Button fx:id="apartmentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#apartmentsButtonOnAction" prefHeight="50.0" prefWidth="274.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Apartments" textFill="#979191">
                   <font>
                      <Font size="21.0" />
                   </font>
                   <graphic>
-                     <ImageView fitHeight="41.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../images/apartment.png" />
-                        </image>
+                     <ImageView fitHeight="41.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/apartment.png" />
                      </ImageView>
                   </graphic>
                </Button>
                <Separator layoutX="10.0" layoutY="93.0" prefWidth="200.0" />
-               <Button fx:id="residentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="56.0" prefWidth="724.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Residents" textFill="#979191">
+               <Button fx:id="residentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#residentsButtonOnAction" prefHeight="50.0" prefWidth="724.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Residents" textFill="#979191">
                   <font>
                      <Font size="21.0" />
                   </font>
                   <graphic>
-                     <ImageView fitHeight="41.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../images/house.png" />
-                        </image>
+                     <ImageView fitHeight="41.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/house.png" />
                      </ImageView>
                   </graphic>
                </Button>
                <Separator layoutX="10.0" layoutY="259.0" prefWidth="200.0" />
-               <Button fx:id="collectionsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="579.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Collections" textFill="#979191">
+               <Button fx:id="collectionsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#collectionsButtonOnAction" prefHeight="50.0" prefWidth="579.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Collections" textFill="#979191">
                   <font>
                      <Font size="21.0" />
                   </font>
                   <graphic>
-                     <ImageView fitHeight="41.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../images/invoice.png" />
-                        </image>
+                     <ImageView fitHeight="41.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/invoice.png" />
                      </ImageView>
                   </graphic>
                </Button>
@@ -137,7 +129,7 @@
                      <Font name="Gill Sans MT" size="35.0" />
                   </font>
                   <textFill>
-                     <LinearGradient endX="1.0" endY="1.0">
+                     <LinearGradient>
                         <stops>
                            <Stop>
                               <color>

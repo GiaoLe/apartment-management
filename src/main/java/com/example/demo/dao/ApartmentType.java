@@ -5,4 +5,9 @@ public enum ApartmentType {
     PENTHOUSE,
     DUPLEX,
     TRIPLEX,
+    GARDEN,
+    LOFT,
+    CONDO,
+    TOWNHOUSE,
+    VILLA
 }

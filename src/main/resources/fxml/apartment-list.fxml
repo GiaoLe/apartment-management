@@ -93,7 +93,7 @@
                   <Insets bottom="40.0" />
                </padding>
             </TableView>
-            <Button fx:id="backBtn" layoutX="987.0" layoutY="73.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="46.0" stylesheets="@../styles/ApartmentList.css" visible="false">
+            <Button fx:id="backButton" layoutX="987.0" layoutY="73.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="46.0" stylesheets="@../styles/ApartmentList.css" visible="false">
                <graphic>
                   <ImageView fitHeight="36.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>

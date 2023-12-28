@@ -56,11 +56,11 @@ public class MenuViewManager {
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.floorTableView.setVisible(false);
             apartmentListController.apartmentTableView.setVisible(true);
-            apartmentListController.backBtn.setVisible(true);
-            apartmentListController.backBtn.setOnMouseClicked(event -> {
+            apartmentListController.backButton.setVisible(true);
+            apartmentListController.backButton.setOnMouseClicked(event -> {
                 apartmentListController.floorTableView.setVisible(true);
                 apartmentListController.apartmentTableView.setVisible(false);
-                apartmentListController.backBtn.setVisible(false);
+                apartmentListController.backButton.setVisible(false);
             });
 
             return loader.getController();
@@ -92,15 +92,15 @@ public class MenuViewManager {
             apartmentListController.showFloorDetail(Integer.parseInt(apartmentCollection.getApartment().getId().substring(0, 1)));
             apartmentListController.selectedFloor.put("floor", apartmentCollection.getApartment().getId().substring(0, 1));
             apartmentListController.toggleFilter();
-            apartmentListController.backBtn.setOnMouseClicked(e -> {
+            apartmentListController.backButton.setOnMouseClicked(e -> {
                 apartmentListController.floorTableView.setVisible(true);
                 apartmentListController.apartmentTableView.setVisible(false);
-                apartmentListController.backBtn.setVisible(false);
+                apartmentListController.backButton.setVisible(false);
             });
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.floorTableView.setVisible(false);
             apartmentListController.apartmentTableView.setVisible(true);
-            apartmentListController.backBtn.setVisible(true);
+            apartmentListController.backButton.setVisible(true);
             borderPane.setCenter(root);
             return loader.getController();
         } catch (IOException e) {

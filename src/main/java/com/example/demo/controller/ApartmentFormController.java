@@ -21,7 +21,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ApartmentFormController {
     private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
@@ -76,7 +75,7 @@ public class ApartmentFormController {
     public TextField IDTextField;
     public DatePicker datePicker;
     public DatePicker dobPicker;
-    private CollectionService collectionService = new CollectionService(new CollectionRepository());
+    private final CollectionService collectionService = new CollectionService(new CollectionRepository());
 
     @FXML
     public void initialize() {
@@ -102,13 +101,13 @@ public class ApartmentFormController {
         } else {
             apartmentStateToSet = ApartmentState.OCCUPIED;
             List<Collection> collections = collectionService.findAll();
-            for(Collection collection : collections){
-                if (collection.getType() == CollectionType.SERVICE_FEE || collection.getType() == CollectionType.MANAGEMENT_FEE){
+            for (Collection collection : collections) {
+                if (collection.getType() == CollectionType.SERVICE_FEE || collection.getType() == CollectionType.MANAGEMENT_FEE) {
                     ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
                     List<Apartment> apartments = apartmentService.findAll();
                     LocalDate localDate = LocalDate.now();
                     localDate = localDate.plusDays(30);
-                    for (Apartment apartment : apartments){
+                    for (Apartment apartment : apartments) {
                         apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, Date.valueOf(localDate)));
                     }
                 }
