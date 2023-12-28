@@ -30,7 +30,7 @@ public class MenuViewManager {
             throw new RuntimeException(e);
         }
     }
-    public static Object switchViewToShowResidentDetails(MenuView menuView, Resident resident){
+    public static void switchViewToShowResidentDetails(MenuView menuView, Resident resident){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             Parent root = loader.load();
@@ -39,12 +39,11 @@ public class MenuViewManager {
             residentListController.showResidentDetailFromAnotherView(resident);
             residentListController.searchTextField.setText(resident.getId().toString());
             residentListController.residentMenuButton.setText("Resident ID");
-            return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public static Object switchViewFromResidentListToShowApartmentDetail(MenuView menuView, Resident resident, ObservableMap<String, String> selectedFloor){
+    public static void switchViewFromResidentListToShowApartmentDetail(MenuView menuView, Resident resident, ObservableMap<String, String> selectedFloor){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             Parent root = loader.load();
@@ -62,13 +61,11 @@ public class MenuViewManager {
                 apartmentListController.apartmentTableView.setVisible(false);
                 apartmentListController.backButton.setVisible(false);
             });
-
-            return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public static Object switchViewToShowCollectionDetail(MenuView menuView, ApartmentCollection apartmentCollection, Apartment selectedApartment){
+    public static void switchViewToShowCollectionDetail(MenuView menuView, ApartmentCollection apartmentCollection, Apartment selectedApartment){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             Parent root = loader.load();
@@ -79,12 +76,11 @@ public class MenuViewManager {
             collectionFormController.switchViewFlag = true;
             collectionFormController.apartmentCollection = apartmentCollection;
             borderPane.setCenter(root);
-            return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public static Object switchViewFromCollectionReportToApartmentDetail(MenuView menuView, ApartmentCollection apartmentCollection){
+    public static void switchViewFromCollectionReportToApartmentDetail(MenuView menuView, ApartmentCollection apartmentCollection){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             Parent root = loader.load();
@@ -102,12 +98,11 @@ public class MenuViewManager {
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.backButton.setVisible(true);
             borderPane.setCenter(root);
-            return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public static Object switchViewToAddNewRes(MenuView menuView, Apartment apartment,  ObservableMap<String, String> selectedFloor){
+    public static void switchViewToAddNewRes(MenuView menuView, Apartment apartment,  ObservableMap<String, String> selectedFloor){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             Parent root = loader.load();
@@ -116,7 +111,6 @@ public class MenuViewManager {
             residentFormController.switchViewFlag = true;
             residentFormController.selectedFloor = selectedFloor;
             borderPane.setCenter(root);
-            return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -31,8 +31,6 @@ import java.util.concurrent.atomic.AtomicReference;
 //TODO: Warning when deleting apartment will also delete all residents in that apartment
 public class ApartmentListController {
     public Label floorText;
-
-
     public Label tableHeader;
     public Button backButton;
     public TableView<ObservableMap<String, String>> floorTableView;
@@ -415,8 +413,6 @@ public class ApartmentListController {
                     } else if (item.equals(ApartmentState.RESERVED.toString())) {
                         getStyleClass().add("state-apartment-design");
                         getStyleClass().add("reserved-state");
-
-
                     }
                 }
             }
@@ -475,10 +471,7 @@ public class ApartmentListController {
                                         + "-fx-background-color: #f0f0f0;"
                         ));
                         deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #d7d7d7;"));
-
                     }
-
-
                     deleteBtn.setOnMouseClicked(e -> {
                         Apartment apartment = getTableView().getItems().get(getIndex());
                         apartmentService.remove(apartment);
