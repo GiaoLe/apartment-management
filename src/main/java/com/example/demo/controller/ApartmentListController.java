@@ -523,20 +523,10 @@ public class ApartmentListController {
                         });
                         addResBtn.setOnMouseClicked(mouseEvent -> MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment, null));
                         AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
-                        residentTableView.setOnMouseClicked(mouseEvent -> {
-                            resident.set(residentTableView.getSelectionModel().getSelectedItem());
-                            if (mouseEvent.getClickCount() >= 2) {
-                                Resident resident1 = residentTableView.getSelectionModel().getSelectedItem();
-                                MenuViewManager.switchViewToShowResidentDetails(MenuView.RESIDENT_LIST, resident1);
-                            }
-                        });
-
-                        delResBtn.setOnMouseClicked(e2 -> {
+                        delResBtn.setOnMouseClicked(event -> {
                             residentService.remove(resident.get());
                             updateData();
-                            Apartment apartmentAfterUpdate = HibernateUtility.getSessionFactory().fromSession(session -> session.createQuery("from Apartment  where id = :id", Apartment.class)
-                                    .setParameter("id", apartment.getId())
-                                    .uniqueResult());
+                            Apartment apartmentAfterUpdate = apartmentService.findById(apartment.getId());
                             updateResidentListsInApartment(apartmentAfterUpdate);
                         });
                     });

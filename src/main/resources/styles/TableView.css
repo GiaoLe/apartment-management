@@ -1,7 +1,7 @@
 .table-view{
     -fx-background-radius:  10;
-    -fx-border-color: transparent; /* Đặt màu đường biên là trong suốt */
-    -fx-padding: 0; /* Đặt padding là 0 */
+    -fx-border-color: transparent;
+    -fx-padding: 0;
 }
 .table-header{
     -fx-font-size: 15px;
@@ -30,8 +30,8 @@
     -fx-end-margin: 10px;
 }
 .menu-item{
-    -fx-text-fill: red; /* Màu chữ */
-    -fx-font-size: 14px;    /* Kích thước font chữ */
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
 }
 .table-row-cell:hover {
     -fx-background-color: lightgray; /* Màu của hàng khi hover */

@@ -25,4 +25,8 @@ public class ApartmentService {
     public void remove(Apartment apartment){
         apartmentRepository.remove(apartment);
     }
+
+    public Apartment findById(String id) {
+        return apartmentRepository.findById(id);
+    }
 }
