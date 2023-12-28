@@ -19,8 +19,8 @@
 }
 .table-row-cell{
     -fx-background-color: transparent;
-    -fx-border-width: 0 0 0.5px 0;
-    -fx-border-color: gray;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: rgb(128, 128, 128);
     -fx-border-style: solid;
 
     -fx-font-size: 15px;
