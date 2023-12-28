@@ -32,7 +32,7 @@
                   <TableColumn fx:id="isPaidTableColumn" prefWidth="92.0" text="Is Paid" />
                </columns>
             </TableView>
-            <HBox prefHeight="38.0" prefWidth="1041.0">
+            <HBox prefHeight="38.0" prefWidth="1041.0" visible="false">
                <children>
                   <Label fx:id="reportNameLabel" text="Report Name">
                      <font>
@@ -61,15 +61,16 @@
                   </TextField>
                </children>
             </HBox>
-            <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14; -fx-background-color: white;" text="Search options">
+            <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14; -fx-background-color: white;" text="Search options">
                <font>
-                  <Font size="18.0" />
+                  <Font size="21.0" />
                </font>
                <items>
                   <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="ApartmentID" />
                   <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Host name" />
                   <MenuItem fx:id="amountItem" mnemonicParsing="false" text="Amount" />
                   <MenuItem fx:id="isPaidItem" mnemonicParsing="false" text="Is paid" />
+                  <MenuItem fx:id="deadlinePaymentItem" mnemonicParsing="false" text="Deadline payment" />
                </items>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -112,6 +113,11 @@
                   <String fx:value="search-btn" />
                </styleClass>
             </Button>
+            <MenuButton fx:id="monthButton" layoutX="33.0" layoutY="52.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Choose Month" visible="false">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </MenuButton>
          </children>
       </AnchorPane>
    </content>

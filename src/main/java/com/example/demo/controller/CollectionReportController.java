@@ -10,13 +10,18 @@ import com.example.demo.service.ApartmentCollectionService;
 import com.example.demo.service.ApartmentService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class CollectionReportController {
 
@@ -44,15 +49,13 @@ public class CollectionReportController {
     public Button markAsPaidButton;
     public Label reportNameLabel;
     public Button addAppsBtn;
-
+    public MenuItem deadlinePaymentItem;
+    public MenuButton monthButton;
+    private ObservableMap<String, Integer> dateObservableMap = FXCollections.observableHashMap();
     public void initializeData(Collection collection) {
         reportNameLabel.setText("Collection's Report: " + collection.getName());
-        selectedItem(new ArrayList<>(List.of(amountItem, apartmentIDItem, hostNameItem, isPaidItem)), residentMenuButton);
+        selectedItem(new ArrayList<>(List.of(amountItem, apartmentIDItem, hostNameItem, isPaidItem, deadlinePaymentItem)), residentMenuButton);
         selectedItem(new ArrayList<>(List.of(falseItem, trueItem)), isPaidMenuButton);
-        System.out.println(collection.getApartmentCollections().size());
-        for (ApartmentCollection apartmentCollection : collection.getApartmentCollections()){
-            System.out.println(apartmentCollection);
-        }
         collectionReportTableView.setItems(FXCollections.observableList(collection.getApartmentCollections()));
         apartmentIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getId()));
         deadlinePayment.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDeadlinePayment()));
@@ -67,7 +70,7 @@ public class CollectionReportController {
                     };
             return new SimpleObjectProperty<>(amount);
         });
-
+        initializeMonthMenuButton();
         isPaidTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
         isPaidTableColumn.setCellFactory(column -> new TextFieldTableCell<>() {
             @Override
@@ -96,15 +99,22 @@ public class CollectionReportController {
                     List<ApartmentCollection> isPaidFilterList = new ArrayList<>();
 
                     handleIsPaidFilter(isPaidFilterList, collection.getApartmentCollections());
-                    collectionReportTableView.setItems(FXCollections.observableList(isPaidFilterList));
+                    updateTable(FXCollections.observableList(isPaidFilterList), collection);
+
                 });
-            }else{
+            } else if (residentMenuButton.getText().equals("Deadline payment")){
+                searchContainer.setVisible(false);
+                monthButton.setVisible(true);
+            }
+            else{
                 searchContainer.setVisible(true);
                 isPaidMenuButton.setVisible(false);
+                monthButton.setVisible(false);
                 if(!searchTextField.getText().isEmpty()){
                     List<ApartmentCollection> filterList = new ArrayList<>();
                     handleFilter(filterList, searchTextField.getText(), collection.getApartmentCollections());
-                    collectionReportTableView.setItems(FXCollections.observableList(filterList));
+                    updateTable(FXCollections.observableList(filterList), collection);
+
                 }else{
                     collectionReportTableView.setItems(FXCollections.observableList(collection.getApartmentCollections()));
                 }
@@ -114,27 +124,64 @@ public class CollectionReportController {
             searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
                 List<ApartmentCollection> filterList = new ArrayList<>();
                 handleFilter(filterList, newValue, collection.getApartmentCollections());
-                collectionReportTableView.setItems(FXCollections.observableList(filterList));
-                apartmentIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getId()));
-                totalResCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getResidents().size()));
-                amountTableColumn.setCellValueFactory(cellData -> {
-                    ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
-                    double apartmentArea = apartmentService.findByID(cellData.getValue().getApartment().getId()).getArea();
-                    Double amount =
-                            switch (collection.getType()) {
-                                case SERVICE_FEE, MANAGEMENT_FEE -> collection.getAmount() * apartmentArea;
-                                default -> collection.getAmount();
-                            };
-                    return new SimpleObjectProperty<>(amount);
-                });
-
+                updateTable(FXCollections.observableList(filterList), collection);
             });
         }
+        monthButton.showingProperty().addListener(e -> {
+            List<ApartmentCollection> filterList = new ArrayList<>();
+            handleSearchByMonth(filterList, monthButton.getText(), collection.getApartmentCollections());
+            updateTable(FXCollections.observableList(filterList), collection);
+        });
 
     }
     public void selectedItem(List<MenuItem> menuItemList, MenuButton menuButton){
         for(MenuItem menuItem : menuItemList){
-            menuItem.setOnAction(e -> menuButton.setText(menuItem.getText()));
+            menuItem.setOnAction(e -> {
+                menuButton.setText(menuItem.getText());
+            });
+        }
+    }
+    public void updateTable(ObservableList<ApartmentCollection> observableList, Collection collection){
+        collectionReportTableView.setItems(observableList);
+        apartmentIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getId()));
+        totalResCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getResidents().size()));
+        isPaidTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
+        amountTableColumn.setCellValueFactory(cellData -> {
+            ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
+            double apartmentArea = apartmentService.findByID(cellData.getValue().getApartment().getId()).getArea();
+            Double amount =
+                    switch (collection.getType()) {
+                        case SERVICE_FEE, MANAGEMENT_FEE -> collection.getAmount() * apartmentArea;
+                        default -> collection.getAmount();
+                    };
+            return new SimpleObjectProperty<>(amount);
+        });
+        deadlinePayment.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDeadlinePayment()));
+        hostNameCol.setCellValueFactory(cellData -> cellData.getValue().getApartment().getHost() == null ? new SimpleObjectProperty<>("Unknown") : new SimpleObjectProperty<>(cellData.getValue().getApartment().getHost().getLastName()));
+    }
+    public void initializeMonthMenuButton(){
+        for (int i = 0 ; i <= 11 ; i++){
+            Calendar calendarForMonth = Calendar.getInstance();
+            calendarForMonth.set(Calendar.MONTH, i);
+            monthButton.getItems().add(
+                    new MenuItem(String.valueOf(calendarForMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())))
+            );
+            dateObservableMap.put(String.valueOf(calendarForMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())), i+1);
+        }
+        List <MenuItem> list = monthButton.getItems();
+        for (MenuItem menuItem : list){
+            menuItem.setOnAction(e -> {
+                monthButton.setText(menuItem.getText());
+            });
+        }
+    }
+    public void handleSearchByMonth(List<ApartmentCollection> filterList, String month, List<ApartmentCollection> apartmentCollectionList){
+        Month month1 = Month.of(dateObservableMap.get(month));
+
+        for (ApartmentCollection apartmentCollection1 : apartmentCollectionList){
+            if (apartmentCollection1.getDeadlinePayment().getMonth() == (month1.getValue() - 1)){
+                filterList.add(apartmentCollection1);
+            }
         }
     }
     public void backButtonOnAction() {
@@ -185,6 +232,12 @@ public class CollectionReportController {
                 Double amount = Double.parseDouble(newValue);
                 for(ApartmentCollection apartmentCollection : apartmentCollectionList){
                     if(amount.equals(apartmentCollection.getCollection().getAmount())){
+                        filterList.add(apartmentCollection);
+                    }
+                }
+            case "Deadline payment":
+                for(ApartmentCollection apartmentCollection : apartmentCollectionList){
+                    if(apartmentCollection.getDeadlinePayment() == java.sql.Date.valueOf(newValue)){
                         filterList.add(apartmentCollection);
                     }
                 }
