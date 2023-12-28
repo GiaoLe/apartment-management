@@ -25,7 +25,7 @@ public class ResidentFormController {
     public TextField lastNameTextField;
     public TextField apartmentTextField;
     public Button submitButton;
-    public Label apartmentTextFieldErrorLabel;
+    public Label apartmentErrorLabel;
     public Label firstNameErrorLabel;
     public Label lastNameErrorLabel;
     public Button backButton;
@@ -40,7 +40,6 @@ public class ResidentFormController {
 
     private ResidentService residentService;
     public DatePicker datePicker;
-    public TextField IDTextField;
     public MenuItem maleItem;
     public MenuItem femaleItem;
     public MenuButton genderMenuButton;
@@ -54,8 +53,10 @@ public class ResidentFormController {
     public TableView<Resident> residentTableView;
     public DatePicker dobPicker;
     public ObservableMap<String, String> selectedFloor = FXCollections.observableHashMap();
-    private CollectionService collectionService = new CollectionService(new CollectionRepository());
-    private ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
+    private final CollectionService collectionService = new CollectionService(new CollectionRepository());
+    private final ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
+
+    private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
 
 
     @FXML
@@ -63,7 +64,7 @@ public class ResidentFormController {
         textFieldWrappers = new ArrayList<>(List.of(
                 new TextFieldWrapper(firstNameTextField, firstNameErrorLabel),
                 new TextFieldWrapper(lastNameTextField, lastNameErrorLabel),
-                new TextFieldWrapper(apartmentTextField, apartmentTextFieldErrorLabel),
+                new TextFieldWrapper(apartmentTextField, apartmentErrorLabel),
                 new TextFieldWrapper(nationalIDTextField, nationalIDErrorLabel),
                 new TextFieldWrapper(phoneNumberTextField, phoneNumberErrorLabel),
                 new TextFieldWrapper(emailTextField, emailErrorLabel)
@@ -111,9 +112,7 @@ public class ResidentFormController {
         }
     }
     private void persistResident() {
-        Apartment apartment = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment where id = :id", Apartment.class)
-                .setParameter("id", apartmentTextField.getText())
-                .uniqueResult());
+        Apartment apartment = apartmentService.findByID(apartmentTextField.getText());
         if (apartment == null) {
             //TODO retain resident information after apartment creation
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -123,7 +122,6 @@ public class ResidentFormController {
                     .ifPresent(response -> MenuViewManager.switchView(MenuView.APARTMENT_FORM));
         } else {
             Resident resident = new Resident(
-                    IDTextField.getText(),
                     Date.valueOf(dobPicker.getValue()),
                     genderMenuButton.getText(),
                     firstNameTextField.getText(),

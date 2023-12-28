@@ -10,11 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.BeanPropertyUtils;
-import org.controlsfx.property.editor.DefaultPropertyEditorFactory;
-import org.controlsfx.property.editor.PropertyEditor;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -201,7 +198,7 @@ public class ResidentListController {
                 break;
             case "ID Number":
                 for (Resident resident : residents) {
-                    if (resident.getIDNumber().contains(newValue)) {
+                    if (resident.getNationalID().contains(newValue)) {
                         filterList.add(resident);
                     }
                 }

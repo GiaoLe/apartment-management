@@ -124,7 +124,6 @@ public class ApartmentFormController {
         apartmentService.persist(apartment);
         for (ObservableMap<String, String> observableMap : this.residentList) {
             Resident resident = new Resident(
-                    observableMap.get("ID"),
                     Date.valueOf(observableMap.get("dob")),
                     observableMap.get("gender"),
                     observableMap.get("firstName"),

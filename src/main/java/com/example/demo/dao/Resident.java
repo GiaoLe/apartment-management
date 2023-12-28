@@ -26,17 +26,20 @@ public class Resident implements Serializable {
     private String firstName;
     @NotNull
     private Date moveInDate;
+
     @NotNull
     private String lastName;
-    @NotNull
-    private String IDNumber;
+
     @NotNull
     private Boolean gender;
+
     @NotNull
     private String phoneNumber;
 
+    @NotNull
     private String email;
 
+    @NotNull
     private String nationalID;
 
     @NotNull
@@ -48,8 +51,7 @@ public class Resident implements Serializable {
     @Setter(AccessLevel.NONE)
     private Apartment apartment;
 
-    public Resident(String IDNumber, Date dateOfBirth, String gender, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
-        this.IDNumber = IDNumber;
+    public Resident(Date dateOfBirth, String gender, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
         this.dateOfBirth = dateOfBirth;
         this.gender = gender.equals("Female");
         this.firstName = firstName;
