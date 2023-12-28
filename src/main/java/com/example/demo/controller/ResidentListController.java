@@ -167,16 +167,6 @@ public class ResidentListController {
         residentPropertySheet.getItems().clear();
         Resident resident = residentTableView.getSelectionModel().getSelectedItem();
         residentPropertySheet.getItems().addAll(BeanPropertyUtils.getProperties(resident));
-        SimpleObjectProperty<Callback<PropertySheet.Item, PropertyEditor<?>>> propertyEditorFactory = new SimpleObjectProperty<>(this, null, new DefaultPropertyEditorFactory());
-        residentPropertySheet.setPropertyEditorFactory(getItemPropertyEditorCallback(propertyEditorFactory));
-    }
-
-    private Callback<PropertySheet.Item, PropertyEditor<?>> getItemPropertyEditorCallback(SimpleObjectProperty<Callback<PropertySheet.Item, PropertyEditor<?>>> propertyEditorFactory) {
-        return param -> {
-            PropertyEditor<?> editor = propertyEditorFactory.get().call(param);
-            editor.getEditor().focusedProperty().addListener(event -> updateButton.setDisable(false));
-            return editor;
-        };
     }
 
     public void handleFilter(List<Resident> filterList, String newValue, List<Resident> residents) {
@@ -225,7 +215,6 @@ public class ResidentListController {
     public void updateButtonOnAction() {
         Resident resident = residentTableView.getSelectionModel().getSelectedItem();
         if (resident != null) {
-            updateButton.setDisable(true);
             residentService.merge(resident);
             residentTableView.refresh();
         } else if (switchViewFlag) {

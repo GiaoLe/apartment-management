@@ -68,7 +68,7 @@
                      </font>
                   </Label>
                   <PropertySheet fx:id="residentPropertySheet" onKeyTyped="#enableUpdateButton" />
-                  <Button fx:id="updateButton" disable="true" mnemonicParsing="false" onAction="#updateButtonOnAction" text="Update" />
+                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButtonOnAction" text="Update" />
                </children>
             </VBox>
             <Label layoutX="410.0" text="Resident List">
