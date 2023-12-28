@@ -36,7 +36,7 @@ public class CollectionListController {
     public MenuItem typeCollectionItem;
     public MenuItem amountCollectionItem;
 
-    public TableColumn<Collection, Integer> totalAppsPartCol;
+    public TableColumn<Collection, Integer> totalBills;
     private final List<Collection> collectionList = collectionService.findAll();
     public HBox searchContainer;
     public DatePicker deadlinePicker;
@@ -114,7 +114,7 @@ public class CollectionListController {
         collectionsTableView.setItems(FXCollections.observableList(collectToShow));
         nameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         typeTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
-        totalAppsPartCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartmentCollections().size()));
+        totalBills.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartmentCollections().size()));
         amountTableColumn.setCellValueFactory(cellData -> switch (cellData.getValue().getType()) {
             case SERVICE_FEE, MANAGEMENT_FEE -> new SimpleObjectProperty<>(cellData.getValue().getAmount() + "/m2");
             default -> new SimpleObjectProperty<>(cellData.getValue().getAmount().toString());

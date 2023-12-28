@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.List;
 
 public class CollectionFormController {
@@ -66,12 +67,19 @@ public class CollectionFormController {
 
         ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
         if (collectionTypeChoiceBox.getValue() != CollectionType.DONATION){
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, 2023);
+            calendar.set(Calendar.DAY_OF_MONTH, 30);
             for (Apartment apartment : apartments) {
-                Date deadlinePayment = apartment.getHost().getMoveInDate();
-                deadlinePayment = Date.valueOf(deadlinePayment.toLocalDate().plusDays(30));
-                apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, deadlinePayment));
+                Date deadlinePayment = apartment.getHost() == null ? Date.valueOf(LocalDate.now()) : apartment.getHost().getMoveInDate();
+                for (int i = deadlinePayment.getMonth() ; i < 12 ; i++) {
+                    calendar.set(Calendar.MONTH, i);
+                    java.util.Date date = calendar.getTime();
+                    apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, date));
+                }
             }
         }
+
         updateCollectionTableView();
         MenuViewManager.switchView(MenuView.COLLECTION_LIST);
     }

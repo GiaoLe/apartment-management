@@ -52,6 +52,7 @@ public class ResidentListController {
     public MenuItem femaleItem;
     public DatePicker dobPicker;
     public HBox searchContainer;
+    public ScrollPane residentContainer;
 
     @FXML
     public void initialize() {

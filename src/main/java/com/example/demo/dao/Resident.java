@@ -63,7 +63,7 @@ public class Resident implements Serializable {
 
     @Override
     public String toString() {
-         return "Apartment{" +
+         return "Resident{" +
                 "id='" + id + '\'' +
                 ", firstName=" + firstName +
                 ", lastName=" + lastName +

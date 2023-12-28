@@ -327,6 +327,11 @@
                                           <MenuItem fx:id="penthouseItem1" mnemonicParsing="false" text="PENTHOUSE" />
                                           <MenuItem fx:id="duplexItem1" mnemonicParsing="false" text="DUPLEX" />
                                           <MenuItem fx:id="triplexItem1" mnemonicParsing="false" text="TRIPLEX" />
+                                          <MenuItem fx:id="gardenItem1" mnemonicParsing="false" text="GARDEN" />
+                                          <MenuItem fx:id="loftItem1" mnemonicParsing="false" text="LOFT" />
+                                          <MenuItem fx:id="condoItem1" mnemonicParsing="false" text="CONDO" />
+                                          <MenuItem fx:id="townhouseItem1" mnemonicParsing="false" text="TOWNHOUSE" />
+                                          <MenuItem fx:id="villaItem1" mnemonicParsing="false" text="VILLA" />
                                        </items>
                                        <styleClass>
                                           <String fx:value="btn-design" />

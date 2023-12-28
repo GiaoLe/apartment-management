@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ApartmentFormController {
@@ -100,18 +101,6 @@ public class ApartmentFormController {
             apartmentStateToSet = ApartmentState.AVAILABLE;
         } else {
             apartmentStateToSet = ApartmentState.OCCUPIED;
-            List<Collection> collections = collectionService.findAll();
-            for (Collection collection : collections) {
-                if (collection.getType() == CollectionType.SERVICE_FEE || collection.getType() == CollectionType.MANAGEMENT_FEE) {
-                    ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
-                    List<Apartment> apartments = apartmentService.findAll();
-                    LocalDate localDate = LocalDate.now();
-                    localDate = localDate.plusDays(30);
-                    for (Apartment apartment : apartments) {
-                        apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, Date.valueOf(localDate)));
-                    }
-                }
-            }
         }
         List<Resident> residentList = new ArrayList<>();
         Apartment apartment = Apartment.builder()
@@ -122,6 +111,23 @@ public class ApartmentFormController {
                 .state(apartmentStateToSet)
                 .build();
         apartmentService.persist(apartment);
+        if (apartmentStateToSet.equals(ApartmentState.OCCUPIED)){
+            List<Collection> collections = collectionService.findAll();
+            for (Collection collection : collections) {
+                if (collection.getType() == CollectionType.SERVICE_FEE || collection.getType() == CollectionType.MANAGEMENT_FEE) {
+                    ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.YEAR, 2023);
+                    calendar.set(Calendar.DAY_OF_MONTH, 30);
+                    for (int i = Date.valueOf(this.residentList.getFirst().get("datePicker")).getMonth() ; i < 12 ; i++){
+                        calendar.set(Calendar.MONTH, i);
+                        java.util.Date date =  calendar.getTime();
+                        System.out.println(date);
+                        apartmentCollectionService.merge(new ApartmentCollection(apartment, collection, date));
+                    }
+                }
+            }
+        }
         for (ObservableMap<String, String> observableMap : this.residentList) {
             Resident resident = new Resident(
                     observableMap.get("ID"),

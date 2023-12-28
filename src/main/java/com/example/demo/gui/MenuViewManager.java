@@ -53,6 +53,7 @@ public class MenuViewManager {
             String floor = resident.getApartmentID().substring(0, 1);
             apartmentListController.showFloorDetail(Integer.parseInt(floor));
             apartmentListController.selectedFloor = selectedFloor;
+            System.out.println(selectedFloor);
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.floorTableView.setVisible(false);
             apartmentListController.apartmentTableView.setVisible(true);
