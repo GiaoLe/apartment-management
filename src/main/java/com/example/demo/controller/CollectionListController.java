@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
+import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.CollectionRepository;
@@ -139,11 +140,20 @@ public class CollectionListController {
     }
 
     public void deleteButtonOnAction() {
-        Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
-        if (collection != null) {
-            collectionsTableView.getItems().remove(collection);
-            collectionService.remove(collection);
-        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Are you sure you want to delete?");
+        alert.setContentText("Click OK to confirm, or Cancel to abort.");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
+                if (collection != null) {
+                    collectionsTableView.getItems().remove(collection);
+                    collectionService.remove(collection);
+                }
+            }
+        });
+
     }
     public void detailsButtonOnAction() {
         Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();

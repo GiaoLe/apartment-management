@@ -17,6 +17,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -36,7 +37,9 @@ public class CollectionFormController {
     public TableColumn<Collection, String> nameCol;
     public TableColumn<Collection, CollectionType> typeCol;
     public TableColumn<Collection, String> descriptionCol;
-
+    public VBox collectionVBox;
+    public VBox vbox = new VBox();
+    public DatePicker datePicker = new DatePicker();
     @FXML
     public void initialize() {
         collectionTypeChoiceBox.getItems().addAll(CollectionType.values());
@@ -51,6 +54,18 @@ public class CollectionFormController {
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
         amountCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAmount()));
         descriptionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescription()));
+        collectionTypeChoiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals(CollectionType.DONATION)){
+                Label label = new Label("Deadline payment");
+                label.getStyleClass().add("label-design");
+                vbox.getChildren().add(label);
+                datePicker.getStyleClass().add("input-design");
+                vbox.getChildren().add(datePicker);
+                collectionVBox.getChildren().add(vbox);
+            } else {
+                collectionVBox.getChildren().remove(vbox);
+            }
+        });
     }
 
     public void submitButtonOnAction() {
@@ -78,6 +93,8 @@ public class CollectionFormController {
                     apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, date));
                 }
             }
+        }else {
+            apartmentCollectionService.persist(new ApartmentCollection(null, collection, Date.valueOf(datePicker.getValue())));
         }
 
         updateCollectionTableView();

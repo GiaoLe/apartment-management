@@ -116,7 +116,7 @@ public class ApartmentListController {
     public TableColumn<ApartmentCollection, Date> deadlinePaymentCollectionCol;
     public TableColumn<ApartmentCollection, String> nameCollectionCol;
     public TableColumn<ApartmentCollection, CollectionType> typeCollectionCol;
-    public TableColumn<ApartmentCollection, Boolean> isPaidCol;
+    public TableColumn<ApartmentCollection, String> isPaidCol;
     public Apartment selectedApartment;
     public MenuItem apartmentIDItem;
     public MenuButton apartmentMenuButton;
@@ -381,13 +381,13 @@ public class ApartmentListController {
         nameCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getName()));
         typeCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getType()));
         amountCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getAmount()));
-        isPaidCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().isPaid()));
+        isPaidCol.setCellValueFactory(cellData -> cellData.getValue().isPaid() ? new SimpleObjectProperty<>("Yes") : new SimpleObjectProperty<>("No"));
         isPaidCol.setCellFactory(column -> new TextFieldTableCell<>() {
             @Override
-            public void updateItem(Boolean item, boolean empty) {
+            public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
-                    if (item) {
+                    if (item.equals("Yes")) {
                         getStyleClass().add("paid");
                         getStyleClass().add("state-apartment-design");
 
@@ -470,46 +470,34 @@ public class ApartmentListController {
                     imageView1.setFitHeight(20);
                     editBtn.setGraphic(imageView);
                     deleteBtn.setGraphic(imageView1);
-                    int rowIndex = getIndex();
-                    if (rowIndex % 2 == 0) {
-                        editBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;");
-                        deleteBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;");
-                        editBtn.setOnMouseExited(e -> editBtn.setStyle(
-                                " -fx-cursor: hand ;"
-                                        + "-fx-background-color: #ffff;"
-                        ));
-                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"));
-                        editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #868686;"));
-                        deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #868686FF;"));
-                        deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
-                                " -fx-cursor: hand ;"
-                                        + "-fx-background-color: #ffff;"
-                        ));
-                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"));
-                    } else {
-                        editBtn.setStyle("-fx-background-color: #f0f0f0;" + "-fx-cursor:HAND;");
-                        deleteBtn.setStyle("-fx-background-color: #f0f0f0;" + "-fx-cursor:HAND;");
-                        editBtn.setOnMouseExited(e -> editBtn.setStyle(
-                                " -fx-cursor: hand ;"
-                                        + "-fx-background-color: #f0f0f0;"
-                        ));
-                        editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #d7d7d7;"));
-                        editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #BDBDBDFF;"));
-                        deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #BDBDBDFF;"));
-                        deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
-                                " -fx-cursor: hand ;"
-                                        + "-fx-background-color: #f0f0f0;"
-                        ));
-                        deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #d7d7d7;"));
-
-                    }
-
-
+                    editBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;");
+                    deleteBtn.setStyle("-fx-background-color: #fff;" + "-fx-cursor:HAND;");
+                    editBtn.setOnMouseExited(e -> editBtn.setStyle(
+                            " -fx-cursor: hand ;"
+                                    + "-fx-background-color: #ffff;"
+                    ));
+                    editBtn.setOnMouseEntered(e -> editBtn.setStyle("-fx-background-color: #dcdcdc;"));
+                    editBtn.setOnMousePressed(e -> editBtn.setStyle("-fx-background-color: #868686;"));
+                    deleteBtn.setOnMousePressed(e -> deleteBtn.setStyle("-fx-background-color: #868686FF;"));
+                    deleteBtn.setOnMouseExited(e -> deleteBtn.setStyle(
+                            " -fx-cursor: hand ;"
+                                    + "-fx-background-color: #ffff;"
+                    ));
+                    deleteBtn.setOnMouseEntered(e -> deleteBtn.setStyle("-fx-background-color: #dcdcdc;"));
                     deleteBtn.setOnMouseClicked(e -> {
-                        Apartment apartment = getTableView().getItems().get(getIndex());
-                        handleDeleteApartmentCollection(apartment);
-                        apartmentService.remove(apartment);
-                        updateData();
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Delete Confirmation");
+                        alert.setHeaderText("Are you sure you want to delete?");
+                        alert.setContentText("Click OK to confirm, or Cancel to abort.");
+                        alert.showAndWait().ifPresent(response -> {
+                            if (response == javafx.scene.control.ButtonType.OK) {
+                                Apartment apartment = getTableView().getItems().get(getIndex());
+                                handleDeleteApartmentCollection(apartment);
+                                apartmentService.remove(apartment);
+                                updateData();
+                            }
+                        });
+
                     });
                     editBtn.setOnMouseClicked(e -> {
                         dialogContainer.setVisible(true);
@@ -558,20 +546,29 @@ public class ApartmentListController {
                             resident.set(residentTableView.getSelectionModel().getSelectedItem());
                             if (mouseEvent.getClickCount() >= 2) {
                                 Resident resident1 = residentTableView.getSelectionModel().getSelectedItem();
-                                MenuViewManager.switchViewToShowResidentDetails(MenuView.RESIDENT_LIST, resident1);
+                                MenuViewManager.switchViewToShowResidentDetails(MenuView.RESIDENT_LIST, resident1, selectedFloor);
                             }
                         });
 
                         delResBtn.setOnMouseClicked(e2 -> {
-                            residentService.remove(resident.get());
-                            if (selectedApartment.getResidents().isEmpty()){
-                                handleDeleteApartmentCollection(selectedApartment);
-                            }
-                            updateData();
-                            Apartment apartmentAfterUpdate = HibernateUtility.getSessionFactory().fromSession(session -> session.createQuery("from Apartment  where id = :id", Apartment.class)
-                                    .setParameter("id", apartment.getId())
-                                    .uniqueResult());
-                            updateResidentListsInApartment(apartmentAfterUpdate);
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Delete Confirmation");
+                            alert.setHeaderText("Are you sure you want to delete?");
+                            alert.setContentText("Click OK to confirm, or Cancel to abort.");
+                            alert.showAndWait().ifPresent(response -> {
+                                if (response == javafx.scene.control.ButtonType.OK) {
+                                    residentService.remove(resident.get());
+                                    if (selectedApartment.getResidents().isEmpty()){
+                                        handleDeleteApartmentCollection(selectedApartment);
+                                    }
+                                    updateData();
+                                    Apartment apartmentAfterUpdate = HibernateUtility.getSessionFactory().fromSession(session -> session.createQuery("from Apartment  where id = :id", Apartment.class)
+                                            .setParameter("id", apartment.getId())
+                                            .uniqueResult());
+                                    updateResidentListsInApartment(apartmentAfterUpdate);
+                                }
+                            });
+
                         });
                     });
 

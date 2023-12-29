@@ -107,7 +107,7 @@
                   <String fx:value="search-btn" />
                </styleClass>
             </Button>
-            <Button fx:id="addAppsBtn" layoutX="208.0" layoutY="638.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Add Apartment">
+            <Button fx:id="addAppsBtn" layoutX="208.0" layoutY="638.0" mnemonicParsing="false" onAction="#handleAddApartment" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Add Apartment">
                <styleClass>
                   <String fx:value="btn-design" />
                   <String fx:value="search-btn" />
@@ -118,6 +118,30 @@
                   <Font size="21.0" />
                </font>
             </MenuButton>
+            <TableView fx:id="donateApartmentTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="810.0" stylesheets="@../styles/TableView.css" visible="false">
+               <columns>
+                  <TableColumn fx:id="apartmentIDCol1" prefWidth="173.0" text="ApartmentID" />
+                  <TableColumn fx:id="hostNameCol1" prefWidth="201.0" text="Host name" />
+                  <TableColumn fx:id="totalResCol1" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
+                  <TableColumn fx:id="takePartCol" minWidth="2.333343505859375" prefWidth="218.0" text="Take Part" />
+               </columns>
+            </TableView>
+            <Button fx:id="takePartButton" layoutX="45.0" layoutY="638.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Take Part" visible="false">
+               <styleClass>
+                  <String fx:value="btn-design" />
+                  <String fx:value="search-btn" />
+               </styleClass>
+            </Button>
+            <Label fx:id="infoLabel" layoutX="219.0" layoutY="350.0" text="No apartments have taken part yet" visible="false">
+               <font>
+                  <Font size="41.0" />
+               </font>
+            </Label>
+            <Label fx:id="reportNameLabel" layoutX="39.0" layoutY="14.0" prefHeight="30.0" prefWidth="743.0" style="-fx-font-weight: 700; -fx-font-size: 20px;" text="Label">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </content>

@@ -1,15 +1,21 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.Apartment;
 import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
+import com.example.demo.repository.ApartmentRepository;
+import com.example.demo.repository.HibernateUtility;
 import com.example.demo.repository.ResidentRepository;
+import com.example.demo.service.ApartmentService;
 import com.example.demo.service.ResidentService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.BeanPropertyUtils;
@@ -30,7 +36,6 @@ public class ResidentListController {
     public TableColumn<Resident, String> lastNameTableColumn;
     public TableColumn<Resident, String> apartmentTableColumn;
     public Button deleteButton;
-    public PropertySheet residentPropertySheet;
     public Button detailsButton;
     public TableColumn<Resident, Integer> idTableColumn;
     public Button updateButton;
@@ -40,6 +45,7 @@ public class ResidentListController {
 
     public MenuItem apartmentItem;
     public MenuItem moveInDateItem;
+    public ObservableMap<String, String> selectedFloor = FXCollections.observableHashMap();
 
     public MenuItem firstNameItem;
     public MenuItem genderItem;
@@ -53,12 +59,28 @@ public class ResidentListController {
     public DatePicker dobPicker;
     public HBox searchContainer;
     public ScrollPane residentContainer;
+    public TextField apartmentIDTextField;
+    public TextField dobTextField;
+
+    public TextField emailTextField;
+    public TextField firstNameTextField;
+
+    public TextField genderTextField;
+    public TextField idNumberTextField;
+    public TextField lastNameTextField;
+    public TextField moveinDateTextField;
+    public TextField nationalIDTextField;
+    public TextField phoneNumberTextField;
+    public TextField resIDTextField;
+    public VBox detailContainer;
+    private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
 
     @FXML
     public void initialize() {
         List<Resident> residents = new ArrayList<>(residentService.findAll());
         fillTableViewWithResidentData(residents);
         enableDoubleClickForResidentDetails();
+
         wrapMenuItem(List.of(IDNumberItem, apartmentItem, moveInDateItem, genderItem, firstNameItem, lastNameItem, residentIDItem), residentMenuButton);
         wrapMenuItem(List.of(maleItem, femaleItem), genderMenuButton);
         searchTextField.textProperty().addListener((observable, oldValue, newVale) -> {
@@ -121,11 +143,26 @@ public class ResidentListController {
 
     public void showResidentDetailFromAnotherView(Resident resident) {
         residentToShow = resident;
-        residentPropertySheet.getItems().clear();
-        residentPropertySheet.getItems().addAll(BeanPropertyUtils.getProperties(residentToShow));
+        handleShowResidentDetail(residentToShow);
+        detailContainer.setVisible(true);
+        updateButton.setVisible(true);
         switchViewFlag = true;
     }
+    public void handleShowResidentDetail(Resident resident){
+        resIDTextField.setText(String.valueOf(resident.getId()));
+        idNumberTextField.setText(resident.getIDNumber());
+        firstNameTextField.setText(resident.getFirstName());
+        lastNameTextField.setText(resident.getLastName());
+        apartmentIDTextField.setText(resident.getApartmentID());
+        apartmentIDTextField.setDisable(true);
+        dobTextField.setText(resident.getDateOfBirth().toString());
+        emailTextField.setText(resident.getEmail());
+        genderTextField.setText(resident.getGender() ? "Female" : "Male");
+        moveinDateTextField.setText(resident.getMoveInDate().toString());
+        nationalIDTextField.setText(resident.getNationalID());
+        phoneNumberTextField.setText(resident.getPhoneNumber());
 
+    }
     public void wrapMenuItem(List<MenuItem> list, MenuButton menuButton) {
         for (MenuItem menuItem : list) {
             menuItem.setOnAction(e -> menuButton.setText(menuItem.getText()));
@@ -157,27 +194,27 @@ public class ResidentListController {
     }
 
     public void deleteButtonOnAction() {
-        Resident resident = residentTableView.getSelectionModel().getSelectedItem();
-        if (resident != null) {
-            residentTableView.getItems().remove(resident);
-            residentService.remove(resident);
-        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Are you sure you want to delete?");
+        alert.setContentText("Click OK to confirm, or Cancel to abort.");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                Resident resident = residentTableView.getSelectionModel().getSelectedItem();
+                if (resident != null) {
+                    residentTableView.getItems().remove(resident);
+                    residentService.remove(resident);
+                }
+            }
+        });
+
     }
 
     public void detailsButtonOnAction() {
-        residentPropertySheet.getItems().clear();
         Resident resident = residentTableView.getSelectionModel().getSelectedItem();
-        residentPropertySheet.getItems().addAll(BeanPropertyUtils.getProperties(resident));
-        SimpleObjectProperty<Callback<PropertySheet.Item, PropertyEditor<?>>> propertyEditorFactory = new SimpleObjectProperty<>(this, null, new DefaultPropertyEditorFactory());
-        residentPropertySheet.setPropertyEditorFactory(getItemPropertyEditorCallback(propertyEditorFactory));
-    }
-
-    private Callback<PropertySheet.Item, PropertyEditor<?>> getItemPropertyEditorCallback(SimpleObjectProperty<Callback<PropertySheet.Item, PropertyEditor<?>>> propertyEditorFactory) {
-        return param -> {
-            PropertyEditor<?> editor = propertyEditorFactory.get().call(param);
-            editor.getEditor().focusedProperty().addListener(event -> updateButton.setDisable(false));
-            return editor;
-        };
+        detailContainer.setVisible(true);
+        updateButton.setVisible(true);
+        handleShowResidentDetail(resident);
     }
 
     public void handleFilter(List<Resident> filterList, String newValue, List<Resident> residents) {
@@ -222,21 +259,29 @@ public class ResidentListController {
                 break;
         }
     }
-
+    public void handleUpdateResident(Resident selectedResident){
+        selectedResident.setIDNumber(idNumberTextField.getText());
+        selectedResident.setFirstName(firstNameTextField.getText());
+        selectedResident.setLastName(lastNameTextField.getText());
+        selectedResident.setEmail(emailTextField.getText());
+        selectedResident.setGender(genderTextField.equals("Female"));
+        selectedResident.setDateOfBirth(Date.valueOf(dobTextField.getText()));
+        selectedResident.setMoveInDate(Date.valueOf(moveinDateTextField.getText()));
+        selectedResident.setPhoneNumber(phoneNumberTextField.getText());
+        selectedResident.setNationalID(nationalIDTextField.getText());
+        residentService.merge(selectedResident);
+        residentTableView.refresh();
+    }
     public void updateButtonOnAction() {
+        detailContainer.setVisible(true);
+        updateButton.setVisible(true);
         Resident resident = residentTableView.getSelectionModel().getSelectedItem();
         if (resident != null) {
-            updateButton.setDisable(true);
-            residentService.merge(resident);
-            residentTableView.refresh();
+            handleUpdateResident(resident);
         } else if (switchViewFlag) {
-            residentService.merge(residentToShow);
-            residentTableView.refresh();
-            MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, residentToShow, null);
+            handleUpdateResident(residentToShow);
+            MenuViewManager.switchViewFromResidentListToShowApartmentDetail(MenuView.APARTMENT_LIST, residentToShow, selectedFloor);
         }
     }
 
-    public void enableUpdateButton() {
-        updateButton.setDisable(false);
-    }
 }

@@ -115,6 +115,7 @@ public class DashboardController {
             menuItem.setOnAction(e -> {
                 typeFeeButton.setText(menuItem.getText());
                 chooseFeeButton.getItems().clear();
+                chooseFeeButton.setText("Choose Fee");
                 if (typeFeeButton.getText().equals("Service Fee")){
                     for (Collection collection : serviceCollections){
                         chooseFeeButton.getItems().add(
@@ -189,22 +190,24 @@ public class DashboardController {
     }
     public void updateData(String collectionName){
         List<Apartment> apartments1 = new ArrayList<>(apartmentService.findAll());
-        for(int i = 0 ; i <= 11 ; i++){
+        for (int i = 0; i <= 11; i++) {
             ObservableMap<String, String> observableMap = FXCollections.observableHashMap();
             initMap(observableMap);
-            for (Apartment apartment : apartments1){
-                for (ApartmentCollection apartmentCollection : apartment.getApartmentCollectionList()){
-                    if (apartmentCollection.getDeadlinePayment().getMonth() == i){
+            Calendar calendarForMonth = Calendar.getInstance();
+            calendarForMonth.set(Calendar.MONTH, i);
+            observableMap.put("month", String.valueOf(calendarForMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())));
+            if (i == 1){
+                observableMap.put("month", "February");
+            }
+            for (Apartment apartment : apartments1) {
+                for (ApartmentCollection apartmentCollection : apartment.getApartmentCollectionList()) {
+                    if (apartmentCollection.getDeadlinePayment().getMonth() == i) {
                         updateFeeTableView(collectionName, apartmentCollection, observableMap);
                     }
-                    Calendar calendarForMonth = Calendar.getInstance();
-                    calendarForMonth.set(Calendar.MONTH, i);
-                    observableMap.put("month", String.valueOf(calendarForMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())));
                 }
             }
             monthPaid.add(observableMap);
         }
-
     }
 
     private void updateFeeTableView(String collectionName, ApartmentCollection apartmentCollection, ObservableMap<String, String> observableMap) {

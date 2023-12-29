@@ -122,7 +122,6 @@ public class ApartmentFormController {
                     for (int i = Date.valueOf(this.residentList.getFirst().get("datePicker")).getMonth() ; i < 12 ; i++){
                         calendar.set(Calendar.MONTH, i);
                         java.util.Date date =  calendar.getTime();
-                        System.out.println(date);
                         apartmentCollectionService.merge(new ApartmentCollection(apartment, collection, date));
                     }
                 }
@@ -151,6 +150,7 @@ public class ApartmentFormController {
     public void handleAddNewRes() {
         dialogContainer.setVisible(true);
         addNewResContainer.setVisible(true);
+        clearTextField(new ArrayList<>(List.of(IDTextField, lastNameTextField, firstNameTextField, phoneNumberTextField, nationalIDTextField, emailTextField)));
         apartmentTextField.setText(idTextField.getText());
         apartmentTextField.setDisable(true);
     }
@@ -239,5 +239,7 @@ public class ApartmentFormController {
         for (TextField textField : listTextFields) {
             textField.setText("");
         }
+        dobPicker.setValue(null);
+        datePicker.setValue(null);
     }
 }

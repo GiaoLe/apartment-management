@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -57,7 +56,7 @@
                   </TextField>
                </children>
             </HBox>
-            <TableView fx:id="floorTableView" layoutX="23.0" layoutY="130.0" onMouseClicked="#selectedFloor" prefHeight="560.0" prefWidth="1022.0" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="130.0">
+            <TableView fx:id="floorTableView" layoutX="23.0" layoutY="130.0" onMouseClicked="#selectedFloor" prefHeight="560.0" prefWidth="1022.0" stylesheets="@../styles/TableView.css" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="130.0">
                <columns>
                   <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Floor" />
                   <TableColumn fx:id="totalColumn" prefWidth="150.0" text="Total Apartments " />
@@ -66,10 +65,6 @@
                   <TableColumn fx:id="occupiedColumn" prefWidth="188.0" text="Occupied Apartments" />
                   <TableColumn fx:id="residentsColumn" prefWidth="182.0" text="Total Residents" />
                </columns>
-               <stylesheets>
-                  <URL value="@../styles/ApartmentList.css" />
-                  <URL value="@../styles/TableView.css" />
-               </stylesheets>
             </TableView>
             <Label fx:id="tableHeader" layoutX="104.0" layoutY="25.0" prefHeight="30.0" prefWidth="204.0" styleClass="table-header" stylesheets="@../styles/ApartmentList.css" text="Apartments Infomation">
                <font>
@@ -345,7 +340,7 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <TableView fx:id="residentTableView" prefHeight="178.0" prefWidth="783.0" stylesheets="@../styles/ApartmentList.css">
+                        <TableView fx:id="residentTableView" prefHeight="178.0" prefWidth="783.0" stylesheets="@../styles/TableView.css">
                            <columns>
                               <TableColumn fx:id="residentID" prefWidth="100.0" text="ResidentID" />
                               <TableColumn fx:id="lastName" prefWidth="181.0" text="Last Name" />
@@ -358,7 +353,7 @@
                               <Insets bottom="40.0" />
                            </padding>
                         </TableView>
-                        <TableView fx:id="collectionTableView" layoutX="10.0" layoutY="192.0" prefHeight="192.0" prefWidth="868.0" stylesheets="@../styles/ApartmentList.css">
+                        <TableView fx:id="collectionTableView" layoutX="10.0" layoutY="192.0" prefHeight="192.0" prefWidth="868.0" stylesheets="@../styles/TableView.css">
                            <columns>
                               <TableColumn fx:id="collectionIDCol" prefWidth="103.0" text="CollectionID" />
                               <TableColumn fx:id="nameCollectionCol" prefWidth="171.0" text="Name" />

@@ -265,21 +265,12 @@
                </DatePicker>
             </VBox>
          </HBox>
-         <HBox layoutX="524.0" layoutY="505.0" prefHeight="26.0" prefWidth="201.0">
+         <HBox layoutX="656.0" layoutY="523.0" prefHeight="26.0" prefWidth="201.0">
             <Button fx:id="residentSubmissionButton" mnemonicParsing="false" onAction="#handleSubmitAddRes" prefHeight="33.0" prefWidth="108.0" text="Submit">
                <styleClass>
                   <String fx:value="btn-design" />
                   <String fx:value="search-btn" />
                </styleClass>
-            </Button>
-            <Button fx:id="backButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="98.0" text="Back">
-               <styleClass>
-                  <String fx:value="btn-design" />
-                  <String fx:value="search-btn" />
-               </styleClass>
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
             </Button>
          </HBox>
          <Label layoutX="272.0" layoutY="19.0" prefHeight="30.0" prefWidth="283.0" styleClass="label-design" text="Add new residents for  " />
