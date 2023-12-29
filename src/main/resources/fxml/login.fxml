@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.LoginController">
    <left>
        <AnchorPane prefHeight="400.0" prefWidth="297.0" style="-fx-background-color: #eba134;" styleClass="background-image" stylesheets="@../styles/LoginForm.css" BorderPane.alignment="CENTER">
            <Label prefHeight="129.0" prefWidth="297.0" text="Welcome to BlueMoon Apartment Management System" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="271.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

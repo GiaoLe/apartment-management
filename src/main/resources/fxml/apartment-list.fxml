@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="apartmentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="833.0" prefWidth="1163.0" style="-fx-background-color: #f2edf3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ApartmentListController">
+<ScrollPane fx:id="apartmentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="833.0" prefWidth="1163.0" style="-fx-background-color: #f2edf3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.ApartmentListController">
    <content>
       <AnchorPane prefHeight="860.0" prefWidth="1169.0" style="-fx-background-color: #f6fdff;" styleClass="container" stylesheets="@../styles/ApartmentList.css">
          <children>

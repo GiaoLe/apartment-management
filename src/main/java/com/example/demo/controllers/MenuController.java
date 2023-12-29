@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;

@@ -1,13 +1,13 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.dao.*;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.*;
-import com.example.demo.service.ApartmentCollectionService;
-import com.example.demo.service.ApartmentService;
-import com.example.demo.service.CollectionService;
-import com.example.demo.service.ResidentService;
+import com.example.demo.repositories.*;
+import com.example.demo.services.ApartmentCollectionService;
+import com.example.demo.services.ApartmentService;
+import com.example.demo.services.CollectionService;
+import com.example.demo.services.ResidentService;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;

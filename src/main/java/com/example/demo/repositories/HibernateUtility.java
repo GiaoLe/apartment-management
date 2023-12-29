@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.example.demo.repositories;
 
 import lombok.Getter;
 import org.hibernate.SessionFactory;

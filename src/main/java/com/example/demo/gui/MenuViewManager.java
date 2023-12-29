@@ -1,7 +1,7 @@
 package com.example.demo.gui;
 
 import com.example.demo.Main;
-import com.example.demo.controller.*;
+import com.example.demo.controllers.*;
 import com.example.demo.dao.Apartment;
 import com.example.demo.dao.ApartmentCollection;
 import com.example.demo.dao.Resident;

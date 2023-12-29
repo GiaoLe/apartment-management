@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.example.demo.repositories;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;

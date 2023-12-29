@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.MenuController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.MenuController">
    <BorderPane fx:id="borderPane" layoutX="-6.0" prefHeight="853.0" prefWidth="1385.0">
       <left>
          <HBox BorderPane.alignment="CENTER">

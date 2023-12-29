@@ -1,13 +1,11 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.dao.Apartment;
-import com.example.demo.repository.HibernateUtility;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ApartmentFilter {
     private final TextField apartmentIDFilter;

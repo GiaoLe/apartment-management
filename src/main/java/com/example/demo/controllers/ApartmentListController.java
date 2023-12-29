@@ -1,17 +1,17 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.dao.*;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.ApartmentRepository;
-import com.example.demo.repository.ResidentRepository;
-import com.example.demo.service.ApartmentService;
-import com.example.demo.service.ResidentService;
+import com.example.demo.repositories.ApartmentRepository;
+import com.example.demo.repositories.ResidentRepository;
+import com.example.demo.services.ApartmentService;
+import com.example.demo.services.ResidentService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import com.example.demo.repository.HibernateUtility;
+import com.example.demo.repositories.HibernateUtility;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

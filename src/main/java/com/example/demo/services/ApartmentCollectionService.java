@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.demo.services;
 
 import com.example.demo.dao.ApartmentCollection;
-import com.example.demo.repository.ApartmentCollectionRepository;
+import com.example.demo.repositories.ApartmentCollectionRepository;
 
 public class ApartmentCollectionService {
     private final ApartmentCollectionRepository apartmentCollectionRepository;

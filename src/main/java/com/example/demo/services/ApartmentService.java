@@ -1,8 +1,8 @@
-package com.example.demo.service;
+package com.example.demo.services;
 
 
 import com.example.demo.dao.Apartment;
-import com.example.demo.repository.ApartmentRepository;
+import com.example.demo.repositories.ApartmentRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.List;

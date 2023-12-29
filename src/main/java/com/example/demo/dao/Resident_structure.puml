@@ -1,0 +1,801 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.example.demo.dao.Resident",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1322970774 { 
+   	label=example
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_134842393 { 
+   	label=demo
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Apartment1748365864[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Apartment</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   apartmentCollectionList: List&lt;ApartmentCollection&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   area: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   host: Resident [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: String [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   residents: List&lt;Resident&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   roomCount: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   state: ApartmentState [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   type: ApartmentType [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addResident(resident: Resident)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ builder(): ApartmentBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ApartmentCollection1748365864[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ApartmentCollection</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   apartment: Apartment [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collection: Collection [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   deadlinePayment: Date [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: ApartmentCollectionID [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isPaid: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ builder(): ApartmentCollectionBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ApartmentCollectionID1748365864[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ApartmentCollectionID</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   apartmentID: Integer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collectionID: Integer [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ApartmentFilter1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ApartmentFilter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   apartmentIDFilter: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   apartments: List&lt;Apartment&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   hostNameFilter: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stateItems: List&lt;MenuItem&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stateMenu: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   submitFilter: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   typeItems: List&lt;MenuItem&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   typeMenu: MenuButton [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ handleFilter(): List&lt;Apartment&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ApartmentFormController1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ApartmentFormController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   IDTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   addNewRedCloseBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   addNewResBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   addNewResContainer: AnchorPane [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentIdCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   apartmentService: ApartmentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentSubmissionButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentTableView: TableView&lt;Apartment&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentTextFieldErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentTypeChoiceBox: ChoiceBox&lt;ApartmentType&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   areaTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   backButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collectionService: CollectionService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   datePicker: DatePicker [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   dialogContainer: AnchorPane [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   dobPicker: DatePicker [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   emailErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   emailTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   femaleItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   firstNameCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   firstNameErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   firstNameTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   genderMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   idTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastNameCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastNameErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastNameTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   maleItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nationalIDCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nationalIDErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nationalIDTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   phoneNumberCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   phoneNumberErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   phoneNumberTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   resIDCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentIDTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   residentList: ObservableList&lt;ObservableMap&lt;String, String&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   residentService: ResidentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentSubmissionButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentTableView: TableView&lt;ObservableMap&lt;String, String&gt;&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   roomCountTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   stateCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   totalResidentsCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeCol: TableColumn&lt;Apartment, ApartmentType&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ clearTextField(listTextFields: List&lt;TextField&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleAddNewRes()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleCloseAddNewRes()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleSubmitAddRes()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectedGender(list: List&lt;MenuItem&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ submitButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateApartmentTableView()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ApartmentListController1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ApartmentListController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   actionsCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   addNewApartment: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   addResBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   amountCollectionCol: TableColumn&lt;ApartmentCollection, Double&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentIDFilter: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentIDFilter1: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentIDItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentIdCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentInfoClosebtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentInfoDialog: AnchorPane [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   apartmentService: ApartmentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentTableView: TableView&lt;Apartment&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   areaCol: TableColumn&lt;Apartment, Double&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   areaItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   availableColumn: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   availableItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   availableItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   backButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   closeDialogBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   collectionIDCol: TableColumn&lt;ApartmentCollection, Integer&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   collectionTableView: TableView&lt;ApartmentCollection&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   deadlinePaymentCollectionCol: TableColumn&lt;ApartmentCollection, Date&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   delResBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   dialogBox: AnchorPane [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   dialogContainer: AnchorPane [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   duplexItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   duplexItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   editResBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   email: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   floorColumn: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   floorList: ObservableList&lt;ObservableMap&lt;String, String&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   floorTableView: TableView&lt;ObservableMap&lt;String, String&gt;&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   floorText: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   hostNameCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   hostNameFilter: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   hostNameFilter1: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   hostNameItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   isPaidCol: TableColumn&lt;ApartmentCollection, Boolean&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastName: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   maintainingItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   maintainingItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nAvailableColumn: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nameCollectionCol: TableColumn&lt;ApartmentCollection, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nationalID: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   occupiedColumn: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   occupiedItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   occupiedItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   penthouseItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   penthouseItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   phoneNumber: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   reservedItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   reservedItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentID: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   residentService: ResidentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentTableView: TableView&lt;Resident&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentsColumn: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   searchTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   selectedApartment: Apartment [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   selectedFloor: ObservableMap&lt;String, String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   stateCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   stateItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   stateMenu: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   stateMenu1: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   studioItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   studioItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   submitFilter: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   tableHeader: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   totalColumn: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   totalResidentsCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   triplexItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   triplexItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeCol: TableColumn&lt;Apartment, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeCollectionCol: TableColumn&lt;ApartmentCollection, CollectionType&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeMenu: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeMenu1: MenuButton [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ handleAddNewApartment()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleClickedFloor()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleFilter(filterList: List&lt;Apartment&gt;, newValue: String, apartments: List&lt;Apartment&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectedFloor()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectedType(listItems: List&lt;MenuItem&gt;, typeMenu: MenuButton)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ showApartments(index: ObservableList&lt;Apartment&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ showFloorDetail(floor: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ showFloorList(apartmentsToShowFloorList: List&lt;Apartment&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toggleFilter()</TD></TR>
+<TR><TD ALIGN="LEFT" >- updateAppsState(apartment: Apartment, No: ObservableMap&lt;String, String&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateCollectionListsInApartment(apartment: Apartment)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateData()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateFloorDetails(apartmentsToShowFloorList: List&lt;Apartment&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateResidentListsInApartment(apartment: Apartment)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Collection1748365864[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Collection</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   amount: Double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   apartmentCollections: List&lt;ApartmentCollection&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   description: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: Integer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   type: CollectionType [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ builder(): CollectionBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CollectionFormController1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CollectionFormController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   amountCol: TableColumn&lt;Collection, Double&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   amountTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   collectionTableView: TableView&lt;Collection&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   collectionTypeChoiceBox: ChoiceBox&lt;CollectionType&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   descriptionCol: TableColumn&lt;Collection, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   descriptionTextArea: TextArea [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nameCol: TableColumn&lt;Collection, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nameTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   submitButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeCol: TableColumn&lt;Collection, CollectionType&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ submitButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateCollectionTableView()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CollectionListController1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CollectionListController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   amountCollectionItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   amountTableColumn: TableColumn&lt;Collection, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collectionList: List&lt;Collection&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collectionService: CollectionService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   collectionTypeMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   collectionsTableView: TableView&lt;Collection&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   deadlinePicker: DatePicker [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   deleteButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   descriptionTableColumn: TableColumn&lt;Collection, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   detailsButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nameCollectionItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nameTableColumn: TableColumn&lt;Collection, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   newButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   searchContainer: HBox [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   searchTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   totalAppsPartCol: TableColumn&lt;Collection, Integer&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeCollectionItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeTableColumn: TableColumn&lt;Collection, CollectionType&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ deleteButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ detailsButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >- enableDoubleClickForViewDetails()</TD></TR>
+<TR><TD ALIGN="LEFT" >- fillTableViewWithData(collectToShow: List&lt;Collection&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleFilter(filterList: List&lt;Collection&gt;, newValue: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ newButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ wrapMenuItem(list: List&lt;MenuItem&gt;)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CollectionReportController1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CollectionReportController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   addAppsBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   amountItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   amountTableColumn: TableColumn&lt;ApartmentCollection, Double&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentCollection: ApartmentCollection [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentIDCol: TableColumn&lt;ApartmentCollection, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentIDItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   backBtn: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   collectionReportTableView: TableView&lt;ApartmentCollection&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   deadlinePayment: TableColumn&lt;ApartmentCollection, Date&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   falseItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   hostNameCol: TableColumn&lt;ApartmentCollection, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   hostNameItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   isPaidItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   isPaidMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   isPaidTableColumn: TableColumn&lt;ApartmentCollection, Boolean&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   markAsPaidButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   reportNameLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   searchContainer: HBox [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   searchTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   switchViewFlag: Boolean [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   totalResCol: TableColumn&lt;ApartmentCollection, Integer&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   trueItem: MenuItem [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ backButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleFilter(filterList: List&lt;ApartmentCollection&gt;, newValue: String, apartmentCollectionList: List&lt;ApartmentCollection&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleIsPaidFilter(filterList: List&lt;ApartmentCollection&gt;, apartmentCollectionList: List&lt;ApartmentCollection&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initializeData(collection: Collection)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ markAsPaidButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectedItem(menuItemList: List&lt;MenuItem&gt;, menuButton: MenuButton)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DashboardController1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DashboardController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   apartmentService: ApartmentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   apartments: List&lt;Apartment&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   appsStateLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   appsTypeLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   chooseFeeButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collectionService: CollectionService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collections: List&lt;Collection&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   curCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   donateCollections: List&lt;Collection&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   donateItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   expCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   feeContainer: AnchorPane [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   feeTableView: TableView&lt;ObservableMap&lt;String, String&gt;&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   infoContainer: AnchorPane [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   manageCollections: List&lt;Collection&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   manageItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   menuItem1: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   menuItem2: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   monthCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   monthPaid: List&lt;ObservableMap&lt;String, String&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   paidCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentChart: PieChart [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   residentService: ResidentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   residents: List&lt;Resident&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   selectedMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   serviceCollections: List&lt;Collection&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   serviceItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   stateChart: PieChart [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   totalResCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeChart: PieChart [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   typeFeeButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   unpaidCol: TableColumn&lt;ObservableMap&lt;String, String&gt;, String&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ handleResidentChart()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleSelectedTypeCollection(menuItemList: List&lt;MenuItem&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleStateChart()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleTypeChart()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleUpdateDateTableView(collectionName: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initMap(observableMap: ObservableMap&lt;String, String&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectItem(list: List&lt;MenuItem&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateData(collectionName: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >- updateFeeTableView(collectionName: String, apartmentCollection: ApartmentCollection, observableMap: ObservableMap&lt;String, String&gt;)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Resident1748365864[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Resident</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   apartment: Apartment [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dateOfBirth: Date [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   firstName: String [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gender: Boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: Integer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lastName: String [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   moveInDate: Date [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nationalID: String [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   phoneNumber: String [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ builder(): ResidentBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ResidentFormController1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ResidentFormController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   apartmentCol: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   apartmentCollectionService: ApartmentCollectionService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   apartmentService: ApartmentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   backButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collectionService: CollectionService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   datePicker: DatePicker [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   dobPicker: DatePicker [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   emailErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   emailTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   femaleItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   firstNameCol: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   firstNameErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   firstNameTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   genderCol: TableColumn&lt;Resident, Boolean&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   genderMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastNameCol: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastNameErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastNameTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   maleItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nationalIDErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   nationalIDTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   phoneNumberCol: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   phoneNumberErrorLabel: Label [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   phoneNumberTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   resIDCol: TableColumn&lt;Resident, Integer&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   residentService: ResidentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentTableView: TableView&lt;Resident&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   selectedFloor: ObservableMap&lt;String, String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   submitButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   switchViewFlag: Boolean [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   textFieldWrappers: ArrayList&lt;TextFieldWrapper&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ backButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initializeResidentTableView()</TD></TR>
+<TR><TD ALIGN="LEFT" >- persistResident()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectedGender(list: List&lt;MenuItem&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ submitButtonOnAction()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ResidentListController1478685853[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ResidentListController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   IDNumberItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   apartmentTableColumn: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   deleteButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   detailsButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   dobPicker: DatePicker [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   femaleItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   firstNameItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   firstNameTableColumn: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   genderItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   genderMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   idTableColumn: TableColumn&lt;Resident, Integer&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastNameItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lastNameTableColumn: TableColumn&lt;Resident, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   maleItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   moveInDateItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   newButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentIDItem: MenuItem [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentMenuButton: MenuButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentPropertySheet: PropertySheet [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   residentService: ResidentService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentTableView: TableView&lt;Resident&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   residentToShow: Resident [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   searchContainer: HBox [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   searchTextField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   switchViewFlag: Boolean [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   updateButton: Button [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ deleteButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ detailsButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >- enableDoubleClickForResidentDetails()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ enableUpdateButton()</TD></TR>
+<TR><TD ALIGN="LEFT" >- fillTableViewWithResidentData(residentList: List&lt;Resident&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleFilter(filterList: List&lt;Resident&gt;, newValue: String, residents: List&lt;Resident&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ newButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ showResidentDetailFromAnotherView(resident: Resident)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateButtonOnAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ wrapMenuItem(list: List&lt;MenuItem&gt;, menuButton: MenuButton)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+Apartment1748365864 -> ApartmentCollection1748365864[label="apartmentCollectionList
+[0..*]"];
+Apartment1748365864 -> Resident1748365864[label="host
+[0..1]"];
+Apartment1748365864 -> Resident1748365864[label="residents
+[0..*]"];
+ApartmentCollection1748365864 -> Apartment1748365864[label="apartment
+[0..1]"];
+ApartmentCollection1748365864 -> ApartmentCollectionID1748365864[label="id
+[0..1]"];
+ApartmentCollection1748365864 -> Collection1748365864[label="collection
+[0..1]"];
+ApartmentFilter1478685853 -> Apartment1748365864[label="apartments
+[0..*]"];
+ApartmentFormController1478685853 -> Apartment1748365864[label="apartmentIdCol
+[0..1]"];
+ApartmentFormController1478685853 -> Apartment1748365864[label="apartmentTableView
+[0..1]"];
+ApartmentFormController1478685853 -> Apartment1748365864[label="stateCol
+[0..1]"];
+ApartmentFormController1478685853 -> Apartment1748365864[label="totalResidentsCol
+[0..1]"];
+ApartmentFormController1478685853 -> Apartment1748365864[label="typeCol
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="actionsCol
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="apartmentIdCol
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="apartmentTableView
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="areaCol
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="hostNameCol
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="selectedApartment
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="stateCol
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="totalResidentsCol
+[0..1]"];
+ApartmentListController1478685853 -> Apartment1748365864[label="typeCol
+[0..1]"];
+ApartmentListController1478685853 -> ApartmentCollection1748365864[label="amountCollectionCol
+[0..1]"];
+ApartmentListController1478685853 -> ApartmentCollection1748365864[label="collectionIDCol
+[0..1]"];
+ApartmentListController1478685853 -> ApartmentCollection1748365864[label="collectionTableView
+[0..1]"];
+ApartmentListController1478685853 -> ApartmentCollection1748365864[label="deadlinePaymentCollectionCol
+[0..1]"];
+ApartmentListController1478685853 -> ApartmentCollection1748365864[label="isPaidCol
+[0..1]"];
+ApartmentListController1478685853 -> ApartmentCollection1748365864[label="nameCollectionCol
+[0..1]"];
+ApartmentListController1478685853 -> ApartmentCollection1748365864[label="typeCollectionCol
+[0..1]"];
+ApartmentListController1478685853 -> Resident1748365864[label="email
+[0..1]"];
+ApartmentListController1478685853 -> Resident1748365864[label="lastName
+[0..1]"];
+ApartmentListController1478685853 -> Resident1748365864[label="nationalID
+[0..1]"];
+ApartmentListController1478685853 -> Resident1748365864[label="phoneNumber
+[0..1]"];
+ApartmentListController1478685853 -> Resident1748365864[label="residentID
+[0..1]"];
+ApartmentListController1478685853 -> Resident1748365864[label="residentTableView
+[0..1]"];
+Collection1748365864 -> ApartmentCollection1748365864[label="apartmentCollections
+[0..*]"];
+CollectionFormController1478685853 -> Collection1748365864[label="amountCol
+[0..1]"];
+CollectionFormController1478685853 -> Collection1748365864[label="collectionTableView
+[0..1]"];
+CollectionFormController1478685853 -> Collection1748365864[label="descriptionCol
+[0..1]"];
+CollectionFormController1478685853 -> Collection1748365864[label="nameCol
+[0..1]"];
+CollectionFormController1478685853 -> Collection1748365864[label="typeCol
+[0..1]"];
+CollectionListController1478685853 -> Collection1748365864[label="amountTableColumn
+[0..1]"];
+CollectionListController1478685853 -> Collection1748365864[label="collectionList
+[0..*]"];
+CollectionListController1478685853 -> Collection1748365864[label="collectionsTableView
+[0..1]"];
+CollectionListController1478685853 -> Collection1748365864[label="descriptionTableColumn
+[0..1]"];
+CollectionListController1478685853 -> Collection1748365864[label="nameTableColumn
+[0..1]"];
+CollectionListController1478685853 -> Collection1748365864[label="totalAppsPartCol
+[0..1]"];
+CollectionListController1478685853 -> Collection1748365864[label="typeTableColumn
+[0..1]"];
+CollectionReportController1478685853 -> ApartmentCollection1748365864[label="amountTableColumn
+[0..1]"];
+CollectionReportController1478685853 -> ApartmentCollection1748365864[label="apartmentCollection
+[0..1]"];
+CollectionReportController1478685853 -> ApartmentCollection1748365864[label="apartmentIDCol
+[0..1]"];
+CollectionReportController1478685853 -> ApartmentCollection1748365864[label="collectionReportTableView
+[0..1]"];
+CollectionReportController1478685853 -> ApartmentCollection1748365864[label="deadlinePayment
+[0..1]"];
+CollectionReportController1478685853 -> ApartmentCollection1748365864[label="hostNameCol
+[0..1]"];
+CollectionReportController1478685853 -> ApartmentCollection1748365864[label="isPaidTableColumn
+[0..1]"];
+CollectionReportController1478685853 -> ApartmentCollection1748365864[label="totalResCol
+[0..1]"];
+DashboardController1478685853 -> Apartment1748365864[label="apartments
+[0..*]"];
+DashboardController1478685853 -> Collection1748365864[label="collections
+[0..*]"];
+DashboardController1478685853 -> Collection1748365864[label="donateCollections
+[0..*]"];
+DashboardController1478685853 -> Collection1748365864[label="manageCollections
+[0..*]"];
+DashboardController1478685853 -> Collection1748365864[label="serviceCollections
+[0..*]"];
+DashboardController1478685853 -> Resident1748365864[label="residents
+[0..*]"];
+Resident1748365864 -> Apartment1748365864[label="apartment
+[0..1]"];
+ResidentFormController1478685853 -> Resident1748365864[label="apartmentCol
+[0..1]"];
+ResidentFormController1478685853 -> Resident1748365864[label="firstNameCol
+[0..1]"];
+ResidentFormController1478685853 -> Resident1748365864[label="genderCol
+[0..1]"];
+ResidentFormController1478685853 -> Resident1748365864[label="lastNameCol
+[0..1]"];
+ResidentFormController1478685853 -> Resident1748365864[label="phoneNumberCol
+[0..1]"];
+ResidentFormController1478685853 -> Resident1748365864[label="resIDCol
+[0..1]"];
+ResidentFormController1478685853 -> Resident1748365864[label="residentTableView
+[0..1]"];
+ResidentListController1478685853 -> Resident1748365864[label="apartmentTableColumn
+[0..1]"];
+ResidentListController1478685853 -> Resident1748365864[label="firstNameTableColumn
+[0..1]"];
+ResidentListController1478685853 -> Resident1748365864[label="idTableColumn
+[0..1]"];
+ResidentListController1478685853 -> Resident1748365864[label="lastNameTableColumn
+[0..1]"];
+ResidentListController1478685853 -> Resident1748365864[label="residentTableView
+[0..1]"];
+ResidentListController1478685853 -> Resident1748365864[label="residentToShow
+[0..1]"];
+    
+}
+@enduml

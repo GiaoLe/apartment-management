@@ -1,10 +1,10 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.ResidentRepository;
-import com.example.demo.service.ResidentService;
+import com.example.demo.repositories.ResidentRepository;
+import com.example.demo.services.ResidentService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

@@ -1,10 +1,10 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.dao.Admin;
 import com.example.demo.gui.Scene;
 import com.example.demo.gui.SceneManager;
-import com.example.demo.repository.AdminRepository;
-import com.example.demo.service.AdminService;
+import com.example.demo.repositories.AdminRepository;
+import com.example.demo.services.AdminService;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;

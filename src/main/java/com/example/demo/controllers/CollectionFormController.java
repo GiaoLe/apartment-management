@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.dao.Apartment;
 import com.example.demo.dao.ApartmentCollection;
@@ -6,21 +6,19 @@ import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.ApartmentCollectionRepository;
-import com.example.demo.repository.ApartmentRepository;
-import com.example.demo.repository.CollectionRepository;
-import com.example.demo.repository.HibernateUtility;
-import com.example.demo.service.ApartmentCollectionService;
-import com.example.demo.service.ApartmentService;
-import com.example.demo.service.CollectionService;
+import com.example.demo.repositories.ApartmentCollectionRepository;
+import com.example.demo.repositories.ApartmentRepository;
+import com.example.demo.repositories.CollectionRepository;
+import com.example.demo.repositories.HibernateUtility;
+import com.example.demo.services.ApartmentCollectionService;
+import com.example.demo.services.ApartmentService;
+import com.example.demo.services.CollectionService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class CollectionFormController {

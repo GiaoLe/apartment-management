@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="dashboardContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="811.0" prefWidth="1127.0" styleClass="container" stylesheets="@../styles/Dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.DashboardController">
+<ScrollPane fx:id="dashboardContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="811.0" prefWidth="1127.0" styleClass="container" stylesheets="@../styles/Dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.DashboardController">
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="841.0" prefWidth="1162.0" style="-fx-background-color: #f6fdff;" stylesheets="@../styles/Dashboard.css">
          <children>

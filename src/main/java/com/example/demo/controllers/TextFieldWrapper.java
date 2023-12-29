@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

@@ -15,12 +15,12 @@ module com.example.demo {
     exports com.example.demo;
     exports com.example.demo.dao;
     opens com.example.demo.dao to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
-    exports com.example.demo.controller;
-    opens com.example.demo.controller to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
-    exports com.example.demo.repository;
-    opens com.example.demo.repository to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
-    exports com.example.demo.service;
-    opens com.example.demo.service to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
+    exports com.example.demo.controllers;
+    opens com.example.demo.controllers to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
+    exports com.example.demo.repositories;
+    opens com.example.demo.repositories to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
+    exports com.example.demo.services;
+    opens com.example.demo.services to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
     exports com.example.demo.gui;
     opens com.example.demo.gui to jakarta.persistence, javafx.fxml, org.hibernate.orm.core, org.hibernate.validator;
 }

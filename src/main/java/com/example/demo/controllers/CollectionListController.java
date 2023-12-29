@@ -1,21 +1,19 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.repository.CollectionRepository;
-import com.example.demo.service.CollectionService;
+import com.example.demo.repositories.CollectionRepository;
+import com.example.demo.services.CollectionService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 

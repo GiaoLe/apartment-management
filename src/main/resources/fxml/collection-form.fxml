@@ -16,7 +16,7 @@
 
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="852.0"
             prefWidth="1134.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.controller.CollectionFormController">
+            fx:controller="com.example.demo.controllers.CollectionFormController">
    <AnchorPane prefHeight="896.0" prefWidth="1143.0" styleClass="container" stylesheets="@../styles/CollectionForm.css">
       <VBox layoutX="47.0" layoutY="116.0" prefHeight="338.0" prefWidth="402.0">
          <VBox layoutX="10.0" layoutY="10.0">
