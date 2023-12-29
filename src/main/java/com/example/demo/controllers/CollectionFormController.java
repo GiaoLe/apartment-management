@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class CollectionFormController {
@@ -65,7 +66,7 @@ public class CollectionFormController {
         ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
         if (collectionTypeChoiceBox.getValue() != CollectionType.DONATION){
             for (Apartment apartment : apartments) {
-                Date deadlinePayment = apartment.getHost().getMoveInDate();
+                Date deadlinePayment = Date.valueOf(LocalDate.now());
                 deadlinePayment = Date.valueOf(deadlinePayment.toLocalDate().plusDays(30));
                 apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, deadlinePayment));
             }
