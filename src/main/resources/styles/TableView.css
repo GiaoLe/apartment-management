@@ -29,6 +29,10 @@
     -fx-start-margin: 10px;
     -fx-end-margin: 10px;
 }
+.table-row-cell:selected {
+    -fx-font-weight: bold;
+    -fx-background-color: #b2b2b2;
+}
 .menu-item{
     -fx-text-fill: red;
     -fx-font-size: 14px;

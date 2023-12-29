@@ -19,6 +19,5 @@ public class Main extends Application {
         SceneManager.setStage(stage);
         SceneManager.switchScene(Scene.MENU);
         AdminService adminService = new AdminService(new AdminRepository());
-        adminService.merge(new Admin("admin", "admin"));
     }
 }

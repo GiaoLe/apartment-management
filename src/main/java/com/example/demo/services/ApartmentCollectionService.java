@@ -3,6 +3,8 @@ package com.example.demo.services;
 import com.example.demo.dao.ApartmentCollection;
 import com.example.demo.repositories.ApartmentCollectionRepository;
 
+import java.util.List;
+
 public class ApartmentCollectionService {
     private final ApartmentCollectionRepository apartmentCollectionRepository;
 
@@ -16,5 +18,11 @@ public class ApartmentCollectionService {
 
     public void merge(ApartmentCollection apartmentCollection) {
         apartmentCollectionRepository.merge(apartmentCollection);
+    }
+    public List<ApartmentCollection> findAll(){
+        return apartmentCollectionRepository.findAll();
+    }
+    public void remove(ApartmentCollection apartmentCollection) {
+        apartmentCollectionRepository.remove(apartmentCollection);
     }
 }

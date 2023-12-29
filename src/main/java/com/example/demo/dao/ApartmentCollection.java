@@ -2,10 +2,7 @@ package com.example.demo.dao;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -17,8 +14,10 @@ import java.util.Date;
 @Builder
 public class ApartmentCollection {
 
-    @EmbeddedId
-    private ApartmentCollectionID id;
+    @Id
+    @Setter(AccessLevel.NONE)
+    @GeneratedValue
+    private Integer id;
 
     @ManyToOne
     private Apartment apartment;
@@ -35,7 +34,8 @@ public class ApartmentCollection {
     @Override
     public String toString() {
         return "ResidentCollection{" +
-                "collection=" + collection.getId() +
+                "id=" + id +
+                ", collection=" + collection.getId() +
                 ", apartment=" + apartment.getId() +
                 ", deadlinePayment = " + deadlinePayment +
                 ", isPaid=" + isPaid +
@@ -43,7 +43,6 @@ public class ApartmentCollection {
     }
 
     public ApartmentCollection(Apartment apartment, Collection collection, Date deadlinePayment) {
-        id = new ApartmentCollectionID(Integer.parseInt(apartment.getId()), collection.getId());
         this.apartment = apartment;
         this.collection = collection;
         this.deadlinePayment = deadlinePayment;

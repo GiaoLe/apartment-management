@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
+import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repositories.CollectionRepository;
@@ -34,7 +35,7 @@ public class CollectionListController {
     public MenuItem typeCollectionItem;
     public MenuItem amountCollectionItem;
 
-    public TableColumn<Collection, Integer> totalAppsPartCol;
+    public TableColumn<Collection, Integer> totalBills;
     private final List<Collection> collectionList = collectionService.findAll();
     public HBox searchContainer;
     public DatePicker deadlinePicker;
@@ -112,7 +113,7 @@ public class CollectionListController {
         collectionsTableView.setItems(FXCollections.observableList(collectToShow));
         nameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         typeTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
-        totalAppsPartCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartmentCollections().size()));
+        totalBills.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartmentCollections().size()));
         amountTableColumn.setCellValueFactory(cellData -> switch (cellData.getValue().getType()) {
             case SERVICE_FEE, MANAGEMENT_FEE -> new SimpleObjectProperty<>(cellData.getValue().getAmount() + "/m2");
             default -> new SimpleObjectProperty<>(cellData.getValue().getAmount().toString());
@@ -137,11 +138,20 @@ public class CollectionListController {
     }
 
     public void deleteButtonOnAction() {
-        Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
-        if (collection != null) {
-            collectionsTableView.getItems().remove(collection);
-            collectionService.remove(collection);
-        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Are you sure you want to delete?");
+        alert.setContentText("Click OK to confirm, or Cancel to abort.");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
+                if (collection != null) {
+                    collectionsTableView.getItems().remove(collection);
+                    collectionService.remove(collection);
+                }
+            }
+        });
+
     }
     public void detailsButtonOnAction() {
         Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();

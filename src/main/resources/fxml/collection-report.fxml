@@ -32,7 +32,7 @@
                   <TableColumn fx:id="isPaidTableColumn" prefWidth="92.0" text="Is Paid" />
                </columns>
             </TableView>
-            <HBox prefHeight="38.0" prefWidth="1041.0">
+            <HBox prefHeight="38.0" prefWidth="1041.0" visible="false">
                <children>
                   <Label fx:id="reportNameLabel" text="Report Name">
                      <font>
@@ -61,15 +61,16 @@
                   </TextField>
                </children>
             </HBox>
-            <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14; -fx-background-color: white;" text="Search options">
+            <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14; -fx-background-color: white;" text="Search options">
                <font>
-                  <Font size="18.0" />
+                  <Font size="21.0" />
                </font>
                <items>
                   <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="ApartmentID" />
                   <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Host name" />
                   <MenuItem fx:id="amountItem" mnemonicParsing="false" text="Amount" />
                   <MenuItem fx:id="isPaidItem" mnemonicParsing="false" text="Is paid" />
+                  <MenuItem fx:id="deadlinePaymentItem" mnemonicParsing="false" text="Deadline payment" />
                </items>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -106,12 +107,41 @@
                   <String fx:value="search-btn" />
                </styleClass>
             </Button>
-            <Button fx:id="addAppsBtn" layoutX="208.0" layoutY="638.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Add Apartment">
+            <Button fx:id="addAppsBtn" layoutX="208.0" layoutY="638.0" mnemonicParsing="false" onAction="#handleAddApartment" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Add Apartment">
                <styleClass>
                   <String fx:value="btn-design" />
                   <String fx:value="search-btn" />
                </styleClass>
             </Button>
+            <MenuButton fx:id="monthButton" layoutX="33.0" layoutY="52.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Choose Month" visible="false">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </MenuButton>
+            <TableView fx:id="donateApartmentTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="810.0" stylesheets="@../styles/TableView.css" visible="false">
+               <columns>
+                  <TableColumn fx:id="apartmentIDCol1" prefWidth="173.0" text="ApartmentID" />
+                  <TableColumn fx:id="hostNameCol1" prefWidth="201.0" text="Host name" />
+                  <TableColumn fx:id="totalResCol1" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
+                  <TableColumn fx:id="takePartCol" minWidth="2.333343505859375" prefWidth="218.0" text="Take Part" />
+               </columns>
+            </TableView>
+            <Button fx:id="takePartButton" layoutX="45.0" layoutY="638.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Take Part" visible="false">
+               <styleClass>
+                  <String fx:value="btn-design" />
+                  <String fx:value="search-btn" />
+               </styleClass>
+            </Button>
+            <Label fx:id="infoLabel" layoutX="219.0" layoutY="350.0" text="No apartments have taken part yet" visible="false">
+               <font>
+                  <Font size="41.0" />
+               </font>
+            </Label>
+            <Label fx:id="reportNameLabel" layoutX="39.0" layoutY="14.0" prefHeight="30.0" prefWidth="743.0" style="-fx-font-weight: 700; -fx-font-size: 20px;" text="Label">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </content>

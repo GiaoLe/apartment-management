@@ -56,7 +56,7 @@
                   <TableColumn fx:id="nameTableColumn" prefWidth="218.0" text="Name" />
                   <TableColumn fx:id="typeTableColumn" prefWidth="166.0" text="Type" />
                   <TableColumn fx:id="amountTableColumn" prefWidth="193.0" text="Amount (USD)" />
-                  <TableColumn fx:id="totalAppsPartCol" prefWidth="257.0" text="Total Apartments Participating" />
+                  <TableColumn fx:id="totalBills" prefWidth="257.0" text="Total Bills" />
                   <TableColumn fx:id="descriptionTableColumn" minWidth="0.0" prefWidth="167.0" text="Description" />
                </columns>
             </TableView>
