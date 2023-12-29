@@ -33,27 +33,6 @@ public class MenuController {
         displayLiveTime();
         initializeUIDDisplay();
         initializeListOfMenuButtons();
-        borderPane.centerProperty().addListener(e -> {
-            switch (borderPane.centerProperty().get().getId()){
-                case "apartmentContainer":
-                    clearAllButtonStyles();
-                    apartmentsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-                    break;
-                case "residentContainer":
-                    clearAllButtonStyles();
-
-                    residentsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-                    break;
-                case "collectionContainer", "collectionReportContainer":
-                    clearAllButtonStyles();
-                    collectionsButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-                    break;
-                case "dashboardContainer":
-                    clearAllButtonStyles();
-                    dashboardButton.setStyle("-fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f20000 0.0%, #f20000 20.6376%, #0ab6e1 100.0%);");
-                    break;
-            }
-        });
     }
 
     private void initializeListOfMenuButtons() {
