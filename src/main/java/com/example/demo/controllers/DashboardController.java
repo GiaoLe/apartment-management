@@ -32,7 +32,6 @@ public class DashboardController {
     public Label appsTypeLabel;
     private final List<Apartment> apartments = new ArrayList<>(apartmentService.findAll());
     private final List<Resident> residentList = new ArrayList<>(residentService.findAll());
-    private final List<Collection> collections = new ArrayList<>(collectionService.findAll());
     private final List<Collection> serviceCollections = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Collection where type = :type", Collection.class)
             .setParameter("type", CollectionType.SERVICE_FEE)
             .getResultList());
@@ -55,7 +54,7 @@ public class DashboardController {
     public TableColumn<ObservableMap<String, String>, String> paidCol;
     public TableColumn<ObservableMap<String, String>, String> unpaidCol;
     public AnchorPane feeContainer;
-    private List<ObservableMap<String, String>> monthPaid = new ArrayList<>();
+    private final List<ObservableMap<String, String>> monthPaid = new ArrayList<>();
     public TableColumn<ObservableMap<String, String>, String> totalResCol;
     public MenuButton chooseFeeButton;
     public MenuItem donateItem;

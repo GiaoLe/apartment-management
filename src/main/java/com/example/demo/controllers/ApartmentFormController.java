@@ -3,8 +3,6 @@ package com.example.demo.controllers;
 import com.example.demo.dao.*;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
-import com.example.demo.gui.PopUpWindow;
-import com.example.demo.gui.PopUpWindowManager;
 import com.example.demo.repositories.*;
 import com.example.demo.services.ApartmentCollectionService;
 import com.example.demo.services.ApartmentService;

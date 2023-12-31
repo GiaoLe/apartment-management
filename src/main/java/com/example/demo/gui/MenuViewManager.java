@@ -37,19 +37,7 @@ public class MenuViewManager {
     public static void refreshView() {
         MenuViewManager.switchView(currentView);
     }
-    public static void switchViewToShowResidentDetails(MenuView menuView, Resident resident){
-        try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
-            Parent root = loader.load();
-            borderPane.setCenter(root);
-            ResidentListController residentListController = loader.getController();
-            residentListController.showResidentDetailFromAnotherView(resident);
-            residentListController.searchTextField.setText(resident.getId().toString());
-            residentListController.residentMenuButton.setText("Resident ID");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     public static void switchViewFromResidentListToShowApartmentDetail(MenuView menuView, Resident resident, ObservableMap<String, String> selectedFloor){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
