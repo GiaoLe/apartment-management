@@ -9,7 +9,12 @@ import java.util.List;
 
 @AllArgsConstructor
 public class ApartmentService {
+
     private final ApartmentRepository apartmentRepository;
+
+    public ApartmentService() {
+        apartmentRepository = new ApartmentRepository();
+    }
     public List<Apartment> findAll(){
         return  apartmentRepository.findAll();
 

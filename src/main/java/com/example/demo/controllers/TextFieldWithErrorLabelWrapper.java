@@ -4,11 +4,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class TextFieldWrapper {
+public class TextFieldWithErrorLabelWrapper {
     private final TextField textField;
     private final Label errorLabel;
 
-    public TextFieldWrapper(TextField textField, Label errorLabel) {
+    public TextFieldWithErrorLabelWrapper(TextField textField, Label errorLabel) {
         this.textField = textField;
         this.errorLabel = errorLabel;
     }

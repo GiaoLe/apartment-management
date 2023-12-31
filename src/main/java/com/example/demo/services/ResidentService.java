@@ -10,6 +10,10 @@ import java.util.List;
 public class ResidentService {
     private final ResidentRepository residentRepository;
 
+    public ResidentService() {
+        this.residentRepository = new ResidentRepository();
+    }
+
     public void persist(Resident resident) {
         residentRepository.persist(resident);
     }

@@ -31,7 +31,7 @@ public class Resident implements Serializable {
     private String lastName;
 
     @NotNull
-    private Boolean gender;
+    private Gender gender;
 
     @NotNull
     private String phoneNumber;
@@ -51,9 +51,9 @@ public class Resident implements Serializable {
     @Setter(AccessLevel.NONE)
     private Apartment apartment;
 
-    public Resident(Date dateOfBirth, String gender, String firstName, String lastName, Apartment apartment, String phoneNumber, String email, String nationalID, Date date) {
+    public Resident(String firstName, String lastName, Gender gender, Date dateOfBirth, String nationalID, String phoneNumber, String email, Apartment apartment, Date date) {
         this.dateOfBirth = dateOfBirth;
-        this.gender = gender.equals("Female");
+        this.gender = gender;
         this.firstName = firstName;
         this.lastName = lastName;
         this.apartment = apartment;

@@ -101,7 +101,7 @@
                   <String fx:value="search-btn" />
                </styleClass>
             </Button>
-            <Button fx:id="addNewApartment" layoutX="871.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleAddNewApartment" prefHeight="44.0" prefWidth="174.0" stylesheets="@../styles/ApartmentList.css" text="Add new apartment">
+            <Button fx:id="addNewApartment" layoutX="871.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleApartmentAddition" prefHeight="44.0" prefWidth="174.0" stylesheets="@../styles/ApartmentList.css" text="Add new apartment">
                <styleClass>
                   <String fx:value="btn-design" />
                   <String fx:value="search-btn" />
@@ -371,7 +371,7 @@
                         </TableView>
                         <HBox prefHeight="41.0" prefWidth="845.0">
                            <children>
-                              <Button fx:id="addResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="149.0" stylesheets="@../styles/ApartmentList.css" text="Add new resident">
+                              <Button fx:id="addResidentToApartmentButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="149.0" stylesheets="@../styles/ApartmentList.css" text="Add new resident">
                                  <styleClass>
                                     <String fx:value="btn-design" />
                                     <String fx:value="search-btn" />
@@ -380,7 +380,7 @@
                                     <Insets left="520.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="editResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="75.0" stylesheets="@../styles/ApartmentList.css" text="Change">
+                              <Button fx:id="editResidentButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="75.0" stylesheets="@../styles/ApartmentList.css" text="Change">
                                  <styleClass>
                                     <String fx:value="btn-design" />
                                     <String fx:value="search-btn" />

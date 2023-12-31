@@ -1,8 +1,11 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dao.Gender;
 import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
+import com.example.demo.gui.PopUpWindow;
+import com.example.demo.gui.PopUpWindowManager;
 import com.example.demo.repositories.ResidentRepository;
 import com.example.demo.services.ResidentService;
 import javafx.beans.property.SimpleObjectProperty;
@@ -72,13 +75,13 @@ public class ResidentListController {
                     List<Resident> filterList = new ArrayList<>();
                     if (newValue1.equals("Female")) {
                         for (Resident resident : residents) {
-                            if (resident.getGender()) {
+                            if (resident.getGender().equals(Gender.FEMALE)) {
                                 filterList.add(resident);
                             }
                         }
                     } else {
                         for (Resident resident : residents) {
-                            if (!resident.getGender()) {
+                            if (resident.getGender().equals(Gender.MALE)) {
                                 filterList.add(resident);
                             }
                         }
@@ -149,7 +152,7 @@ public class ResidentListController {
     }
 
     public void newButtonOnAction() {
-        MenuViewManager.switchView(MenuView.RESIDENT_FORM);
+        PopUpWindowManager.openPopUpWindow(PopUpWindow.RESIDENT_POP_UP_FORM);
     }
 
     public void deleteButtonOnAction() {

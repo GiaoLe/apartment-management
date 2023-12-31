@@ -3,6 +3,8 @@ package com.example.demo.controllers;
 import com.example.demo.dao.*;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
+import com.example.demo.gui.PopUpWindow;
+import com.example.demo.gui.PopUpWindowManager;
 import com.example.demo.repositories.*;
 import com.example.demo.services.ApartmentCollectionService;
 import com.example.demo.services.ApartmentService;
@@ -62,7 +64,6 @@ public class ApartmentFormController {
     public MenuItem femaleItem;
     public MenuButton genderMenuButton;
     public Button residentSubmissionButton;
-    public Button backButton;
     public Button apartmentSubmissionButton;
     public Label apartmentTextFieldErrorLabel;
     ResidentService residentService = new ResidentService(new ResidentRepository());
@@ -124,14 +125,8 @@ public class ApartmentFormController {
         apartmentService.persist(apartment);
         for (ObservableMap<String, String> observableMap : this.residentList) {
             Resident resident = new Resident(
-                    Date.valueOf(observableMap.get("dob")),
-                    observableMap.get("gender"),
-                    observableMap.get("firstName"),
-                    observableMap.get("lastName"),
-                    apartment,
-                    observableMap.get("phoneNumber"),
-                    observableMap.get("email"),
-                    observableMap.get("nationalID"),
+                    observableMap.get("firstName"), observableMap.get("lastName"), Gender.MALE, Date.valueOf(observableMap.get("dob")),
+                    observableMap.get("nationalID"), observableMap.get("phoneNumber"), observableMap.get("email"), apartment,
                     Date.valueOf(observableMap.get("datePicker"))
             );
             residentList.add(resident);
@@ -141,7 +136,7 @@ public class ApartmentFormController {
         MenuViewManager.switchView(MenuView.APARTMENT_LIST);
     }
 
-    public void handleAddNewRes() {
+    public void addNewResidentButtonOnAction() {
         dialogContainer.setVisible(true);
         addNewResContainer.setVisible(true);
         apartmentTextField.setText(idTextField.getText());

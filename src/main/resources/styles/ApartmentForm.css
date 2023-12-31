@@ -1,4 +1,4 @@
-.btn-design{
+.btn-design {
     -fx-background-color: #ffff;
     -fx-cursor: HAND;
     -fx-border-color: black;
@@ -7,33 +7,44 @@
     -fx-background-radius: 10px;
     -fx-font-size: 15px;
 }
-.btn-design:hover{
+
+.btn-design:hover {
     -fx-background-color: #d0d0d0;
 }
-.btn-design:pressed{
-    -fx-background-color: #b7b7b7;
 
+.btn-design:pressed {
+    -fx-background-color: #b7b7b7;
 }
-.label-design{
+
+.btn-design:focused {
+    -fx-border-color: FF002B;
+}
+
+.label-design {
     -fx-font-size: 20px;
     -fx-font-weight: 700;
 }
-.input-design{
+
+.input-design {
     -fx-background-color: white;
     -fx-border-width: 1px;
-    -fx-border-color: gray;
+    -fx-border-color: rgb(128, 128, 128);
 }
-.search-btn{
+
+.search-btn {
     -fx-border-color: black;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-font-size: 15px;
 }
-.search-btn:hover{
+
+.search-btn:hover {
     -fx-background-color: #d0d0d0;
 }
-.search-btn:pressed{
+
+.search-btn:pressed {
     -fx-background-color: #b7b7b7;
+
 
 }

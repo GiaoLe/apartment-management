@@ -3,6 +3,8 @@ package com.example.demo.controllers;
 import com.example.demo.dao.*;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
+import com.example.demo.gui.PopUpWindow;
+import com.example.demo.gui.PopUpWindowManager;
 import com.example.demo.repositories.ApartmentRepository;
 import com.example.demo.repositories.ResidentRepository;
 import com.example.demo.services.ApartmentService;
@@ -77,9 +79,9 @@ public class ApartmentListController {
     public TableColumn<Resident, String> phoneNumber;
     public TableColumn<Resident, String> residentID;
     public TableView<Resident> residentTableView;
-    public Button addResBtn;
+    public Button addResidentToApartmentButton;
     public Button delResBtn;
-    public Button editResBtn;
+    public Button editResidentButton;
     public TextField apartmentIDFilter1;
     public MenuButton hostNameFilter1;
     public MenuItem availableItem1;
@@ -294,9 +296,8 @@ public class ApartmentListController {
         });
     }
 
-    public void handleAddNewApartment() {
-        MenuViewManager.switchView(MenuView.APARTMENT_FORM);
-
+    public void handleApartmentAddition() {
+        PopUpWindowManager.openPopUpWindow(PopUpWindow.APARTMENT_POP_UP_FORM);
     }
 
     public void showFloorDetail(int floor) {
@@ -513,7 +514,7 @@ public class ApartmentListController {
                             selectedToBeHost.set(apartment.getHost());
                         }
 
-                        editResBtn.setOnMouseClicked(e2 -> {
+                        editResidentButton.setOnMouseClicked(e2 -> {
                             Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), ApartmentState.valueOf(stateMenu1.getText()), apartment.getRoomCount(), selectedToBeHost.get());
                             apartmentService.merge(updateApartment);
                             apartmentInfoDialog.setVisible(false);
@@ -521,7 +522,7 @@ public class ApartmentListController {
                             floorList.clear();
                             updateData();
                         });
-                        addResBtn.setOnMouseClicked(mouseEvent -> MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment, null));
+                        addResidentToApartmentButton.setOnMouseClicked(mouseEvent -> PopUpWindowManager.openPopUpWindow(PopUpWindow.RESIDENT_POP_UP_FORM));
                         AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
                         delResBtn.setOnMouseClicked(event -> {
                             residentService.remove(resident.get());

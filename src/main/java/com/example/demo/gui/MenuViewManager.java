@@ -19,16 +19,23 @@ public class MenuViewManager {
     @Setter
     private static BorderPane borderPane;
 
+    private static MenuView currentView;
+
     private MenuViewManager() {}
 
     public static Object switchView(MenuView menuView) {
         try {
+            currentView = menuView;
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             borderPane.setCenter(loader.load());
             return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void refreshView() {
+        MenuViewManager.switchView(currentView);
     }
     public static void switchViewToShowResidentDetails(MenuView menuView, Resident resident){
         try {
@@ -97,19 +104,6 @@ public class MenuViewManager {
             apartmentListController.floorTableView.setVisible(false);
             apartmentListController.apartmentTableView.setVisible(true);
             apartmentListController.backButton.setVisible(true);
-            borderPane.setCenter(root);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static void switchViewToAddNewRes(MenuView menuView, Apartment apartment,  ObservableMap<String, String> selectedFloor){
-        try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
-            Parent root = loader.load();
-            ResidentFormController residentFormController = loader.getController();
-            residentFormController.apartmentTextField.setText(apartment.getId());
-            residentFormController.switchViewFlag = true;
-            residentFormController.selectedFloor = selectedFloor;
             borderPane.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);

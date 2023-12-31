@@ -1,11 +1,9 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dao.*;
 import com.example.demo.dao.Collection;
-import com.example.demo.repositories.ApartmentRepository;
+import com.example.demo.dao.*;
 import com.example.demo.repositories.CollectionRepository;
 import com.example.demo.repositories.HibernateUtility;
-import com.example.demo.repositories.ResidentRepository;
 import com.example.demo.services.ApartmentService;
 import com.example.demo.services.CollectionService;
 import com.example.demo.services.ResidentService;
@@ -19,6 +17,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 
 import java.util.*;
 
@@ -26,13 +25,13 @@ public class DashboardController {
     public PieChart stateChart;
     public PieChart typeChart;
 
-    private final ResidentService residentService = new ResidentService(new ResidentRepository());
-    private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
+    private final ResidentService residentService = new ResidentService();
+    private final ApartmentService apartmentService = new ApartmentService();
     private final CollectionService collectionService = new CollectionService(new CollectionRepository());
     public Label appsStateLabel;
     public Label appsTypeLabel;
     private final List<Apartment> apartments = new ArrayList<>(apartmentService.findAll());
-    private final List<Resident> residents = new ArrayList<>(residentService.findAll());
+    private final List<Resident> residentList = new ArrayList<>(residentService.findAll());
     private final List<Collection> collections = new ArrayList<>(collectionService.findAll());
     private final List<Collection> serviceCollections = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Collection where type = :type", Collection.class)
             .setParameter("type", CollectionType.SERVICE_FEE)
@@ -164,8 +163,8 @@ public class DashboardController {
         typeChart.getData().addAll(totalAppsData);
     }
     public void handleResidentChart(){
-        int femaleCount = CollectionUtils.countMatches(residents, Resident::getGender);
-        int maleCount = CollectionUtils.countMatches(residents, resident -> !resident.getGender());
+        long maleCount = IterableUtils.countMatches(residentList, resident -> resident.getGender() == Gender.MALE);
+        long femaleCount = residentList.size() - maleCount;
         ObservableList<PieChart.Data> totalAppsData = FXCollections.observableArrayList(
                 new PieChart.Data("Female", femaleCount),
                 new PieChart.Data("Male", maleCount)

@@ -71,7 +71,7 @@
             </ChoiceBox>
          </VBox>
          <HBox prefHeight="50.0" prefWidth="257.0">
-            <Button fx:id="addNewResBtn" disable="true" mnemonicParsing="false" onAction="#handleAddNewRes" prefHeight="25.0" prefWidth="118.0" styleClass="btn-design" stylesheets="@../styles/ApartmentForm.css" text="Add residents">
+            <Button fx:id="addNewResBtn" disable="true" mnemonicParsing="false" onAction="#addNewResidentButtonOnAction" prefHeight="25.0" prefWidth="118.0" styleClass="btn-design" stylesheets="@../styles/ApartmentForm.css" text="Add residents">
                <HBox.margin>
                   <Insets left="240.0" />
                </HBox.margin>
