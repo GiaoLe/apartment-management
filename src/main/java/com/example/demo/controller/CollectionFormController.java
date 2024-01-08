@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
@@ -35,7 +36,7 @@ public class CollectionFormController {
     public TableColumn<Collection, Double> amountCol;
     public TableView<Collection> collectionTableView;
     public TableColumn<Collection, String> nameCol;
-    public TableColumn<Collection, CollectionType> typeCol;
+    public TableColumn<Collection, String> typeCol;
     public TableColumn<Collection, String> descriptionCol;
     public VBox collectionVBox;
     public VBox vbox = new VBox();
@@ -51,7 +52,15 @@ public class CollectionFormController {
                 .getResultList());
         collectionTableView.setItems(FXCollections.observableList(collectionList));
         nameCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
-        typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
+        typeCol.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getType() == CollectionType.MANAGEMENT_FEE){
+                return new SimpleObjectProperty<>("Phí quản lý");
+            } else if(cellData.getValue().getType() == CollectionType.SERVICE_FEE){
+                return new SimpleObjectProperty<>("Phí dịch vụ");
+            } else {
+                return new SimpleObjectProperty<>("Phí tình nguyện");
+            }
+        });
         amountCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAmount()));
         descriptionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescription()));
         collectionTypeChoiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -82,16 +91,38 @@ public class CollectionFormController {
 
         ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
         if (collectionTypeChoiceBox.getValue() != CollectionType.DONATION){
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, 2023);
-            calendar.set(Calendar.DAY_OF_MONTH, 30);
+
             for (Apartment apartment : apartments) {
-                Date deadlinePayment = apartment.getHost() == null ? Date.valueOf(LocalDate.now()) : apartment.getHost().getMoveInDate();
-                for (int i = deadlinePayment.getMonth() ; i < 12 ; i++) {
-                    calendar.set(Calendar.MONTH, i);
-                    java.util.Date date = calendar.getTime();
-                    apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, date));
+                if (apartment.getHost() != null){
+                    Date deadlinePayment = apartment.getHost().getMoveInDate();
+                    if (deadlinePayment.getYear() + 1900 < LocalDate.now().getYear()){
+                        LocalDate localDate = LocalDate.of(deadlinePayment.getYear() + 1900, deadlinePayment.getMonth() + 1, 30);
+                        while(localDate.isBefore(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth().plus(1), LocalDate.now().getDayOfMonth()))){
+                            if ((30 - apartment.getHost().getMoveInDate().getDate()) > 5){
+                                apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, Date.valueOf(localDate)));
+                            }
+                            localDate=localDate.plusMonths(1);
+                        }
+                    }else {
+                        for (int j = deadlinePayment.getMonth() ; j < LocalDate.now().getMonthValue() ; j++) {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(Calendar.YEAR, LocalDate.now().getYear());
+                            calendar.set(Calendar.DAY_OF_MONTH, 30);
+                            if (deadlinePayment.getMonth() == apartment.getHost().getMoveInDate().getMonth()){
+                                calendar.set(Calendar.MONTH, j);
+                                java.util.Date date = calendar.getTime();
+                                if (30 - apartment.getHost().getMoveInDate().getDate() > 5){
+                                    apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, date));
+                                }
+                            }else {
+                                calendar.set(Calendar.MONTH, j);
+                                java.util.Date date = calendar.getTime();
+                                apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, date));
+                            }
+                        }
+                    }
                 }
+
             }
         }else {
             apartmentCollectionService.persist(new ApartmentCollection(null, collection, Date.valueOf(datePicker.getValue())));

@@ -27,9 +27,15 @@ public class ApartmentCollection {
 
     @NotNull
     private Date deadlinePayment;
+    private Date paymentDate;
 
     @NotNull
-    private boolean isPaid;
+    private ApartmentCollectionState state;
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+        state = ApartmentCollectionState.PAID;
+    }
 
     @Override
     public String toString() {
@@ -38,7 +44,7 @@ public class ApartmentCollection {
                 ", collection=" + collection.getId() +
                 ", apartment=" + apartment.getId() +
                 ", deadlinePayment = " + deadlinePayment +
-                ", isPaid=" + isPaid +
+                ", isPaid=" + state +
                 '}';
     }
 
@@ -46,6 +52,7 @@ public class ApartmentCollection {
         this.apartment = apartment;
         this.collection = collection;
         this.deadlinePayment = deadlinePayment;
-        isPaid = false;
+        state = ApartmentCollectionState.UNPAID;
     }
+
 }

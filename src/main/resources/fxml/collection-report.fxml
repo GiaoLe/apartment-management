@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -15,133 +16,199 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <ScrollPane fx:id="collectionReportContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1092.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.CollectionReportController">
    <content>
-      <AnchorPane prefHeight="758.0" prefWidth="1091.0" styleClass="container" stylesheets="@../styles/CollectionReport.css">
+      <AnchorPane prefHeight="745.0" prefWidth="1092.0">
          <children>
-            <HBox layoutX="25.0" layoutY="603.0" />
-            <TableView fx:id="collectionReportTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="1004.0" stylesheets="@../styles/TableView.css">
-               <columns>
-                  <TableColumn fx:id="apartmentIDCol" prefWidth="173.0" text="ApartmentID" />
-                  <TableColumn fx:id="hostNameCol" prefWidth="201.0" text="Host name" />
-                  <TableColumn fx:id="totalResCol" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
-                  <TableColumn fx:id="amountTableColumn" prefWidth="123.0" text="Amount" />
-                  <TableColumn fx:id="deadlinePayment" prefWidth="196.0" text="Deadline Payment" />
-                  <TableColumn fx:id="isPaidTableColumn" prefWidth="92.0" text="Is Paid" />
-               </columns>
-            </TableView>
-            <HBox prefHeight="38.0" prefWidth="1041.0" visible="false">
+            <AnchorPane prefHeight="758.0" prefWidth="1091.0" styleClass="container" stylesheets="@../styles/CollectionReport.css">
                <children>
-                  <Label fx:id="reportNameLabel" text="Report Name">
+                  <HBox layoutX="25.0" layoutY="603.0" />
+                  <TableView fx:id="collectionReportTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="1004.0" stylesheets="@../styles/TableView.css">
+                     <columns>
+                        <TableColumn fx:id="apartmentIDCol" prefWidth="173.0" text="ID căn hộ" />
+                        <TableColumn fx:id="hostNameCol" prefWidth="201.0" text="Chủ căn hộ" />
+                        <TableColumn fx:id="totalResCol" minWidth="2.333343505859375" prefWidth="218.0" text="Tổng số dân cư" />
+                        <TableColumn fx:id="amountTableColumn" prefWidth="123.0" text="Chi phí phải trả" />
+                        <TableColumn fx:id="deadlinePayment" prefWidth="196.0" text="Hạn nộp phí" />
+                        <TableColumn fx:id="isPaidTableColumn" prefWidth="92.0" text="Đã trả phí" />
+                     </columns>
+                  </TableView>
+                  <HBox prefHeight="38.0" prefWidth="1041.0" visible="false">
+                     <children>
+                        <Label fx:id="reportNameLabel" text="Report Name">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="searchContainer" layoutX="33.0" layoutY="52.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14; -fx-background-color: white;">
+                     <children>
+                        <ImageView fitHeight="23.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/search.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="8.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <TextField fx:id="searchTextField" prefHeight="46.0" prefWidth="318.0" promptText="Tìm kiếm" style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14; -fx-background-color: white;" text="Tùy chọn tìm kiếm">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font size="21.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
+                     <items>
+                        <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="ID căn hộ" />
+                        <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Chủ căn hộ" />
+                        <MenuItem fx:id="amountItem" mnemonicParsing="false" text="Chi phí" />
+                        <MenuItem fx:id="isPaidItem" mnemonicParsing="false" text="Đã trả" />
+                        <MenuItem fx:id="deadlinePaymentItem" mnemonicParsing="false" text="Hạn nộp" />
+                     </items>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MenuButton>
+                  <MenuButton fx:id="isPaidMenuButton" layoutX="55.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14;" text="Choose option" visible="false">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <items>
+                        <MenuItem fx:id="trueItem" mnemonicParsing="false" text="Đã trả" />
+                        <MenuItem fx:id="falseItem" mnemonicParsing="false" text="Chưa trả" />
+                     </items>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MenuButton>
+                  <Button fx:id="markAsPaidButton" layoutX="45.0" layoutY="638.0" mnemonicParsing="false" onAction="#addPaymenButtonOnAction" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Thêm khoản nộp">
+                     <styleClass>
+                        <String fx:value="btn-design" />
+                        <String fx:value="search-btn" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="backBtn" layoutX="964.0" layoutY="52.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="44.0" prefWidth="46.0" stylesheets="@../styles/ApartmentList.css">
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/angle-small-left.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="btn-design" />
+                        <String fx:value="search-btn" />
+                     </styleClass>
+                  </Button>
+                  <MenuButton fx:id="monthButton" layoutX="33.0" layoutY="52.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Chọn tháng" visible="false">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </MenuButton>
+                  <TableView fx:id="donateApartmentTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="810.0" stylesheets="@../styles/TableView.css" visible="false">
+                     <columns>
+                        <TableColumn fx:id="apartmentIDCol1" prefWidth="173.0" text="ApartmentID" />
+                        <TableColumn fx:id="hostNameCol1" prefWidth="201.0" text="Host name" />
+                        <TableColumn fx:id="totalResCol1" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
+                        <TableColumn fx:id="takePartCol" minWidth="2.333343505859375" prefWidth="218.0" text="Take Part" />
+                     </columns>
+                  </TableView>
+                  <Label fx:id="infoLabel" layoutX="219.0" layoutY="350.0" text="No apartments have taken part yet" visible="false">
+                     <font>
+                        <Font size="41.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="reportNameLabel" layoutX="33.0" layoutY="14.0" prefHeight="30.0" prefWidth="743.0" style="-fx-font-weight: 700; -fx-font-size: 20px;" text="Label">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
                   </Label>
                </children>
-            </HBox>
-            <HBox fx:id="searchContainer" layoutX="33.0" layoutY="52.0" prefHeight="34.0" prefWidth="260.0" style="-fx-border-color: black; -fx-padding: 5px; -fx-border-radius: 14; -fx-background-color: white;">
+            </AnchorPane>
+            <AnchorPane fx:id="dialogContainer" opacity="0.2" prefHeight="755.0" prefWidth="1092.0" style="-fx-background-color: black;" visible="false" />
+            <AnchorPane fx:id="dialogBox" layoutX="217.0" layoutY="176.0" prefHeight="319.0" prefWidth="659.0" style="-fx-background-color: white; -fx-border-radius: 14; -fx-background-radius: 14; -fx-border-width: 1px; -fx-border-color: black;" stylesheets="@../styles/CollectionReport.css" visible="false">
                <children>
-                  <ImageView fitHeight="23.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/search.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets top="8.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <TextField fx:id="searchTextField" prefHeight="46.0" prefWidth="318.0" promptText="Search..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </TextField>
+                  <VBox fx:id="vboxContainer" layoutX="121.0" layoutY="43.0" prefHeight="174.0" prefWidth="431.0">
+                     <children>
+                        <HBox prefHeight="22.0" prefWidth="433.0">
+                           <children>
+                              <Label styleClass="label-design" text="Tên khoản phí:" />
+                              <Label fx:id="collectionName" prefHeight="30.0" prefWidth="244.0" styleClass="label-design" text="Label">
+                                 <HBox.margin>
+                                    <Insets left="45.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="433.0">
+                           <children>
+                              <Label styleClass="label-design" text="Tên người nộp:" />
+                              <MenuButton fx:id="apartmentMenu" mnemonicParsing="false" styleClass="input-design" text="Chọn tên người nộp">
+                                 <HBox.margin>
+                                    <Insets left="45.0" />
+                                 </HBox.margin>
+                              </MenuButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label styleClass="label-design" text="Chọn khoản phí:" />
+                              <MenuButton fx:id="monthMenu" disable="true" mnemonicParsing="false" styleClass="input-design" text="Chọn tháng">
+                                 <HBox.margin>
+                                    <Insets left="35.0" />
+                                 </HBox.margin>
+                              </MenuButton>
+                              <MenuButton fx:id="yearMenu" layoutX="199.0" layoutY="10.0" mnemonicParsing="false" styleClass="input-design" text="Chọn năm">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </MenuButton>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="35.0" prefHeight="17.0" prefWidth="433.0">
+                           <children>
+                              <Label styleClass="label-design" text="Ngày nộp:" />
+                              <DatePicker fx:id="datePicker" styleClass="input-design">
+                                 <HBox.margin>
+                                    <Insets left="90.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Button layoutX="288.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleAddPayment" styleClass="btn-design" text="Xác nhận" />
+                  <Button fx:id="closeDialogBtn" layoutX="592.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleCloseDialog" prefHeight="37.0" prefWidth="40.0" styleClass="btn-design" stylesheets="@../styles/ApartmentList.css">
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/circle-x-mark.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
-            </HBox>
-            <MenuButton fx:id="residentMenuButton" layoutX="337.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14; -fx-background-color: white;" text="Search options">
-               <font>
-                  <Font size="21.0" />
-               </font>
-               <items>
-                  <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="ApartmentID" />
-                  <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Host name" />
-                  <MenuItem fx:id="amountItem" mnemonicParsing="false" text="Amount" />
-                  <MenuItem fx:id="isPaidItem" mnemonicParsing="false" text="Is paid" />
-                  <MenuItem fx:id="deadlinePaymentItem" mnemonicParsing="false" text="Deadline payment" />
-               </items>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </MenuButton>
-            <MenuButton fx:id="isPaidMenuButton" layoutX="55.0" layoutY="53.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 14;" text="Choose option" visible="false">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <items>
-                  <MenuItem fx:id="trueItem" mnemonicParsing="false" text="True" />
-                  <MenuItem fx:id="falseItem" mnemonicParsing="false" text="False" />
-               </items>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </MenuButton>
-            <Button fx:id="markAsPaidButton" layoutX="45.0" layoutY="638.0" mnemonicParsing="false" onAction="#markAsPaidButtonOnAction" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Mark as paid">
-               <styleClass>
-                  <String fx:value="btn-design" />
-                  <String fx:value="search-btn" />
-               </styleClass>
-            </Button>
-            <Button fx:id="backBtn" layoutX="964.0" layoutY="52.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="44.0" prefWidth="46.0" stylesheets="@../styles/ApartmentList.css">
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/angle-small-left.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <styleClass>
-                  <String fx:value="btn-design" />
-                  <String fx:value="search-btn" />
-               </styleClass>
-            </Button>
-            <Button fx:id="addAppsBtn" layoutX="208.0" layoutY="638.0" mnemonicParsing="false" onAction="#handleAddApartment" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Add Apartment">
-               <styleClass>
-                  <String fx:value="btn-design" />
-                  <String fx:value="search-btn" />
-               </styleClass>
-            </Button>
-            <MenuButton fx:id="monthButton" layoutX="33.0" layoutY="52.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Choose Month" visible="false">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </MenuButton>
-            <TableView fx:id="donateApartmentTableView" layoutX="25.0" layoutY="110.0" prefHeight="506.0" prefWidth="810.0" stylesheets="@../styles/TableView.css" visible="false">
-               <columns>
-                  <TableColumn fx:id="apartmentIDCol1" prefWidth="173.0" text="ApartmentID" />
-                  <TableColumn fx:id="hostNameCol1" prefWidth="201.0" text="Host name" />
-                  <TableColumn fx:id="totalResCol1" minWidth="2.333343505859375" prefWidth="218.0" text="Total residents" />
-                  <TableColumn fx:id="takePartCol" minWidth="2.333343505859375" prefWidth="218.0" text="Take Part" />
-               </columns>
-            </TableView>
-            <Button fx:id="takePartButton" layoutX="45.0" layoutY="638.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" stylesheets="@../styles/CollectionReport.css" text="Take Part" visible="false">
-               <styleClass>
-                  <String fx:value="btn-design" />
-                  <String fx:value="search-btn" />
-               </styleClass>
-            </Button>
-            <Label fx:id="infoLabel" layoutX="219.0" layoutY="350.0" text="No apartments have taken part yet" visible="false">
-               <font>
-                  <Font size="41.0" />
-               </font>
-            </Label>
-            <Label fx:id="reportNameLabel" layoutX="39.0" layoutY="14.0" prefHeight="30.0" prefWidth="743.0" style="-fx-font-weight: 700; -fx-font-size: 20px;" text="Label">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Label>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </content>

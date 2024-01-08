@@ -114,7 +114,8 @@ public class MenuViewManager {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource(menuView.getFileName())));
             Parent root = loader.load();
             ResidentFormController residentFormController = loader.getController();
-            residentFormController.apartmentTextField.setText(apartment.getId());
+            residentFormController.apartmentMenuButton.setText(apartment.getId());
+            residentFormController.apartmentMenuButton.setDisable(true);
             residentFormController.switchViewFlag = true;
             residentFormController.selectedFloor = selectedFloor;
             borderPane.setCenter(root);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -31,54 +32,90 @@
                         <Insets top="8.0" />
                      </HBox.margin>
                   </ImageView>
-                  <TextField fx:id="searchTextField" prefHeight="46.0" prefWidth="318.0" promptText="Search..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+                  <TextField fx:id="searchTextField" prefHeight="46.0" prefWidth="318.0" promptText="Tìm kiếm chi phí" style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </TextField>
                </children>
             </HBox>
-            <HBox layoutX="750.0" layoutY="708.0" prefHeight="33.0" prefWidth="309.0">
+            <HBox layoutX="627.0" layoutY="708.0" prefHeight="33.0" prefWidth="432.0">
                <children>
-                  <Button fx:id="newButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="New" textAlignment="CENTER" />
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="Delete" textAlignment="CENTER">
+                  <Button fx:id="newButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="Thêm" textAlignment="CENTER" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="Xóa" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="Details" textAlignment="CENTER">
+                  <Button layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="Sửa" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin></Button>
+                  <Button fx:id="detailsButton1" layoutX="230.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefHeight="33.0" prefWidth="90.0" styleClass="btn-design" text="Chi tiết" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <TableView fx:id="collectionsTableView" editable="true" layoutX="57.0" layoutY="115.0" prefHeight="581.0" prefWidth="1002.0" stylesheets="@../styles/TableView.css">
                <columns>
-                  <TableColumn fx:id="nameTableColumn" prefWidth="218.0" text="Name" />
-                  <TableColumn fx:id="typeTableColumn" prefWidth="166.0" text="Type" />
-                  <TableColumn fx:id="amountTableColumn" prefWidth="193.0" text="Amount (USD)" />
-                  <TableColumn fx:id="totalBills" prefWidth="257.0" text="Total Bills" />
-                  <TableColumn fx:id="descriptionTableColumn" minWidth="0.0" prefWidth="167.0" text="Description" />
+                  <TableColumn fx:id="nameTableColumn" prefWidth="218.0" text="Tên phí" />
+                  <TableColumn fx:id="typeTableColumn" prefWidth="166.0" text="Loại phí" />
+                  <TableColumn fx:id="amountTableColumn" prefWidth="193.0" text="Chi phí" />
+                  <TableColumn fx:id="totalBills" prefWidth="257.0" text="Tổng số hóa đơn" />
+                  <TableColumn fx:id="descriptionTableColumn" minWidth="0.0" prefWidth="167.0" text="Ghi chú" />
                </columns>
             </TableView>
-            <Label layoutX="407.0" text="Collection List ">
+            <Label layoutX="407.0" text="Danh sách phí">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <MenuButton fx:id="collectionTypeMenuButton" layoutX="370.0" layoutY="54.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="207.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Search options">
+            <MenuButton fx:id="collectionTypeMenuButton" layoutX="370.0" layoutY="54.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="207.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Tùy chọn tìm kiếm">
                <font>
                   <Font size="18.0" />
                </font>
                <items>
-                  <MenuItem fx:id="nameCollectionItem" mnemonicParsing="false" text="Name" />
-                  <MenuItem fx:id="typeCollectionItem" mnemonicParsing="false" text="Type" />
-                  <MenuItem fx:id="amountCollectionItem" mnemonicParsing="false" text="Amount" />
+                  <MenuItem fx:id="nameCollectionItem" mnemonicParsing="false" text="Tên phí" />
+                  <MenuItem fx:id="typeCollectionItem" mnemonicParsing="false" text="Loại phí" />
+                  <MenuItem fx:id="amountCollectionItem" mnemonicParsing="false" text="Chi phí" />
                </items>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </MenuButton>
             <DatePicker fx:id="deadlinePicker" layoutX="57.0" layoutY="53.0" prefHeight="47.0" prefWidth="260.0" visible="false" />
+            <AnchorPane fx:id="dialogContainer" opacity="0.2" prefHeight="767.0" prefWidth="1131.0" style="-fx-background-color: black;" visible="false" />
+            <AnchorPane fx:id="dialogBox" layoutX="129.0" layoutY="91.0" prefHeight="475.0" prefWidth="921.0" style="-fx-background-color: white; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-border-width: 1px; -fx-border-color: black;" visible="false">
+               <children>
+                  <TextField fx:id="nameTextField" layoutX="47.0" layoutY="189.0" prefHeight="38.0" prefWidth="226.0" styleClass="input-design" />
+                  <Label layoutX="47.0" layoutY="150.0" styleClass="label-design" text="Tên phí" />
+                  <Label layoutX="367.0" layoutY="149.0" styleClass="label-design" text="Loại phí" />
+                  <TextField fx:id="amountTextField" layoutX="653.0" layoutY="187.0" prefHeight="38.0" prefWidth="226.0" styleClass="input-design" />
+                  <Label layoutX="653.0" layoutY="148.0" styleClass="label-design" text="Chi phí" />
+                  <MenuButton fx:id="typeMenu" layoutX="367.0" layoutY="188.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="226.0" styleClass="input-design" text="MenuButton">
+                    <items>
+                      <MenuItem fx:id="serviceItem" mnemonicParsing="false" text="Phí dịch vụ" />
+                      <MenuItem fx:id="manangeItem" mnemonicParsing="false" text="Phí quản lý" />
+                        <MenuItem fx:id="donateItem" mnemonicParsing="false" text="Phí tình nguyện" />
+                    </items>
+                  </MenuButton>
+                  <Button layoutX="369.0" layoutY="315.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="184.0" styleClass="btn-design" text="Xác nhận" />
+                  <Button fx:id="closeBtn" layoutX="857.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="37.0" prefWidth="40.0" stylesheets="@../styles/ApartmentList.css">
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/circle-x-mark.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="btn-design" />
+                        <String fx:value="search-btn" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </content>

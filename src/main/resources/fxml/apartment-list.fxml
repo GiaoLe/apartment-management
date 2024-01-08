@@ -24,16 +24,16 @@
    <content>
       <AnchorPane prefHeight="860.0" prefWidth="1169.0" style="-fx-background-color: #f6fdff;" styleClass="container" stylesheets="@../styles/ApartmentList.css">
          <children>
-            <MenuButton fx:id="apartmentMenuButton" layoutX="340.0" layoutY="74.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Search options" visible="false">
+            <MenuButton fx:id="apartmentMenuButton" layoutX="340.0" layoutY="74.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Tùy chọn tìm kiếm" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
                <items>
-                  <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="Apartment ID" />
-                  <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Host Name" />
-                  <MenuItem fx:id="stateItem" mnemonicParsing="false" text="State" />
-                  <MenuItem fx:id="typeItem" mnemonicParsing="false" text="Type" />
-                  <MenuItem fx:id="areaItem" mnemonicParsing="false" text="Area" />
+                  <MenuItem fx:id="apartmentIDItem" mnemonicParsing="false" text="ID Căn hộ" />
+                  <MenuItem fx:id="hostNameItem" mnemonicParsing="false" text="Chủ căn hộ" />
+                  <MenuItem fx:id="stateItem" mnemonicParsing="false" text="Tình trạng" />
+                  <MenuItem fx:id="typeItem" mnemonicParsing="false" text="Loại căn hộ" />
+                  <MenuItem fx:id="areaItem" mnemonicParsing="false" text="Diện tích" />
                </items>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -49,7 +49,7 @@
                         <Insets top="8.0" />
                      </HBox.margin>
                   </ImageView>
-                  <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="216.0" promptText="Floor..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+                  <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="216.0" promptText="Tìm kiếm theo tầng" style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -58,15 +58,15 @@
             </HBox>
             <TableView fx:id="floorTableView" layoutX="23.0" layoutY="130.0" onMouseClicked="#selectedFloor" prefHeight="560.0" prefWidth="1022.0" stylesheets="@../styles/TableView.css" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="130.0">
                <columns>
-                  <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Floor" />
-                  <TableColumn fx:id="totalColumn" prefWidth="150.0" text="Total Apartments " />
-                  <TableColumn fx:id="availableColumn" prefWidth="191.0" text="Available Apartments" />
-                  <TableColumn fx:id="nAvailableColumn" prefWidth="206.0" text="Not Available Apartments" />
-                  <TableColumn fx:id="occupiedColumn" prefWidth="188.0" text="Occupied Apartments" />
-                  <TableColumn fx:id="residentsColumn" prefWidth="182.0" text="Total Residents" />
+                  <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Tầng" />
+                  <TableColumn fx:id="totalColumn" prefWidth="150.0" text="Tổng số căn hộ" />
+                  <TableColumn fx:id="availableColumn" prefWidth="191.0" text="Căn hộ trống" />
+                  <TableColumn fx:id="nAvailableColumn" prefWidth="206.0" text="Căn hộ " />
+                  <TableColumn fx:id="occupiedColumn" prefWidth="188.0" text="Căn hộ đang được sở hữu" />
+                  <TableColumn fx:id="residentsColumn" prefWidth="182.0" text="Tổng số dân cư" />
                </columns>
             </TableView>
-            <Label fx:id="tableHeader" layoutX="104.0" layoutY="25.0" prefHeight="30.0" prefWidth="204.0" styleClass="table-header" stylesheets="@../styles/ApartmentList.css" text="Apartments Infomation">
+            <Label fx:id="tableHeader" layoutX="104.0" layoutY="25.0" prefHeight="30.0" prefWidth="204.0" styleClass="table-header" stylesheets="@../styles/ApartmentList.css" text="Thông tin chung cư">
                <font>
                   <Font name="Comic Sans MS" size="30.0" />
                </font>
@@ -76,13 +76,13 @@
             </Label>
             <TableView fx:id="apartmentTableView" layoutX="22.0" layoutY="131.0" prefHeight="556.0" prefWidth="1022.0" stylesheets="@../styles/ApartmentList.css" visible="false">
                <columns>
-                  <TableColumn fx:id="apartmentIdCol" prefWidth="154.0" text="Apartment ID" />
-                  <TableColumn fx:id="hostNameCol" prefWidth="165.0" text="Host Name" />
-                  <TableColumn fx:id="totalResidentsCol" prefWidth="158.0" text="Total Residents" />
-                  <TableColumn fx:id="stateCol" prefWidth="162.0" text="State" />
-                  <TableColumn fx:id="typeCol" prefWidth="143.0" text="Type" />
-                  <TableColumn fx:id="areaCol" prefWidth="90.0" text="Area" />
-                  <TableColumn fx:id="actionsCol" prefWidth="178.0" text="Actions" />
+                  <TableColumn fx:id="apartmentIdCol" prefWidth="154.0" text="ID căn hộ" />
+                  <TableColumn fx:id="hostNameCol" prefWidth="165.0" text="Chủ hộ" />
+                  <TableColumn fx:id="totalResidentsCol" prefWidth="158.0" text="Tổng số dân cư" />
+                  <TableColumn fx:id="stateCol" prefWidth="162.0" text="Tình trạng" />
+                  <TableColumn fx:id="typeCol" prefWidth="143.0" text="Loại" />
+                  <TableColumn fx:id="areaCol" prefWidth="90.0" text="Diện tích" />
+                  <TableColumn fx:id="actionsCol" prefWidth="178.0" text="Thêm" />
                </columns>
                <padding>
                   <Insets bottom="40.0" />
@@ -101,7 +101,7 @@
                   <String fx:value="search-btn" />
                </styleClass>
             </Button>
-            <Button fx:id="addNewApartment" layoutX="871.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleAddNewApartment" prefHeight="44.0" prefWidth="174.0" stylesheets="@../styles/ApartmentList.css" text="Add new apartment">
+            <Button fx:id="addNewApartment" layoutX="871.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleAddNewApartment" prefHeight="44.0" prefWidth="174.0" stylesheets="@../styles/ApartmentList.css" text="Thêm mới căn hộ">
                <styleClass>
                   <String fx:value="btn-design" />
                   <String fx:value="search-btn" />
@@ -119,7 +119,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label alignment="CENTER" layoutX="287.0" prefHeight="58.0" prefWidth="237.0" text="Apartment Filter">
+                  <Label alignment="CENTER" layoutX="287.0" prefHeight="58.0" prefWidth="237.0" text="Lọc căn hộ">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font>
@@ -131,7 +131,7 @@
                            <children>
                               <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" text="ApartmentID">
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="ID căn hộ">
                                        <font>
                                           <Font size="23.0" />
                                        </font>
@@ -144,7 +144,7 @@
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" text="Host Name">
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="Chủ căn hộ">
                                        <font>
                                           <Font size="23.0" />
                                        </font>
@@ -161,12 +161,12 @@
                            <children>
                               <VBox prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" text="State">
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="Tình trạng">
                                        <font>
                                           <Font size="23.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="33.0" prefWidth="213.0" styleClass="input-design" stylesheets="@../styles/ApartmentList.css" text="Choose State">
+                                    <MenuButton fx:id="stateMenu" mnemonicParsing="false" prefHeight="33.0" prefWidth="213.0" styleClass="input-design" stylesheets="@../styles/ApartmentList.css" text="Chọn tình trạng">
                                        <items>
                                           <MenuItem fx:id="availableItem" mnemonicParsing="false" text="AVAILABLE" />
                                           <MenuItem fx:id="occupiedItem" mnemonicParsing="false" text="OCCUPIED" />
@@ -184,12 +184,12 @@
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="95.0" prefWidth="352.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" text="Type">
+                                    <Label prefHeight="52.0" prefWidth="226.0" text="Loại căn hộ">
                                        <font>
                                           <Font size="23.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="33.0" prefWidth="213.0" styleClass="input-design" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
+                                    <MenuButton fx:id="typeMenu" mnemonicParsing="false" prefHeight="33.0" prefWidth="213.0" styleClass="input-design" stylesheets="@../styles/ApartmentList.css" text="Chọn loại">
                                        <items>
                                           <MenuItem fx:id="studioItem" mnemonicParsing="false" text="STUDIO" />
                                           <MenuItem fx:id="penthouseItem" mnemonicParsing="false" text="PENTHOUSE" />
@@ -207,7 +207,7 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="submitFilter" mnemonicParsing="false" prefHeight="39.0" prefWidth="127.0" stylesheets="@../styles/ApartmentList.css" text="Search">
+                        <Button fx:id="submitFilter" mnemonicParsing="false" prefHeight="39.0" prefWidth="127.0" stylesheets="@../styles/ApartmentList.css" text="Tìm kiếm">
                            <VBox.margin>
                               <Insets left="350.0" top="20.0" />
                            </VBox.margin>
@@ -238,7 +238,7 @@
                         <String fx:value="search-btn" />
                      </styleClass>
                   </Button>
-                  <Label alignment="CENTER" layoutX="238.0" prefHeight="58.0" prefWidth="422.0" text="Infomation of Apartment">
+                  <Label alignment="CENTER" layoutX="238.0" prefHeight="58.0" prefWidth="422.0" text="Thông tin căn hộ">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font>
@@ -250,7 +250,7 @@
                            <children>
                               <VBox prefHeight="95.0" prefWidth="450.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="131.0" styleClass="label-design" text="ApartmentID">
+                                    <Label prefHeight="52.0" prefWidth="131.0" styleClass="label-design" text="ID căn hộ">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -266,12 +266,12 @@
                               </VBox>
                               <VBox prefHeight="95.0" prefWidth="404.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" styleClass="label-design" text="Host name">
+                                    <Label prefHeight="52.0" prefWidth="226.0" styleClass="label-design" text="Chủ căn hộ">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="hostNameFilter1" mnemonicParsing="false" prefHeight="27.0" prefWidth="121.0" stylesheets="@../styles/ApartmentList.css" text="Choose Host">
+                                    <MenuButton fx:id="hostNameFilter1" mnemonicParsing="false" prefHeight="27.0" prefWidth="130.0" stylesheets="@../styles/ApartmentList.css" text="Chọn chủ căn hộ">
                                        <styleClass>
                                           <String fx:value="btn-design" />
                                           <String fx:value="input-design" />
@@ -287,17 +287,17 @@
                            <children>
                               <VBox prefHeight="86.0" prefWidth="414.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" styleClass="label-design" text="State">
+                                    <Label prefHeight="52.0" prefWidth="226.0" styleClass="label-design" text="Tình trạng">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="stateMenu1" mnemonicParsing="false" prefHeight="27.0" prefWidth="121.0" stylesheets="@../styles/ApartmentList.css" text="Choose State">
+                                    <MenuButton fx:id="stateMenu1" mnemonicParsing="false" prefHeight="27.0" prefWidth="121.0" stylesheets="@../styles/ApartmentList.css" text="Chọn tình trạng">
                                        <items>
-                                          <MenuItem fx:id="availableItem1" mnemonicParsing="false" text="AVAILABLE" />
-                                          <MenuItem fx:id="occupiedItem1" mnemonicParsing="false" text="OCCUPIED" />
-                                          <MenuItem fx:id="reservedItem1" mnemonicParsing="false" text="RESERVED" />
-                                          <MenuItem fx:id="maintainingItem1" mnemonicParsing="false" text="MAINTENANCE" />
+                                          <MenuItem fx:id="availableItem1" mnemonicParsing="false" text="Còn trống" />
+                                          <MenuItem fx:id="occupiedItem1" mnemonicParsing="false" text="Đang sử dụng" />
+                                          <MenuItem fx:id="reservedItem1" mnemonicParsing="false" text="Đang bảo trì" />
+                                          <MenuItem fx:id="maintainingItem1" mnemonicParsing="false" text="Đang sửa chữa" />
                                        </items>
                                        <styleClass>
                                           <String fx:value="btn-design" />
@@ -311,12 +311,12 @@
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="86.0" prefWidth="371.0">
                                  <children>
-                                    <Label prefHeight="52.0" prefWidth="226.0" styleClass="label-design" text="Type">
+                                    <Label prefHeight="52.0" prefWidth="226.0" styleClass="label-design" text="Loại căn hộ">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton fx:id="typeMenu1" mnemonicParsing="false" prefHeight="27.0" prefWidth="121.0" stylesheets="@../styles/ApartmentList.css" text="Choose Type">
+                                    <MenuButton fx:id="typeMenu1" mnemonicParsing="false" prefHeight="27.0" prefWidth="131.0" stylesheets="@../styles/ApartmentList.css" text="Chọn loại">
                                        <items>
                                           <MenuItem fx:id="studioItem1" mnemonicParsing="false" text="STUDIO" />
                                           <MenuItem fx:id="penthouseItem1" mnemonicParsing="false" text="PENTHOUSE" />
@@ -342,12 +342,12 @@
                         </HBox>
                         <TableView fx:id="residentTableView" prefHeight="178.0" prefWidth="783.0" stylesheets="@../styles/TableView.css">
                            <columns>
-                              <TableColumn fx:id="residentID" prefWidth="100.0" text="ResidentID" />
-                              <TableColumn fx:id="lastName" prefWidth="181.0" text="Last Name" />
-                              <TableColumn fx:id="phoneNumber" prefWidth="211.0" text="Phone number" />
+                              <TableColumn fx:id="residentID" prefWidth="100.0" text="ID dân cư" />
+                              <TableColumn fx:id="lastName" prefWidth="181.0" text="Tên" />
+                              <TableColumn fx:id="phoneNumber" prefWidth="211.0" text="SDT" />
                               <TableColumn fx:id="email" prefWidth="180.0" text="Email" />
-                              <TableColumn fx:id="nationalID" prefWidth="125.0" text="NationalID" />
-                              <TableColumn fx:id="asd" prefWidth="70.0" text="isHost" />
+                              <TableColumn fx:id="nationalID" prefWidth="125.0" text="Quốc tịch" />
+                              <TableColumn fx:id="asd" prefWidth="70.0" text="Chủ hộ" />
                            </columns>
                            <padding>
                               <Insets bottom="40.0" />
@@ -355,12 +355,12 @@
                         </TableView>
                         <TableView fx:id="collectionTableView" layoutX="10.0" layoutY="192.0" prefHeight="192.0" prefWidth="868.0" stylesheets="@../styles/TableView.css">
                            <columns>
-                              <TableColumn fx:id="collectionIDCol" prefWidth="103.0" text="CollectionID" />
-                              <TableColumn fx:id="nameCollectionCol" prefWidth="171.0" text="Name" />
-                              <TableColumn fx:id="typeCollectionCol" prefWidth="178.0" text="Type" />
-                              <TableColumn fx:id="amountCollectionCol" prefWidth="136.0" text="Amount(USD)" />
-                              <TableColumn fx:id="deadlinePaymentCollectionCol" prefWidth="171.0" text="Deadline payment" />
-                              <TableColumn fx:id="isPaidCol" prefWidth="108.0" text="isPaid" />
+                              <TableColumn fx:id="collectionIDCol" prefWidth="103.0" text="Phí chung cư" />
+                              <TableColumn fx:id="nameCollectionCol" prefWidth="171.0" text="Tên phí" />
+                              <TableColumn fx:id="typeCollectionCol" prefWidth="178.0" text="Loại phí" />
+                              <TableColumn fx:id="amountCollectionCol" prefWidth="136.0" text="Chi phí (VND)" />
+                              <TableColumn fx:id="deadlinePaymentCollectionCol" prefWidth="171.0" text="Hạn nộp" />
+                              <TableColumn fx:id="isPaidCol" prefWidth="108.0" text="Đã trả" />
                            </columns>
                            <padding>
                               <Insets bottom="40.0" />
@@ -371,7 +371,7 @@
                         </TableView>
                         <HBox prefHeight="41.0" prefWidth="845.0">
                            <children>
-                              <Button fx:id="addResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="149.0" stylesheets="@../styles/ApartmentList.css" text="Add new resident">
+                              <Button fx:id="addResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="149.0" stylesheets="@../styles/ApartmentList.css" text="Thêm dân cư">
                                  <styleClass>
                                     <String fx:value="btn-design" />
                                     <String fx:value="search-btn" />
@@ -380,7 +380,7 @@
                                     <Insets left="520.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="editResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="75.0" stylesheets="@../styles/ApartmentList.css" text="Change">
+                              <Button fx:id="editResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="83.0" stylesheets="@../styles/ApartmentList.css" text="Thay đổi">
                                  <styleClass>
                                     <String fx:value="btn-design" />
                                     <String fx:value="search-btn" />
@@ -389,7 +389,7 @@
                                     <Insets left="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="delResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="75.0" stylesheets="@../styles/ApartmentList.css" text="Delete">
+                              <Button fx:id="delResBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="75.0" stylesheets="@../styles/ApartmentList.css" text="Xóa">
                                  <styleClass>
                                     <String fx:value="btn-design" />
                                     <String fx:value="search-btn" />

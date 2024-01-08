@@ -26,7 +26,7 @@
                <Insets />
             </BorderPane.margin>
             <VBox fx:id="sideBar" prefHeight="702.0" prefWidth="274.0" style="-fx-background-color: #fff;" styleClass="sidebar">
-               <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#dashboardButtonOnAction" prefHeight="60.0" prefWidth="274.0" stylesheets="@../styles/Dashboard.css" text="Dashboard" textFill="RED">
+               <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#dashboardButtonOnAction" prefHeight="60.0" prefWidth="274.0" stylesheets="@../styles/Dashboard.css" text="Tổng quan" textFill="RED">
                   <font>
                      <Font size="22.0" />
                   </font>
@@ -43,7 +43,7 @@
                   </padding>
                </Button>
                <Separator prefWidth="200.0" />
-               <Button fx:id="apartmentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#apartmentsButtonOnAction" prefHeight="50.0" prefWidth="274.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Apartments" textFill="#979191">
+               <Button fx:id="apartmentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#apartmentsButtonOnAction" prefHeight="50.0" prefWidth="274.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Căn hộ" textFill="#979191">
                   <font>
                      <Font size="21.0" />
                   </font>
@@ -54,7 +54,7 @@
                   </graphic>
                </Button>
                <Separator layoutX="10.0" layoutY="93.0" prefWidth="200.0" />
-               <Button fx:id="residentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#residentsButtonOnAction" prefHeight="50.0" prefWidth="724.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Residents" textFill="#979191">
+               <Button fx:id="residentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#residentsButtonOnAction" prefHeight="50.0" prefWidth="724.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Dân cư" textFill="#979191">
                   <font>
                      <Font size="21.0" />
                   </font>
@@ -65,7 +65,7 @@
                   </graphic>
                </Button>
                <Separator layoutX="10.0" layoutY="259.0" prefWidth="200.0" />
-               <Button fx:id="collectionsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#collectionsButtonOnAction" prefHeight="50.0" prefWidth="579.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Collections" textFill="#979191">
+               <Button fx:id="collectionsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#collectionsButtonOnAction" prefHeight="50.0" prefWidth="579.0" styleClass="sidebar-button" stylesheets="@../styles/Dashboard.css" text="Phí chung cư" textFill="#979191">
                   <font>
                      <Font size="21.0" />
                   </font>

@@ -63,6 +63,7 @@ public class DashboardController {
     public MenuItem manageItem;
     public MenuItem serviceItem;
     public MenuButton typeFeeButton;
+    public MenuItem revenueStatic;
     @FXML
     public void initialize(){
         handleStateChart();
@@ -82,10 +83,10 @@ public class DashboardController {
         int reserveCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentState.RESERVED.equals(apartment.getState()));
         int occupiedCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentState.OCCUPIED.equals(apartment.getState()));
         ObservableList<PieChart.Data> totalAppsData = FXCollections.observableArrayList(
-                new PieChart.Data("Maintenance", maintenanceCount),
-                new PieChart.Data("Available", availableCount),
-                new PieChart.Data("Reserve", reserveCount),
-                new PieChart.Data("Occupied", occupiedCount)
+                new PieChart.Data("Đang sửa chữa", maintenanceCount),
+                new PieChart.Data("Còn trống", availableCount),
+                new PieChart.Data("Đang bảo trì", reserveCount),
+                new PieChart.Data("Đang sử dụng", occupiedCount)
         );
         totalAppsData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
@@ -99,13 +100,15 @@ public class DashboardController {
         for (MenuItem menuItem : list){
             menuItem.setOnAction(e -> {
                 selectedMenuButton.setText(menuItem.getText());
-                if(Objects.equals(menuItem.getText(), "Information of Apartment")){
+                if(Objects.equals(menuItem.getText(), "Thông tin chung cư")){
                     infoContainer.setVisible(true);
                     feeContainer.setVisible(false);
                 }
-                else {
+                else if(Objects.equals(menuItem.getText(), "Thống kê doanh thu")) {
                     feeContainer.setVisible(true);
                     infoContainer.setVisible(false);
+                } else {
+
                 }
             });
         }
@@ -113,16 +116,17 @@ public class DashboardController {
     public void handleSelectedTypeCollection (List <MenuItem> menuItemList){
         for (MenuItem menuItem : menuItemList){
             menuItem.setOnAction(e -> {
+                ContextMenu contextMenu = new ContextMenu();
                 typeFeeButton.setText(menuItem.getText());
                 chooseFeeButton.getItems().clear();
-                chooseFeeButton.setText("Choose Fee");
-                if (typeFeeButton.getText().equals("Service Fee")){
+                chooseFeeButton.setText("Chọn phí");
+                if (typeFeeButton.getText().equals("Phí dịch vụ chung cư")){
                     for (Collection collection : serviceCollections){
                         chooseFeeButton.getItems().add(
                                 new MenuItem(collection.getName())
                         );
                     }
-                } else if (typeFeeButton.getText().equals("Management Fee")){
+                } else if (typeFeeButton.getText().equals("Phí quản lý chung cư")){
                     for (Collection collection : manageCollections){
                         chooseFeeButton.getItems().add(
                                 new MenuItem(collection.getName())
@@ -149,11 +153,23 @@ public class DashboardController {
         int studioCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.STUDIO.equals(apartment.getType()));
         int triplexCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.TRIPLEX.equals(apartment.getType()));
         int duplexCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.DUPLEX.equals(apartment.getType()));
+        int condoCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.CONDO.equals(apartment.getType()));
+        int gardenCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.GARDEN.equals(apartment.getType()));
+        int loftCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.LOFT.equals(apartment.getType()));
+        int townHouseCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.TOWNHOUSE.equals(apartment.getType()));
+        int villaCount = CollectionUtils.countMatches(apartments, apartment -> ApartmentType.VILLA.equals(apartment.getType()));
+
         ObservableList<PieChart.Data> totalAppsData = FXCollections.observableArrayList(
                 new PieChart.Data("Penthouse", penthouseCount),
                 new PieChart.Data("Studio", studioCount),
                 new PieChart.Data("Triplex", triplexCount),
-                new PieChart.Data("Duplex", duplexCount)
+                new PieChart.Data("Duplex", duplexCount),
+                new PieChart.Data("Condo", condoCount),
+                new PieChart.Data("Garden", gardenCount),
+                new PieChart.Data("Loft", loftCount),
+                new PieChart.Data("TownHouse", townHouseCount),
+                new PieChart.Data("Villa", villaCount)
+
         );
         totalAppsData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
@@ -167,8 +183,8 @@ public class DashboardController {
         int femaleCount = CollectionUtils.countMatches(residents, Resident::getGender);
         int maleCount = CollectionUtils.countMatches(residents, resident -> !resident.getGender());
         ObservableList<PieChart.Data> totalAppsData = FXCollections.observableArrayList(
-                new PieChart.Data("Female", femaleCount),
-                new PieChart.Data("Male", maleCount)
+                new PieChart.Data("Nữ", femaleCount),
+                new PieChart.Data("Nam", maleCount)
         );
         totalAppsData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
@@ -214,7 +230,7 @@ public class DashboardController {
         if(apartmentCollection.getCollection().getName().equals(collectionName)){
             observableMap.compute("expFee", (key, oldValue) -> String.valueOf(Double.parseDouble(oldValue) + apartmentCollection.getCollection().getAmount()*apartmentCollection.getApartment().getArea()));
             observableMap.compute("totalRes", (key, oldvalue) -> String.valueOf(Integer.parseInt(oldvalue) + 1));
-            if (apartmentCollection.isPaid()){
+            if (apartmentCollection.getState() == ApartmentCollectionState.PAID){
                 observableMap.compute("receivedFee", (key, oldValue) -> String.valueOf(Double.parseDouble(oldValue) + apartmentCollection.getCollection().getAmount() * apartmentCollection.getApartment().getArea()));
                 observableMap.compute("paidRes", (key, oldValue) -> String.valueOf(Integer.parseInt(oldValue) + 1));
             } else {

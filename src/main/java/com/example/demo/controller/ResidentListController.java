@@ -89,14 +89,14 @@ public class ResidentListController {
             fillTableViewWithResidentData(filterList);
         });
         residentMenuButton.showingProperty().addListener((observable, oldValue, newValue) -> {
-            if (residentMenuButton.getText().equals("Gender")) {
+            if (residentMenuButton.getText().equals("Giới tính")) {
                 genderMenuButton.setVisible(true);
                 searchContainer.setVisible(false);
                 dobPicker.setVisible(false);
                 searchTextField.setText("");
                 genderMenuButton.textProperty().addListener((observable1, oldValue1, newValue1) -> {
                     List<Resident> filterList = new ArrayList<>();
-                    if (newValue1.equals("Female")) {
+                    if (newValue1.equals("Nữ")) {
                         for (Resident resident : residents) {
                             if (resident.getGender()) {
                                 filterList.add(resident);
@@ -111,7 +111,7 @@ public class ResidentListController {
                     }
                     fillTableViewWithResidentData(filterList);
                 });
-            } else if (residentMenuButton.getText().equals("Move-in Date")) {
+            } else if (residentMenuButton.getText().equals("Ngày chuyển vào")) {
                 dobPicker.setVisible(true);
                 searchContainer.setVisible(false);
                 genderMenuButton.setVisible(false);
@@ -157,7 +157,7 @@ public class ResidentListController {
         apartmentIDTextField.setDisable(true);
         dobTextField.setText(resident.getDateOfBirth().toString());
         emailTextField.setText(resident.getEmail());
-        genderTextField.setText(resident.getGender() ? "Female" : "Male");
+        genderTextField.setText(resident.getGender() ? "Nữ" : "Nam");
         moveinDateTextField.setText(resident.getMoveInDate().toString());
         nationalIDTextField.setText(resident.getNationalID());
         phoneNumberTextField.setText(resident.getPhoneNumber());
@@ -194,60 +194,73 @@ public class ResidentListController {
     }
 
     public void deleteButtonOnAction() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to delete?");
-        alert.setContentText("Click OK to confirm, or Cancel to abort.");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == javafx.scene.control.ButtonType.OK) {
-                Resident resident = residentTableView.getSelectionModel().getSelectedItem();
-                if (resident != null) {
-                    residentTableView.getItems().remove(resident);
-                    residentService.remove(resident);
+        Resident resident = residentTableView.getSelectionModel().getSelectedItem();
+
+        if (resident == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Hãy chọn dân cư để xem thông tin chi tiết");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Xác nhận");
+            alert.setHeaderText("Bạn có chắc chắn muốn xóa ?");
+            alert.setContentText("Nhấn OK để xóa hoặc Cancel để hủy");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == javafx.scene.control.ButtonType.OK) {
+                        residentTableView.getItems().remove(resident);
+                        residentService.remove(resident);
                 }
-            }
-        });
+            });
+        }
 
     }
 
     public void detailsButtonOnAction() {
         Resident resident = residentTableView.getSelectionModel().getSelectedItem();
-        detailContainer.setVisible(true);
-        updateButton.setVisible(true);
-        handleShowResidentDetail(resident);
+        if (resident == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Hãy chọn dân cư để xem thông tin chi tiết");
+            alert.showAndWait();
+        }else {
+            detailContainer.setVisible(true);
+            updateButton.setVisible(true);
+            handleShowResidentDetail(resident);
+        }
+
     }
 
     public void handleFilter(List<Resident> filterList, String newValue, List<Resident> residents) {
         switch (residentMenuButton.getText()) {
-            case "Resident ID":
+            case "ID dân cư":
                 for (Resident resident : residents) {
                     if (String.valueOf(resident.getId()).contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
                 break;
-            case "First Name":
+            case "Họ":
                 for (Resident resident : residents) {
                     if (resident.getFirstName().contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
                 break;
-            case "Last Name":
+            case "Tên":
                 for (Resident resident : residents) {
                     if (resident.getLastName().contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
                 break;
-            case "Apartment":
+            case "Căn hộ":
                 for (Resident resident : residents) {
                     if (resident.getApartmentID().contains(newValue)) {
                         filterList.add(resident);
                     }
                 }
                 break;
-            case "ID Number":
+            case "Số CCCD":
                 for (Resident resident : residents) {
                     if (resident.getIDNumber().contains(newValue)) {
                         filterList.add(resident);
@@ -264,7 +277,7 @@ public class ResidentListController {
         selectedResident.setFirstName(firstNameTextField.getText());
         selectedResident.setLastName(lastNameTextField.getText());
         selectedResident.setEmail(emailTextField.getText());
-        selectedResident.setGender(genderTextField.equals("Female"));
+        selectedResident.setGender(genderTextField.equals("Nữ"));
         selectedResident.setDateOfBirth(Date.valueOf(dobTextField.getText()));
         selectedResident.setMoveInDate(Date.valueOf(moveinDateTextField.getText()));
         selectedResident.setPhoneNumber(phoneNumberTextField.getText());

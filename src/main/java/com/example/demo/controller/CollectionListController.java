@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.sql.Date;
@@ -25,7 +26,7 @@ public class CollectionListController {
     public Button newButton;
     public TableView<Collection> collectionsTableView;
     public TableColumn<Collection, String> nameTableColumn;
-    public TableColumn<Collection, CollectionType> typeTableColumn;
+    public TableColumn<Collection, String> typeTableColumn;
     public TableColumn<Collection, String> amountTableColumn;
     public TableColumn<Collection, String> descriptionTableColumn;
     public Button deleteButton;
@@ -41,6 +42,15 @@ public class CollectionListController {
     private final List<Collection> collectionList = collectionService.findAll();
     public HBox searchContainer;
     public DatePicker deadlinePicker;
+    public AnchorPane dialogContainer;
+    public AnchorPane dialogBox;
+    public Button closeBtn;
+    private Collection selectedCollection ;
+    public TextField nameTextField;
+    public TextField amountTextField;
+    public MenuButton typeMenu;
+    public MenuItem serviceItem;
+    public MenuItem manangeItem;
 
     @FXML
     public void initialize() {
@@ -84,21 +94,21 @@ public class CollectionListController {
     }
     public void handleFilter(List<Collection> filterList, String newValue){
         switch (collectionTypeMenuButton.getText()){
-            case "Name":
+            case "Tên phí":
                 for(Collection collection : collectionList){
                     if(collection.getName().contains(newValue)){
                         filterList.add(collection);
                     }
                 }
                 break;
-            case "Type":
+            case "Loại phí":
                 for(Collection collection : collectionList){
                     if(collection.getType().toString().toLowerCase().contains(newValue.toLowerCase())){
                         filterList.add(collection);
                     }
                 }
                 break;
-            case "Amount":
+            case "Chi phí":
                 Double amount = Double.parseDouble(newValue);
                 for(Collection collection : collectionList){
                     if(amount.equals(collection.getAmount())){
@@ -114,7 +124,15 @@ public class CollectionListController {
     private void fillTableViewWithData(List<Collection> collectToShow) {
         collectionsTableView.setItems(FXCollections.observableList(collectToShow));
         nameTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
-        typeTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()));
+        typeTableColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getType() == CollectionType.MANAGEMENT_FEE){
+                return new SimpleObjectProperty<>("Phí quản lý");
+            } else if(cellData.getValue().getType() == CollectionType.SERVICE_FEE){
+                return new SimpleObjectProperty<>("Phí dịch vụ");
+            } else {
+                return new SimpleObjectProperty<>("Phí tình nguyện");
+            }
+        });
         totalBills.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartmentCollections().size()));
         amountTableColumn.setCellValueFactory(cellData -> switch (cellData.getValue().getType()) {
             case SERVICE_FEE, MANAGEMENT_FEE -> new SimpleObjectProperty<>(cellData.getValue().getAmount() + "/m2");
@@ -138,30 +156,56 @@ public class CollectionListController {
     public void newButtonOnAction() {
         MenuViewManager.switchView(MenuView.COLLECTION_FORM);
     }
+    public void handleEdit() {
+        dialogBox.setVisible(true);
+        dialogContainer.setVisible(true);
+        nameTextField.setText(selectedCollection.getName());
+        if (selectedCollection.getType() == CollectionType.DONATION) {
+            typeMenu.setText("Phí tình nguyện");
+        } else if(selectedCollection.getType() == CollectionType.MANAGEMENT_FEE){
+            typeMenu.setText("Phí quản lý");
+        } else if (selectedCollection.getType() == CollectionType.SERVICE_FEE){
+            typeMenu.setText("Phí dịch vụ");
+        }
+        amountTextField.setText(String.valueOf(selectedCollection.getAmount()));
 
+    }
+    public void handleClose (){
+        dialogBox.setVisible(false);
+        dialogContainer.setVisible(false);
+    }
     public void deleteButtonOnAction() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to delete?");
-        alert.setContentText("Click OK to confirm, or Cancel to abort.");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == javafx.scene.control.ButtonType.OK) {
-                Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
-                if (collection != null) {
-                    collectionsTableView.getItems().remove(collection);
-                    collectionService.remove(collection);
+        Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
+        if (collection == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Hãy chọn phí để xem thông tin chi tiết");
+            alert.showAndWait();
+        }else {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Xác nhận");
+            alert.setHeaderText("Bạn có chắc chắn muốn xóa ?");
+            alert.setContentText("Nhấn OK để xóa hoặc Cancel để hủy");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == javafx.scene.control.ButtonType.OK) {
+                        collectionsTableView.getItems().remove(collection);
+                        collectionService.remove(collection);
                 }
-            }
-        });
+            });
+        }
 
     }
     public void detailsButtonOnAction() {
         Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
-        System.out.println(collection);
+        selectedCollection = collection;
         if (collection != null) {
             CollectionReportController collectionReportController
                     = (CollectionReportController) MenuViewManager.switchView(MenuView.COLLECTION_REPORT);
             collectionReportController.initializeData(collection);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Hãy chọn phí để xem thông tin chi tiết");
+            alert.showAndWait();
         }
     }
 }

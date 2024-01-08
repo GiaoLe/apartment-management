@@ -18,34 +18,34 @@
    <AnchorPane prefHeight="896.0" prefWidth="1143.0" styleClass="container" stylesheets="@../styles/CollectionForm.css">
       <VBox layoutX="47.0" layoutY="116.0" prefHeight="310.0" prefWidth="402.0">
          <VBox fx:id="collectionVBox" layoutX="10.0" layoutY="10.0">
-            <Label styleClass="label-design" text="Name" />
+            <Label styleClass="label-design" text="Tên phí" />
             <TextField fx:id="nameTextField" prefHeight="13.0" prefWidth="200.0" styleClass="input-design" />
          </VBox>
          <VBox>
-            <Label styleClass="label-design" text="Type of Collection" />
+            <Label styleClass="label-design" text="Loại phí" />
             <ChoiceBox fx:id="collectionTypeChoiceBox" prefHeight="27.0" prefWidth="200.0" styleClass="input-design" />
          </VBox>
          <VBox>
-            <Label styleClass="label-design" text="Amount" />
+            <Label styleClass="label-design" text="Chi phí" />
             <TextField fx:id="amountTextField" styleClass="input-design" />
             <VBox>
-               <Label styleClass="label-design" text="Description" />
+               <Label styleClass="label-design" text="Ghi chú" />
                <TextArea fx:id="descriptionTextArea" prefHeight="87.0" prefWidth="402.0" styleClass="input-design" />
             </VBox>
          </VBox>
       </VBox>
       <TableView fx:id="collectionTableView" layoutX="491.0" layoutY="116.0" prefHeight="498.0" prefWidth="603.0" stylesheets="@../styles/TableView.css">
          <columns>
-            <TableColumn fx:id="nameCol" prefWidth="182.0" text="Name" />
-            <TableColumn fx:id="typeCol" prefWidth="185.0" text="Type" />
-            <TableColumn fx:id="amountCol" prefWidth="109.0" text="Amount(USD)" />
-            <TableColumn fx:id="descriptionCol" prefWidth="126.0" text="Description" />
+            <TableColumn fx:id="nameCol" prefWidth="182.0" text="Tên phí" />
+            <TableColumn fx:id="typeCol" prefWidth="185.0" text="Loại phí" />
+            <TableColumn fx:id="amountCol" prefWidth="109.0" text="Chi phí (VND)" />
+            <TableColumn fx:id="descriptionCol" prefWidth="126.0" text="Ghi chú" />
          </columns>
       </TableView>
-      <Label layoutX="143.0" layoutY="45.0" prefHeight="39.0" prefWidth="211.0" styleClass="label-design" text="Create New Collection" />
-      <Label layoutX="687.0" layoutY="45.0" prefHeight="39.0" prefWidth="211.0" styleClass="label-design" text="Existing Collections" />
+      <Label layoutX="143.0" layoutY="45.0" prefHeight="39.0" prefWidth="211.0" styleClass="label-design" text="Tạo phí mới" />
+      <Label layoutX="687.0" layoutY="45.0" prefHeight="39.0" prefWidth="211.0" styleClass="label-design" text="Các phí đã tồn tại" />
       <HBox layoutX="47.0" layoutY="434.0">
-         <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" prefHeight="33.0" prefWidth="123.0" text="Submit">
+         <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnAction" prefHeight="33.0" prefWidth="123.0" text="Xác nhận">
             <styleClass>
                <String fx:value="search-btn" />
                <String fx:value="btn-design" />

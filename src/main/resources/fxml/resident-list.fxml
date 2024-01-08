@@ -23,15 +23,15 @@
    <content>
       <AnchorPane prefHeight="792.0" prefWidth="1156.0" styleClass="container" stylesheets="@../styles/ResidentList.css">
          <children>
-            <HBox layoutX="340.0" layoutY="675.0" prefHeight="33.0" prefWidth="278.0">
+            <HBox layoutX="303.0" layoutY="675.0" prefHeight="33.0" prefWidth="315.0">
                <children>
-                  <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="New">
+                  <Button fx:id="newButton" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="33.0" prefWidth="93.0" text="Thêm mới">
                      <styleClass>
                         <String fx:value="btn-design" />
                         <String fx:value="search-btn" />
                      </styleClass>
                   </Button>
-                  <Button fx:id="deleteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="Delete">
+                  <Button fx:id="deleteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="Xóa">
                      <styleClass>
                         <String fx:value="btn-design" />
                         <String fx:value="search-btn" />
@@ -40,7 +40,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="Details">
+                  <Button fx:id="detailsButton" layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#detailsButtonOnAction" prefHeight="33.0" prefWidth="90.0" text="Chi tiết">
                      <styleClass>
                         <String fx:value="btn-design" />
                         <String fx:value="search-btn" />
@@ -54,14 +54,14 @@
             <TableView fx:id="residentTableView" editable="true" layoutX="11.0" layoutY="124.0" prefHeight="530.0" prefWidth="607.0" stylesheets="@../styles/TableView.css">
                <columns>
                   <TableColumn fx:id="idTableColumn" prefWidth="91.5" text="ID" />
-                  <TableColumn fx:id="firstNameTableColumn" prefWidth="139.5" text="First Name" />
-                  <TableColumn fx:id="lastNameTableColumn" prefWidth="243.0" text="Last Name" />
-                  <TableColumn fx:id="apartmentTableColumn" prefWidth="131.0" text="Apartment" />
+                  <TableColumn fx:id="firstNameTableColumn" prefWidth="139.5" text="Họ" />
+                  <TableColumn fx:id="lastNameTableColumn" prefWidth="243.0" text="Tên" />
+                  <TableColumn fx:id="apartmentTableColumn" prefWidth="131.0" text="Căn hộ" />
                </columns>
             </TableView>
             <VBox fx:id="detailContainer" alignment="TOP_CENTER" layoutX="653.0" layoutY="65.0" prefHeight="596.0" prefWidth="414.0" visible="false">
                <children>
-                  <Label text="Details" textAlignment="CENTER">
+                  <Label text="Thông tin dân cư" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -71,8 +71,8 @@
                   </Label>
                   <HBox prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label styleClass="label-design" text="Resident ID: " />
-                        <TextField fx:id="resIDTextField" prefHeight="33.0" prefWidth="267.0" styleClass="input-design">
+                        <Label prefHeight="30.0" prefWidth="143.0" styleClass="label-design" text="ID dân cư:" />
+                        <TextField fx:id="resIDTextField" disable="true" prefHeight="41.0" prefWidth="293.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets left="28.0" />
                            </HBox.margin>
@@ -81,7 +81,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="45.0" prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="174.0" styleClass="label-design" text="ID Number:" />
+                        <Label prefHeight="30.0" prefWidth="174.0" styleClass="label-design" text="Số CCCD:" />
                         <TextField fx:id="idNumberTextField" prefHeight="33.0" prefWidth="292.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets />
@@ -94,7 +94,7 @@
                   </HBox>
                   <HBox prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="First Name: " />
+                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Họ: " />
                         <TextField fx:id="firstNameTextField" prefHeight="33.0" prefWidth="303.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets left="9.0" />
@@ -107,7 +107,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="123.0" prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Last Name: " />
+                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Tên: " />
                         <TextField fx:id="lastNameTextField" prefHeight="33.0" prefWidth="303.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets left="9.0" />
@@ -120,7 +120,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="84.0" prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Apartment ID: " />
+                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Căn hộ:" />
                         <TextField fx:id="apartmentIDTextField" prefHeight="33.0" prefWidth="303.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets left="9.0" />
@@ -133,10 +133,10 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="84.0" prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label styleClass="label-design" text="DOB: " />
-                        <TextField fx:id="dobTextField" prefHeight="33.0" prefWidth="265.0" styleClass="input-design">
+                        <Label prefHeight="30.0" prefWidth="361.0" styleClass="label-design" text="Ngày sinh: " />
+                        <TextField fx:id="dobTextField" prefHeight="41.0" prefWidth="478.0" styleClass="input-design">
                            <HBox.margin>
-                              <Insets left="95.0" />
+                              <Insets />
                            </HBox.margin>
                         </TextField>
                      </children>
@@ -159,7 +159,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="162.0" prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Gender: " />
+                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Giới tính:" />
                         <TextField fx:id="genderTextField" prefHeight="33.0" prefWidth="303.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets left="9.0" />
@@ -172,7 +172,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="318.0" prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Move-in Date:" />
+                        <Label prefHeight="30.0" prefWidth="238.0" styleClass="label-design" text="Ngày chuyển vào:" />
                         <TextField fx:id="moveinDateTextField" prefHeight="33.0" prefWidth="303.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets left="9.0" />
@@ -185,7 +185,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="357.0" prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="National ID:" />
+                        <Label prefHeight="30.0" prefWidth="178.0" styleClass="label-design" text="Quốc tịch: " />
                         <TextField fx:id="nationalIDTextField" prefHeight="33.0" prefWidth="303.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets left="9.0" />
@@ -198,7 +198,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="396.0" prefHeight="39.0" prefWidth="334.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="176.0" styleClass="label-design" text="Phone Number:" />
+                        <Label prefHeight="30.0" prefWidth="176.0" styleClass="label-design" text="SDT: " />
                         <TextField fx:id="phoneNumberTextField" prefHeight="33.0" prefWidth="303.0" styleClass="input-design">
                            <HBox.margin>
                               <Insets left="9.0" />
@@ -211,23 +211,23 @@
                   </HBox>
                </children>
             </VBox>
-            <Label layoutX="410.0" text="Resident List">
+            <Label layoutX="410.0" text="Danh sách dân cư">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <MenuButton fx:id="residentMenuButton" layoutX="314.0" layoutY="70.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="193.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Search options">
+            <MenuButton fx:id="residentMenuButton" layoutX="314.0" layoutY="70.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Tùy chọn tìm kiếm">
                <font>
                   <Font size="18.0" />
                </font>
                <items>
-                  <MenuItem fx:id="residentIDItem" mnemonicParsing="false" text="Resident ID" />
-                  <MenuItem fx:id="firstNameItem" mnemonicParsing="false" text="First Name" />
-                  <MenuItem fx:id="lastNameItem" mnemonicParsing="false" text="Last Name" />
-                  <MenuItem fx:id="apartmentItem" mnemonicParsing="false" text="Apartment" />
-                  <MenuItem fx:id="genderItem" mnemonicParsing="false" text="Gender" />
-                  <MenuItem fx:id="IDNumberItem" mnemonicParsing="false" text="ID Number" />
-                  <MenuItem fx:id="moveInDateItem" mnemonicParsing="false" text="Move-in Date" />
+                  <MenuItem fx:id="residentIDItem" mnemonicParsing="false" text="ID dân cư" />
+                  <MenuItem fx:id="firstNameItem" mnemonicParsing="false" text="Họ " />
+                  <MenuItem fx:id="lastNameItem" mnemonicParsing="false" text="Tên" />
+                  <MenuItem fx:id="apartmentItem" mnemonicParsing="false" text="Căn hộ" />
+                  <MenuItem fx:id="genderItem" mnemonicParsing="false" text="Giới tính" />
+                  <MenuItem fx:id="IDNumberItem" mnemonicParsing="false" text="Số CCCD" />
+                  <MenuItem fx:id="moveInDateItem" mnemonicParsing="false" text="Ngày chuyển vào" />
                </items>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -243,17 +243,17 @@
                         <Insets top="8.0" />
                      </HBox.margin>
                   </ImageView>
-                  <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="216.0" promptText="Search..." style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
+                  <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="216.0" promptText="Tìm kiếm" style="-fx-background-color: transparent; -fx-border-width: 0 0 0 1px;">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </TextField>
                </children>
             </HBox>
-            <MenuButton fx:id="genderMenuButton" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Choose Gender" visible="false">
+            <MenuButton fx:id="genderMenuButton" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="260.0" style="-fx-border-radius: 14; -fx-border-color: black;" styleClass="input-design" text="Chọn giới tính" visible="false">
               <items>
-                <MenuItem fx:id="maleItem" mnemonicParsing="false" text="Male" />
-                <MenuItem fx:id="femaleItem" mnemonicParsing="false" text="Female" />
+                <MenuItem fx:id="maleItem" mnemonicParsing="false" text="Nam" />
+                <MenuItem fx:id="femaleItem" mnemonicParsing="false" text="Nữ" />
               </items>
                <font>
                   <Font size="19.0" />

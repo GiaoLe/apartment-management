@@ -115,7 +115,7 @@ public class ApartmentListController {
     public TableView<ApartmentCollection> collectionTableView;
     public TableColumn<ApartmentCollection, Date> deadlinePaymentCollectionCol;
     public TableColumn<ApartmentCollection, String> nameCollectionCol;
-    public TableColumn<ApartmentCollection, CollectionType> typeCollectionCol;
+    public TableColumn<ApartmentCollection, String> typeCollectionCol;
     public TableColumn<ApartmentCollection, String> isPaidCol;
     public Apartment selectedApartment;
     public MenuItem apartmentIDItem;
@@ -257,28 +257,60 @@ public class ApartmentListController {
     public void handleFilter(List<Apartment> filterList, String newValue, List<Apartment> apartments) {
         if (apartmentMenuButton.visibleProperty().get()) {
             switch (apartmentMenuButton.getText()) {
-                case "Apartment ID":
+                case "ID Căn hộ":
                     for (Apartment apartment : apartments) {
                         if (apartment.getId().contains(newValue)) {
                             filterList.add(apartment);
                         }
                     }
                     break;
-                case "State":
+                case "Chủ căn hộ":
                     for (Apartment apartment : apartments) {
-                        if (String.valueOf(apartment.getState()).toLowerCase().contains(newValue.toLowerCase())) {
-                            filterList.add(apartment);
+                        if (apartment.getHost() != null) {
+                            if (apartment.getHost().getFirstName().contains(newValue)){
+                                filterList.add(apartment);
+                            }
                         }
                     }
                     break;
-                case "Type":
+                case "Tình trạng":
+                    for (Apartment apartment : apartments) {
+                        switch (newValue){
+                            case "Còn trống":
+                                String available = "AVAILABLE";
+                                if (String.valueOf(apartment.getState()).toLowerCase().contains(available.toLowerCase())){
+                                    filterList.add(apartment);
+                                }
+                                break;
+                            case "Đang sử dụng":
+                                String occupied = "OCCUPIED";
+                                if (String.valueOf(apartment.getState()).toLowerCase().contains(occupied.toLowerCase())){
+                                    filterList.add(apartment);
+                                }
+                                break;
+                            case "Đang sửa chữa":
+                                String maintenance = "MAINTENANCE";
+                                if (String.valueOf(apartment.getState()).toLowerCase().contains(maintenance.toLowerCase())){
+                                    filterList.add(apartment);
+                                }
+                                break;
+                            case "Đang bảo trì":
+                                String reserved = "RESERVED";
+                                if (String.valueOf(apartment.getState()).toLowerCase().contains(reserved.toLowerCase())){
+                                    filterList.add(apartment);
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case "Loại căn hộ":
                     for (Apartment apartment : apartments) {
                         if (String.valueOf(apartment.getType()).toLowerCase().contains(newValue.toLowerCase())) {
                             filterList.add(apartment);
                         }
                     }
                     break;
-                case "Area":
+                case "Diện tích":
                     for (Apartment apartment : apartments) {
                         if (apartment.getArea() == Double.parseDouble(newValue)) {
                             filterList.add(apartment);
@@ -379,15 +411,25 @@ public class ApartmentListController {
         }
         collectionIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getId()));
         nameCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getName()));
-        typeCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getType()));
+        typeCollectionCol.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getCollection().getType() == CollectionType.DONATION) {
+                return new SimpleObjectProperty<>("Phí tình nguyện");
+            } else if(cellData.getValue().getCollection().getType() == CollectionType.MANAGEMENT_FEE){
+                return new SimpleObjectProperty<>("Phí quản lý");
+            } else if (cellData.getValue().getCollection().getType() == CollectionType.SERVICE_FEE){
+                return new SimpleObjectProperty<>("Phí dịch vụ");
+            }
+            return null;
+
+        });
         amountCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getAmount()));
-        isPaidCol.setCellValueFactory(cellData -> cellData.getValue().isPaid() ? new SimpleObjectProperty<>("Yes") : new SimpleObjectProperty<>("No"));
+        isPaidCol.setCellValueFactory(cellData -> cellData.getValue().getState() == ApartmentCollectionState.PAID ? new SimpleObjectProperty<>("Đã trả") : new SimpleObjectProperty<>("Chưa trả"));
         isPaidCol.setCellFactory(column -> new TextFieldTableCell<>() {
             @Override
             public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
-                    if (item.equals("Yes")) {
+                    if (item.equals("Đã trả")) {
                         getStyleClass().add("paid");
                         getStyleClass().add("state-apartment-design");
 
@@ -417,7 +459,18 @@ public class ApartmentListController {
     public void showApartments(ObservableList<Apartment> index) {
         apartmentIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
         totalResidentsCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResidents().size()).asString());
-        stateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState()).asString());
+        stateCol.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getState() == ApartmentState.AVAILABLE){
+                return new SimpleObjectProperty<>("Còn trống");
+            } else if(cellData.getValue().getState() == ApartmentState.MAINTENANCE){
+                return new SimpleObjectProperty<>("Đang sửa chữa");
+            } else if(cellData.getValue().getState() == ApartmentState.OCCUPIED){
+                return new SimpleObjectProperty<>("Đang sử dụng");
+            } else if(cellData.getValue().getState() == ApartmentState.RESERVED){
+                return new SimpleObjectProperty<>("Đang bảo trì");
+            }
+            return null;
+        });
         typeCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getType()).asString());
         hostNameCol.setCellValueFactory(cellData -> cellData.getValue().getHost() == null ? new SimpleObjectProperty<>("Unknown") : new SimpleObjectProperty<>(cellData.getValue().getHost().getLastName()));
         areaCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getArea()));
@@ -426,19 +479,19 @@ public class ApartmentListController {
             public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
-                    if (item.equals(ApartmentState.AVAILABLE.toString())) {
+                    if (item.equals("Còn trống")) {
                         getStyleClass().add("state-apartment-design");
                         getStyleClass().add("available-state");
 
-                    } else if (item.equals(ApartmentState.OCCUPIED.toString())) {
+                    } else if (item.equals("Đang sử dụng")) {
                         getStyleClass().add("state-apartment-design");
                         getStyleClass().add("occupied-state");
 
-                    } else if (item.equals(ApartmentState.MAINTENANCE.toString())) {
+                    } else if (item.equals("Đang sửa chữa")) {
                         getStyleClass().add("state-apartment-design");
                         getStyleClass().add("maintenance-state");
 
-                    } else if (item.equals(ApartmentState.RESERVED.toString())) {
+                    } else if (item.equals("Đang bảo trì")) {
                         getStyleClass().add("state-apartment-design");
                         getStyleClass().add("reserved-state");
 
@@ -490,7 +543,7 @@ public class ApartmentListController {
                         alert.setHeaderText("Are you sure you want to delete?");
                         alert.setContentText("Click OK to confirm, or Cancel to abort.");
                         alert.showAndWait().ifPresent(response -> {
-                            if (response == javafx.scene.control.ButtonType.OK) {
+                            if (response == ButtonType.OK) {
                                 Apartment apartment = getTableView().getItems().get(getIndex());
                                 handleDeleteApartmentCollection(apartment);
                                 apartmentService.remove(apartment);
@@ -510,7 +563,15 @@ public class ApartmentListController {
                         selectedApartment = apartment;
                         updateCollectionListsInApartment(apartment);
                         apartmentIDFilter1.setText(apartment.getId());
-                        stateMenu1.setText(String.valueOf(apartment.getState()));
+                        if (apartment.getState() == ApartmentState.AVAILABLE){
+                            stateMenu1.setText("Còn trống");
+                        } else if(apartment.getState() == ApartmentState.MAINTENANCE){
+                            stateMenu1.setText("Đang sửa chữa");
+                        } else if(apartment.getState() == ApartmentState.OCCUPIED){
+                            stateMenu1.setText("Đang sử dụng");
+                        } else if(apartment.getState() == ApartmentState.RESERVED){
+                            stateMenu1.setText("Đang bảo trì");
+                        }
                         typeMenu1.setText(String.valueOf(apartment.getType()));
                         hostNameFilter1.setText(apartment.getHost() == null ? "" : apartment.getHost().getLastName());
                         List<MenuItem> typeItems = FXCollections.observableArrayList(studioItem1, penthouseItem1, duplexItem1, triplexItem1, gardenItem1, loftItem1, condoItem1, townhouseItem1, villaItem1);
@@ -533,7 +594,17 @@ public class ApartmentListController {
                         selectedToBeHost.set(apartment.getHost());
 
                         editResBtn.setOnMouseClicked(e2 -> {
-                            Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), ApartmentState.valueOf(stateMenu1.getText()), apartment.getRoomCount(), selectedToBeHost.get());
+                            ApartmentState apartmentState = null;
+                            if (stateMenu1.getText().equals("Đang sử dụng")){
+                                apartmentState = ApartmentState.OCCUPIED;
+                            } else if (stateMenu1.getText().equals("Đang bảo trì")){
+                                apartmentState = ApartmentState.RESERVED;
+                            } else if(stateMenu1.getText().equals("Còn trống")){
+                                apartmentState = ApartmentState.AVAILABLE;
+                            } else if (stateMenu1.getText().equals("Đang sửa chữa")){
+                                apartmentState = ApartmentState.MAINTENANCE;
+                            }
+                            Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), apartmentState, apartment.getRoomCount(), selectedToBeHost.get());
                             apartmentService.merge(updateApartment);
                             apartmentInfoDialog.setVisible(false);
                             dialogContainer.setVisible(false);
@@ -556,7 +627,7 @@ public class ApartmentListController {
                             alert.setHeaderText("Are you sure you want to delete?");
                             alert.setContentText("Click OK to confirm, or Cancel to abort.");
                             alert.showAndWait().ifPresent(response -> {
-                                if (response == javafx.scene.control.ButtonType.OK) {
+                                if (response == ButtonType.OK) {
                                     residentService.remove(resident.get());
                                     if (selectedApartment.getResidents().isEmpty()){
                                         handleDeleteApartmentCollection(selectedApartment);
