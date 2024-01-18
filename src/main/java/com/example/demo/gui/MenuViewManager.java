@@ -36,10 +36,12 @@ public class MenuViewManager {
             Parent root = loader.load();
             borderPane.setCenter(root);
             ResidentListController residentListController = loader.getController();
+            residentListController.initialize();
+            residentListController.setFormatter();
             residentListController.selectedFloor = selectedFloor;
             residentListController.showResidentDetailFromAnotherView(resident);
             residentListController.searchTextField.setText(resident.getId().toString());
-            residentListController.residentMenuButton.setText("Resident ID");
+            residentListController.residentMenuButton.setText("ID dân cư");
             return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -76,7 +78,7 @@ public class MenuViewManager {
             Parent root = loader.load();
             CollectionReportController collectionFormController = loader.getController();
             collectionFormController.initializeData(apartmentCollection.getCollection());
-            collectionFormController.residentMenuButton.setText("ApartmentID");
+            collectionFormController.residentMenuButton.setText("ID căn hộ");
             collectionFormController.searchTextField.setText(selectedApartment.getId());
             collectionFormController.switchViewFlag = true;
             collectionFormController.apartmentCollection = apartmentCollection;

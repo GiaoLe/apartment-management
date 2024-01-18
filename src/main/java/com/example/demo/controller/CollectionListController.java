@@ -1,11 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.Apartment;
 import com.example.demo.dao.Collection;
 import com.example.demo.dao.CollectionType;
 import com.example.demo.dao.Resident;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
+import com.example.demo.repository.ApartmentCollectionRepository;
 import com.example.demo.repository.CollectionRepository;
+import com.example.demo.repository.HibernateUtility;
+import com.example.demo.service.ApartmentCollectionService;
 import com.example.demo.service.CollectionService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -51,6 +55,7 @@ public class CollectionListController {
     public MenuButton typeMenu;
     public MenuItem serviceItem;
     public MenuItem manangeItem;
+
 
     @FXML
     public void initialize() {
@@ -156,7 +161,36 @@ public class CollectionListController {
     public void newButtonOnAction() {
         MenuViewManager.switchView(MenuView.COLLECTION_FORM);
     }
+    public void handleSubmitEdit() {
+        boolean amount = true;
+        selectedCollection.setName(nameTextField.getText());
+        if(Double.valueOf(amountTextField.getText()) < 0 ){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Chi phí không được âm");
+            alert.setContentText("Nhấn OK để tắt thông báo");
+            amount = false;
+            alert.showAndWait();
+        }else {
+            selectedCollection.setAmount(Double.valueOf(amountTextField.getText()));
+        }
+        if (typeMenu.getText().equals("Phí dịch vụ")){
+            selectedCollection.setType(CollectionType.SERVICE_FEE);
+        } else if (typeMenu.getText().equals("Phí tình nguyện")){
+            selectedCollection.setType(CollectionType.MANAGEMENT_FEE);
+        } else {
+            selectedCollection.setType(CollectionType.DONATION);
+        }
+        if (!amount){
+
+        }else {
+            collectionService.merge(selectedCollection);
+            dialogContainer.setVisible(false);
+            dialogBox.setVisible(false);
+            fillTableViewWithData(collectionService.findAll());
+        }
+    }
     public void handleEdit() {
+        selectedCollection = collectionsTableView.getSelectionModel().getSelectedItem();
         dialogBox.setVisible(true);
         dialogContainer.setVisible(true);
         nameTextField.setText(selectedCollection.getName());
@@ -166,6 +200,11 @@ public class CollectionListController {
             typeMenu.setText("Phí quản lý");
         } else if (selectedCollection.getType() == CollectionType.SERVICE_FEE){
             typeMenu.setText("Phí dịch vụ");
+        }
+        for (MenuItem menuItem : typeMenu.getItems()){
+            menuItem.setOnAction(e -> {
+                typeMenu.setText(menuItem.getText());
+            });
         }
         amountTextField.setText(String.valueOf(selectedCollection.getAmount()));
 
@@ -197,7 +236,6 @@ public class CollectionListController {
     }
     public void detailsButtonOnAction() {
         Collection collection = collectionsTableView.getSelectionModel().getSelectedItem();
-        selectedCollection = collection;
         if (collection != null) {
             CollectionReportController collectionReportController
                     = (CollectionReportController) MenuViewManager.switchView(MenuView.COLLECTION_REPORT);

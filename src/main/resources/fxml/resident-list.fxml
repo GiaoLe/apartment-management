@@ -59,7 +59,7 @@
                   <TableColumn fx:id="apartmentTableColumn" prefWidth="131.0" text="Căn hộ" />
                </columns>
             </TableView>
-            <VBox fx:id="detailContainer" alignment="TOP_CENTER" layoutX="653.0" layoutY="65.0" prefHeight="596.0" prefWidth="414.0" visible="false">
+            <VBox fx:id="detailContainer" alignment="TOP_CENTER" layoutX="653.0" layoutY="38.0" prefHeight="633.0" prefWidth="414.0" visible="false">
                <children>
                   <Label text="Thông tin dân cư" textAlignment="CENTER">
                      <font>

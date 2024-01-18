@@ -23,4 +23,5 @@ public class CollectionService {
     public void remove(Collection collection) {
         collectionRepository.remove(collection);
     }
+    public void merge(Collection collection) { collectionRepository.merge(collection);}
 }

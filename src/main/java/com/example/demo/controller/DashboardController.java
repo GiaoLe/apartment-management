@@ -20,6 +20,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.*;
 
 public class DashboardController {
@@ -64,6 +66,7 @@ public class DashboardController {
     public MenuItem serviceItem;
     public MenuButton typeFeeButton;
     public MenuItem revenueStatic;
+    public MenuButton yearMenu;
     @FXML
     public void initialize(){
         handleStateChart();
@@ -72,9 +75,14 @@ public class DashboardController {
         selectItem(List.of(menuItem1, menuItem2));
         handleSelectedTypeCollection(List.of(serviceItem, manageItem, donateItem));
         chooseFeeButton.textProperty().addListener((observable, oldValue, newValue) -> {
-            monthPaid.clear();
-            handleUpdateDateTableView(newValue);
+            yearMenu.getItems().clear();
+            initializeYearMenu(newValue);
+            yearMenu.textProperty().addListener((observable1, oldValue1, newValue1) -> {
+                monthPaid.clear();
+                handleUpdateDateTableView(newValue, newValue1);
+            });
         });
+
     }
     public void handleStateChart(){
 
@@ -113,10 +121,28 @@ public class DashboardController {
             });
         }
     }
+    public void initializeYearMenu(String newValue){
+        List<Integer> year = new ArrayList<>();
+        List<ApartmentCollection> apartmentCollectionList = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from ApartmentCollection where collection.name = :name", ApartmentCollection.class)
+                .setParameter("name", newValue)
+                .getResultList());
+        for (ApartmentCollection apartmentCollection1 : apartmentCollectionList){
+            if (!year.contains(apartmentCollection1.getDeadlinePayment().getYear() + 1900)){
+                year.add(apartmentCollection1.getDeadlinePayment().getYear() + 1900);
+            }
+        }
+        for (Integer integer : year){
+            yearMenu.getItems().add(new MenuItem(String.valueOf(integer)));
+        }
+        for (MenuItem menuItem : yearMenu.getItems()){
+            menuItem.setOnAction(e -> {
+                yearMenu.setText(menuItem.getText());
+            });
+        }
+    }
     public void handleSelectedTypeCollection (List <MenuItem> menuItemList){
         for (MenuItem menuItem : menuItemList){
             menuItem.setOnAction(e -> {
-                ContextMenu contextMenu = new ContextMenu();
                 typeFeeButton.setText(menuItem.getText());
                 chooseFeeButton.getItems().clear();
                 chooseFeeButton.setText("Chọn phí");
@@ -143,6 +169,8 @@ public class DashboardController {
                 for (MenuItem menuItem1 : menuItemList1){
                     menuItem1.setOnAction(e1 -> {
                         chooseFeeButton.setText(menuItem1.getText());
+                        yearMenu.setDisable(false);
+
                     });
                 }
             });
@@ -169,7 +197,6 @@ public class DashboardController {
                 new PieChart.Data("Loft", loftCount),
                 new PieChart.Data("TownHouse", townHouseCount),
                 new PieChart.Data("Villa", villaCount)
-
         );
         totalAppsData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
@@ -194,8 +221,8 @@ public class DashboardController {
         residentChart.setLegendVisible(false);
         residentChart.getData().addAll(totalAppsData);
     }
-    public void handleUpdateDateTableView(String collectionName){
-        updateData(collectionName);
+    public void handleUpdateDateTableView(String collectionName, String year){
+        updateData(collectionName, year);
         feeTableView.setItems(FXCollections.observableList(monthPaid));
         monthCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("month")));
         expCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("expFee")));
@@ -204,7 +231,7 @@ public class DashboardController {
         unpaidCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("unpaidRes")));
         totalResCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().get("totalRes")));
     }
-    public void updateData(String collectionName){
+    public void updateData(String collectionName, String year){
         List<Apartment> apartments1 = new ArrayList<>(apartmentService.findAll());
         for (int i = 0; i <= 11; i++) {
             ObservableMap<String, String> observableMap = FXCollections.observableHashMap();
@@ -217,8 +244,12 @@ public class DashboardController {
             }
             for (Apartment apartment : apartments1) {
                 for (ApartmentCollection apartmentCollection : apartment.getApartmentCollectionList()) {
-                    if (apartmentCollection.getDeadlinePayment().getMonth() == i) {
-                        updateFeeTableView(collectionName, apartmentCollection, observableMap);
+                    if (!yearMenu.getText().equals("Chọn năm")){
+                        if (apartmentCollection.getDeadlinePayment().getYear() + 1900 == Year.of(Integer.parseInt(year)).getValue()){
+                            if (apartmentCollection.getDeadlinePayment().getMonth() == i) {
+                                updateFeeTableView(collectionName, apartmentCollection, observableMap);
+                            }
+                        }
                     }
                 }
             }

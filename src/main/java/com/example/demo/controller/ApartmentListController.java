@@ -28,6 +28,7 @@ import javafx.util.Callback;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -102,7 +103,7 @@ public class ApartmentListController {
     public MenuItem townhouseItem1;
     public MenuItem villaItem1;
     public MenuItem gardenItem1;
-
+    public MenuItem pickHost;
 
     private final ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
     private static final int TOTAL_FLOOR = 50;
@@ -113,7 +114,7 @@ public class ApartmentListController {
     public TableColumn<ApartmentCollection, Integer> collectionIDCol;
 
     public TableView<ApartmentCollection> collectionTableView;
-    public TableColumn<ApartmentCollection, Date> deadlinePaymentCollectionCol;
+    public TableColumn<ApartmentCollection, java.util.Date> deadlinePaymentCollectionCol;
     public TableColumn<ApartmentCollection, String> nameCollectionCol;
     public TableColumn<ApartmentCollection, String> typeCollectionCol;
     public TableColumn<ApartmentCollection, String> isPaidCol;
@@ -399,6 +400,13 @@ public class ApartmentListController {
         email.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getEmail()));
         nationalID.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNationalID()));
         residentTableView.setItems(residentObservableList);
+        collectionIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>((cellData.getValue().getId())));
+        nameCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getName()));
+        typeCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getCollection().getType())));
+        amountCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCollection().getAmount()));
+        deadlinePaymentCollectionCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDeadlinePayment()));
+        isPaidCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getState() == ApartmentCollectionState.PAID ? "Đã trả" : "Chưa trả"));
+        residentTableView.setItems(residentObservableList);
     }
 
     public void updateCollectionListsInApartment(Apartment apartment) {
@@ -494,8 +502,6 @@ public class ApartmentListController {
                     } else if (item.equals("Đang bảo trì")) {
                         getStyleClass().add("state-apartment-design");
                         getStyleClass().add("reserved-state");
-
-
                     }
                 }
             }
@@ -545,6 +551,7 @@ public class ApartmentListController {
                         alert.showAndWait().ifPresent(response -> {
                             if (response == ButtonType.OK) {
                                 Apartment apartment = getTableView().getItems().get(getIndex());
+                                System.out.println(apartment.getId());
                                 handleDeleteApartmentCollection(apartment);
                                 apartmentService.remove(apartment);
                                 updateData();
@@ -581,18 +588,24 @@ public class ApartmentListController {
                         updateResidentListsInApartment(apartment);
                         AtomicReference<Resident> selectedToBeHost = new AtomicReference<>(new Resident());
                         hostNameFilter1.getItems().clear();
+                        hostNameFilter1.getItems().add(pickHost);
+                        pickHost.setOnAction(e1 -> {
+                            hostNameFilter1.setText(pickHost.getText());
+
+                        });
+
                         for (Resident resident : apartment.getResidents()) {
                                 MenuItem menuItem = new MenuItem(String.valueOf(resident.getLastName()));
                                 hostNameFilter1.getItems().add(menuItem);
                                 menuItem.setId(String.valueOf(resident.getId()));
                                 menuItem.setOnAction(event -> {
-                                    selectedToBeHost.set(resident);
                                     hostNameFilter1.setText(menuItem.getText());
+                                        selectedToBeHost.set(resident);
                                 });
+
                                 menuItem.setStyle("-fx-border-radius: 14;" + "-fx-pref-width: 80px;");
                             }
                         selectedToBeHost.set(apartment.getHost());
-
                         editResBtn.setOnMouseClicked(e2 -> {
                             ApartmentState apartmentState = null;
                             if (stateMenu1.getText().equals("Đang sử dụng")){
@@ -604,12 +617,13 @@ public class ApartmentListController {
                             } else if (stateMenu1.getText().equals("Đang sửa chữa")){
                                 apartmentState = ApartmentState.MAINTENANCE;
                             }
-                            Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), apartmentState, apartment.getRoomCount(), selectedToBeHost.get());
-                            apartmentService.merge(updateApartment);
-                            apartmentInfoDialog.setVisible(false);
-                            dialogContainer.setVisible(false);
-                            floorList.clear();
-                            updateData();
+                                Apartment updateApartment = new Apartment(apartmentIDFilter1.getText(), apartment.getArea(), ApartmentType.valueOf(typeMenu1.getText()), apartmentState, apartment.getRoomCount(), selectedToBeHost.get());
+                                apartmentService.merge(updateApartment);
+                                apartmentInfoDialog.setVisible(false);
+                                dialogContainer.setVisible(false);
+                                floorList.clear();
+                                updateData();
+
                         });
                         addResBtn.setOnMouseClicked(mouseEvent -> MenuViewManager.switchViewToAddNewRes(MenuView.RESIDENT_FORM, selectedApartment, selectedFloor));
                         AtomicReference<Resident> resident = new AtomicReference<>(new Resident());
@@ -623,9 +637,8 @@ public class ApartmentListController {
 
                         delResBtn.setOnMouseClicked(e2 -> {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.setTitle("Delete Confirmation");
-                            alert.setHeaderText("Are you sure you want to delete?");
-                            alert.setContentText("Click OK to confirm, or Cancel to abort.");
+                            alert.setHeaderText("Bạn có chắc chắn muốn xóa?");
+                            alert.setContentText("Nhấn OK để xác nhận");
                             alert.showAndWait().ifPresent(response -> {
                                 if (response == ButtonType.OK) {
                                     residentService.remove(resident.get());
@@ -636,6 +649,10 @@ public class ApartmentListController {
                                     Apartment apartmentAfterUpdate = HibernateUtility.getSessionFactory().fromSession(session -> session.createQuery("from Apartment  where id = :id", Apartment.class)
                                             .setParameter("id", apartment.getId())
                                             .uniqueResult());
+                                    if (apartmentAfterUpdate.getResidents().isEmpty()){
+                                        System.out.println(true);
+                                        apartmentAfterUpdate.setState(ApartmentState.AVAILABLE);
+                                    }
                                     updateResidentListsInApartment(apartmentAfterUpdate);
                                 }
                             });

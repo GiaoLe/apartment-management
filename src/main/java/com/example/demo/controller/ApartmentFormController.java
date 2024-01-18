@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.*;
+import com.example.demo.dao.Collection;
 import com.example.demo.gui.MenuView;
 import com.example.demo.gui.MenuViewManager;
 import com.example.demo.repository.*;
@@ -24,10 +25,7 @@ import org.hibernate.Session;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class ApartmentFormController {
@@ -88,9 +86,10 @@ public class ApartmentFormController {
     public DatePicker dobPicker;
     public Label genderErrorLabel;
     private final CollectionService collectionService = new CollectionService(new CollectionRepository());
-
+    private final ObservableMap<String, Boolean> flag = FXCollections.observableHashMap();
     @FXML
     public void initialize() {
+        initFlag();
         apartmentTypeChoiceBox.getItems().addAll(ApartmentType.values());
         idTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             boolean isTextFieldEmpty = newValue.trim().isEmpty();
@@ -100,7 +99,16 @@ public class ApartmentFormController {
         selectedGender(List.of(maleItem, femaleItem));
         setFormatter();
     }
-
+    public void initFlag(){
+        flag.put("CCCD", false);
+        flag.put("dob", false);
+        flag.put("firstName", false);
+        flag.put("lastName", false);
+        flag.put("gender", false);
+        flag.put("phoneNumber", false);
+        flag.put("nationality", false);
+        flag.put("moveInDate", false);
+    }
     public void selectedGender(List<MenuItem> list) {
         for (MenuItem menuItem : list) {
             menuItem.setOnAction(e -> genderMenuButton.setText(menuItem.getText()));
@@ -114,16 +122,23 @@ public class ApartmentFormController {
             if(datePicker1 == dobPicker){
                 if (localDate != null){
                     dobErrorLabel.setText("");
+                    flag.replace("dob", true);
+
                 } else {
                     dobErrorLabel.setText("Ngày không hợp lệ");
                     dobErrorLabel.setTextFill(Color.RED);
+                    flag.replace("dob", false);
                 }
             } else {
                 if (localDate != null){
                     moveInDateErrorLabel.setText("");
+                    flag.replace("moveInDate", true);
+
                 } else {
                     moveInDateErrorLabel.setText("Ngày không hợp lệ");
                     moveInDateErrorLabel.setTextFill(Color.RED);
+                    flag.replace("moveInDate", false);
+
                 }
             }
         }
@@ -136,21 +151,27 @@ public class ApartmentFormController {
                 if (textField.getText().isEmpty()){
                     idErrorLabel.setText("Yêu cầu nhập thông tin");
                     idErrorLabel.setTextFill(Color.RED);
+                    flag.replace("CCCD", false);
+
                 } else {
                     if (textField.getText().length() != 12){
                         idErrorLabel.setText("Số CCCD phải đầy đủ 12 số");
                         idErrorLabel.setTextFill(Color.RED);
+                        flag.replace("CCCD", false);
                     } else {
                         try (Session session = HibernateUtility.getSessionFactory().openSession()) {
                             Resident resident = session.createQuery("from Resident where IDNumber = :id", Resident.class)
                                     .setParameter("id", IDTextField.getText())
                                     .uniqueResult();
-
                             if (resident != null) {
                                 idErrorLabel.setText("Số CCCD đã tồn tại");
                                 idErrorLabel.setTextFill(Color.RED);
+                                flag.replace("CCCD", false);
+
                             } else {
                                 idErrorLabel.setText("");
+                                flag.replace("CCCD", true);
+
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -161,17 +182,23 @@ public class ApartmentFormController {
                 if(textField.getText().isEmpty()){
                     firstNameErrorLabel.setText("Yêu cầu nhập thông tin");
                     firstNameErrorLabel.setTextFill(Color.RED);
+                    flag.replace("firstName", false);
+
                 }
                 else {
                     firstNameErrorLabel.setText("");
+                    flag.replace("firstName", true);
 
                 }
             } else if(textField == lastNameTextField){
                 if(textField.getText().isEmpty()){
                     lastNameErrorLabel.setText("Yêu cầu nhập thông tin");
                     lastNameErrorLabel.setTextFill(Color.RED);
+                    flag.replace("lastName", false);
+
                 }else {
                     lastNameErrorLabel.setText("");
+                    flag.replace("lastName", true);
 
                 }
             } else if(textField == nationalIDTextField){
@@ -179,8 +206,11 @@ public class ApartmentFormController {
                     System.out.println("national empty");
                     nationalIDErrorLabel.setText("Yêu cầu nhập thông tin");
                     nationalIDErrorLabel.setTextFill(Color.RED);
+                    flag.replace("nationality", false);
+
                 }else {
                     nationalIDErrorLabel.setText("");
+                    flag.replace("nationality", true);
 
                 }
             } else if(textField == phoneNumberTextField){
@@ -188,8 +218,17 @@ public class ApartmentFormController {
                     System.out.println("phone empty");
                     phoneNumberErrorLabel.setText("Yêu cầu nhập thông tin");
                     phoneNumberErrorLabel.setTextFill(Color.RED);
+                    flag.replace("phoneNumber", false);
+
                 } else {
-                    phoneNumberErrorLabel.setText("");
+                    if(phoneNumberTextField.getText().length() != 10){
+                        phoneNumberErrorLabel.setText("Số điện thoại phải có 10 số");
+                        phoneNumberErrorLabel.setTextFill(Color.RED);
+                        flag.replace("phoneNumber", false);
+                    }else {
+                        phoneNumberErrorLabel.setText("");
+                        flag.replace("phoneNumber", true);
+                    }
 
                 }
             }
@@ -200,9 +239,12 @@ public class ApartmentFormController {
                 if (Objects.equals(menuButton.getText(), "Gender")){
                     genderErrorLabel.setTextFill(Color.RED);
                     genderErrorLabel.setText("Giới tính không hợp lệ");
+                    flag.replace("gender", false);
+
                 }
                 else {
                     genderErrorLabel.setText("");
+                    flag.replace("gender", true);
 
                 }
             }
@@ -215,7 +257,6 @@ public class ApartmentFormController {
         } else {
             apartmentStateToSet = ApartmentState.OCCUPIED;
         }
-
             List<Resident> residentList = new ArrayList<>();
             Apartment apartment = Apartment.builder()
                     .id(idTextField.getText())
@@ -257,14 +298,6 @@ public class ApartmentFormController {
                                 }
                             }
                         }
-//                        Calendar calendar = Calendar.getInstance();
-//                        calendar.set(Calendar.YEAR, LocalDate.now().getYear());
-//                        calendar.set(Calendar.DAY_OF_MONTH, 30);
-//                        for (int i = Date.valueOf(this.residentList.getFirst().get("datePicker")).getMonth() ; i < 12 ; i++){
-//                            calendar.set(Calendar.MONTH, i);
-//                            java.util.Date date =  calendar.getTime();
-//                            apartmentCollectionService.merge(new ApartmentCollection(apartment, collection, date));
-//                        }
 
                     }
                 }
@@ -435,22 +468,11 @@ public class ApartmentFormController {
 
     }
     public void handleSubmitAddRes() {
-
         checkInvalidDate();
         checkInvalidInput();
-        List<Label> errorList = new ArrayList<>(List.of(idErrorLabel, firstNameErrorLabel, lastNameErrorLabel, apartmentErrorLabel, dobErrorLabel, moveInDateErrorLabel, phoneNumberErrorLabel, emailErrorLabel, genderErrorLabel));
-        boolean invalidFlag = false;
-        for (Label label : errorList){
-            System.out.println(label.getText());
-            if (Objects.equals(label.getText(), "")){
-                invalidFlag = false;
-            } else {
-                invalidFlag = true;
-                break;
-            }
-        }
-        System.out.println(invalidFlag);
-        if (!invalidFlag){
+        if (!flag.get("CCCD") || !flag.get("phoneNumber") || !flag.get("dob") || !flag.get("firstName") || !flag.get("lastName") || !flag.get("gender") || !flag.get("nationality") || !flag.get("moveInDate")){
+            System.out.println(flag);
+        } else {
             ObservableMap<String, String> residents = FXCollections.observableHashMap();
             residents.put("ID", IDTextField.getText());
             residents.put("gender", genderMenuButton.getText());
@@ -487,9 +509,6 @@ public class ApartmentFormController {
             dialogContainer.setVisible(false);
             addNewResContainer.setVisible(false);
             clearTextField(new ArrayList<>(List.of(IDTextField, lastNameTextField, firstNameTextField, phoneNumberTextField, nationalIDTextField, emailTextField)));
-
-        } else {
-
         }
 
     }

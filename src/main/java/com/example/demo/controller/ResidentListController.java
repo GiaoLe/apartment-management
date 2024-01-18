@@ -17,15 +17,20 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.DefaultStringConverter;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.BeanPropertyUtils;
 import org.controlsfx.property.editor.DefaultPropertyEditorFactory;
 import org.controlsfx.property.editor.PropertyEditor;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 public class ResidentListController {
 
@@ -139,6 +144,7 @@ public class ResidentListController {
                 }
             }
         });
+        setFormatter();
     }
 
     public void showResidentDetailFromAnotherView(Resident resident) {
@@ -272,17 +278,151 @@ public class ResidentListController {
                 break;
         }
     }
+    public void setFormatter(){
+        UnaryOperator<TextFormatter.Change> phoneNumberFilter = change -> {
+            if (change.isDeleted() && change.getControlText().length() == 1) {
+                return change;
+            }
+            if (change.getControlNewText().length() > 10) {
+                return null;
+            }
+            if (change.getControlNewText().matches("[0-9]+")) {
+                return change;
+            } else {
+                return null;
+            }
+
+        };
+        UnaryOperator<TextFormatter.Change> IDNumberFilter = change -> {
+            if (change.isDeleted() && change.getControlText().length() == 1) {
+                return change;
+            }
+            if (change.getControlNewText().length() > 12) {
+                return null;
+            }
+            if (change.getControlNewText().matches("[0-9]+")) {
+                return change;
+            } else {
+                return null;
+            }
+        };
+
+        StringConverter<String> stringConverter = new StringConverter<String>() {
+            @Override
+            public String fromString(String string) {
+                return string;
+            }
+
+            @Override
+            public String toString(String object) {
+                return object;
+            }
+        };
+
+        TextFormatter<String> phoneNumberFormatter = new TextFormatter<>(stringConverter, "", phoneNumberFilter);
+        TextFormatter<String> IDNumberFormatter = new TextFormatter<>(stringConverter, "", IDNumberFilter);
+
+        phoneNumberTextField.setTextFormatter(phoneNumberFormatter);
+        idNumberTextField.setTextFormatter(IDNumberFormatter);
+        UnaryOperator<TextFormatter.Change> stringFilter = change -> {
+            if (change.isDeleted() && change.getControlText().length() == 1) {
+                return change;
+            }
+            if (change.getControlNewText().matches("[a-zA-Z\\p{IsAlphabetic} ]*")) {
+                return change;
+            } else {
+                return null;
+            }
+        };
+        StringConverter<String> stringConverter1 = new DefaultStringConverter();
+
+        TextFormatter<String> firstNameFormatter = new TextFormatter<>(stringConverter1, "", stringFilter);
+        TextFormatter<String> lastNameFormatter = new TextFormatter<>(stringConverter1, "", stringFilter);
+        TextFormatter<String> nationalIDFormatter = new TextFormatter<>(stringConverter1, "", stringFilter);
+        firstNameTextField.setTextFormatter(firstNameFormatter);
+        lastNameTextField.setTextFormatter(lastNameFormatter);
+        nationalIDTextField.setTextFormatter(nationalIDFormatter);
+        StringConverter<LocalDate> converter = new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            @Override
+            public String toString(LocalDate object) {
+                if (object != null) {
+                    return dateFormatter.format(object);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                try {
+                    return LocalDate.parse(string, dateFormatter);
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+        };
+        dobPicker.setConverter(converter);
+
+    }
     public void handleUpdateResident(Resident selectedResident){
-        selectedResident.setIDNumber(idNumberTextField.getText());
+        boolean id = true;
+        boolean phone = true;
+        boolean dob = true;
+        boolean date = true;
+        if(idNumberTextField.getText().length() != 12){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("CCCD phải có 12 số");
+            alert.setContentText("Nhấn OK để tắt thông báo");
+            id = false;
+            alert.showAndWait();
+        } else {
+            selectedResident.setIDNumber(idNumberTextField.getText());
+        }
         selectedResident.setFirstName(firstNameTextField.getText());
         selectedResident.setLastName(lastNameTextField.getText());
         selectedResident.setEmail(emailTextField.getText());
         selectedResident.setGender(genderTextField.equals("Nữ"));
-        selectedResident.setDateOfBirth(Date.valueOf(dobTextField.getText()));
-        selectedResident.setMoveInDate(Date.valueOf(moveinDateTextField.getText()));
-        selectedResident.setPhoneNumber(phoneNumberTextField.getText());
+        try{
+            selectedResident.setDateOfBirth(Date.valueOf(dobTextField.getText()));
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Ngày sinh không hợp lệ");
+            alert.setContentText("Nhấn OK để tắt thông báo");
+            dob = false;
+
+            alert.showAndWait();
+        }
+        try{
+            selectedResident.setMoveInDate(Date.valueOf(moveinDateTextField.getText()));
+
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Ngày sinh không hợp lệ");
+            alert.setContentText("Nhấn OK để tắt thông báo");
+            date = false;
+            alert.showAndWait();
+        }
+        if (phoneNumberTextField.getText().length() != 10){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Số điện thoại phải có 10 số");
+            alert.setContentText("Nhấn OK để tắt thông báo");
+            phone = false;
+            alert.showAndWait();
+        } else {
+            selectedResident.setPhoneNumber(phoneNumberTextField.getText());
+        }
         selectedResident.setNationalID(nationalIDTextField.getText());
-        residentService.merge(selectedResident);
+        if (!id || !phone || !date || !dob){
+
+        } else {
+            residentService.merge(selectedResident);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Cập nhật thông tin thành công");
+            alert.setContentText("Nhấn OK để tắt thông báo");
+            alert.showAndWait();
+        }
         residentTableView.refresh();
     }
     public void updateButtonOnAction() {

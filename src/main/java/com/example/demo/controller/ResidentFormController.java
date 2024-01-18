@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 import javafx.util.converter.CharacterStringConverter;
 import javafx.util.converter.DefaultStringConverter;
+import org.hibernate.Session;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -31,9 +32,7 @@ public class ResidentFormController {
 
     public TextField firstNameTextField;
     public TextField lastNameTextField;
-    public TextField apartmentTextField;
     public Button submitButton;
-    public Label apartmentTextFieldErrorLabel;
     public Label firstNameErrorLabel;
     public Label lastNameErrorLabel;
     public Button backButton;
@@ -44,7 +43,6 @@ public class ResidentFormController {
     public TextField emailTextField;
     public Label emailErrorLabel;
 
-    private ArrayList<TextFieldWrapper> textFieldWrappers;
 
     private ResidentService residentService;
     public DatePicker datePicker;
@@ -71,8 +69,11 @@ public class ResidentFormController {
     public MenuButton apartmentMenuButton;
     public Label genderErrorLabel;
     private Boolean invalidFlag;
+    private final ObservableMap<String, Boolean> flag = FXCollections.observableHashMap();
+
     @FXML
     public void initialize() {
+        initFlag();
         residentService = new ResidentService(new ResidentRepository());
         initializeResidentTableView();
         selectedGender(List.of(maleItem, femaleItem));
@@ -83,19 +84,14 @@ public class ResidentFormController {
     public void submitButtonOnAction() {
         checkInvalidDate();
         checkInvalidInput();
-        List<Label> errorList = new ArrayList<>(List.of(idErrorLabel, firstNameErrorLabel, lastNameErrorLabel, apartmentErrorLabel, dobErrorLabel, moveInDateErrorLabel, phoneNumberErrorLabel, emailErrorLabel, genderErrorLabel));
-        for (Label label : errorList){
-            if (Objects.equals(label.getText(), "")){
-                invalidFlag = false;
-            } else {
-                invalidFlag = true;
-            }
-        }
-        if(!invalidFlag){
-            persistResident();
 
+        if(!flag.get("CCCD") || !flag.get("phoneNumber") || !flag.get("dob") || !flag.get("firstName") || !flag.get("lastName") || !flag.get("gender") || !flag.get("nationality") || !flag.get("moveInDate")){
+            System.out.println(flag);
+        }else {
+            System.out.println(true);
+            persistResident();
         }
-        residentTableView.refresh();
+        initializeResidentTableView();
     }
     public void setApartmentForMenuButton(){
         List<Apartment> apartments = HibernateUtility.getSessionFactory().fromTransaction(session -> session.createQuery("from Apartment order by id", Apartment.class)
@@ -207,20 +203,36 @@ public class ResidentFormController {
             if(datePicker1 == dobPicker){
                 if (localDate != null){
                     dobErrorLabel.setText("");
+                    flag.replace("dob", true);
                 } else {
                     dobErrorLabel.setText("Ngày không hợp lệ");
                     dobErrorLabel.setTextFill(Color.RED);
+                    flag.replace("dob", false);
                 }
             } else {
                 if (localDate != null){
                     moveInDateErrorLabel.setText("");
+                    flag.replace("moveInDate", true);
+
                 } else {
                     moveInDateErrorLabel.setText("Ngày không hợp lệ");
                     moveInDateErrorLabel.setTextFill(Color.RED);
+                    flag.replace("moveInDate", false);
+
                 }
             }
         }
 
+    }
+    public void initFlag(){
+        flag.put("CCCD", false);
+        flag.put("dob", false);
+        flag.put("firstName", false);
+        flag.put("lastName", false);
+        flag.put("gender", false);
+        flag.put("phoneNumber", false);
+        flag.put("nationality", false);
+        flag.put("moveInDate", false);
     }
     public void checkInvalidInput(){
         List<TextField> textFields = new ArrayList<>(List.of(IDTextField, firstNameTextField, lastNameTextField,  phoneNumberTextField, nationalIDTextField, emailTextField));
@@ -229,65 +241,101 @@ public class ResidentFormController {
                 if (textField.getText().isEmpty()){
                     idErrorLabel.setText("Yêu cầu nhập thông tin");
                     idErrorLabel.setTextFill(Color.RED);
+                    flag.replace("CCCD", false);
+
                 } else {
                     if (textField.getText().length() != 12){
                         idErrorLabel.setText("Số CCCD phải đầy đủ 12 số");
                         idErrorLabel.setTextFill(Color.RED);
+                        flag.replace("CCCD", false);
                     } else {
-                       idErrorLabel.setText("");
+                        try (Session session = HibernateUtility.getSessionFactory().openSession()) {
+                            Resident resident = session.createQuery("from Resident where IDNumber = :id", Resident.class)
+                                    .setParameter("id", IDTextField.getText())
+                                    .uniqueResult();
+                            if (resident != null) {
+                                idErrorLabel.setText("Số CCCD đã tồn tại");
+                                idErrorLabel.setTextFill(Color.RED);
+                                flag.replace("CCCD", false);
+
+                            } else {
+                                idErrorLabel.setText("");
+                                flag.replace("CCCD", true);
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             } else if(textField == firstNameTextField){
                 if(textField.getText().isEmpty()){
                     firstNameErrorLabel.setText("Yêu cầu nhập thông tin");
                     firstNameErrorLabel.setTextFill(Color.RED);
+                    flag.replace("firstName", false);
+
                 }
                 else {
                     firstNameErrorLabel.setText("");
+                    flag.replace("firstName", true);
 
                 }
             } else if(textField == lastNameTextField){
                 if(textField.getText().isEmpty()){
                     lastNameErrorLabel.setText("Yêu cầu nhập thông tin");
                     lastNameErrorLabel.setTextFill(Color.RED);
+                    flag.replace("lastName", false);
+
                 }else {
                     lastNameErrorLabel.setText("");
+                    flag.replace("lastName", true);
 
                 }
             } else if(textField == nationalIDTextField){
                 if (textField.getText().isEmpty()){
+                    System.out.println("national empty");
                     nationalIDErrorLabel.setText("Yêu cầu nhập thông tin");
                     nationalIDErrorLabel.setTextFill(Color.RED);
+                    flag.replace("nationality", false);
+
                 }else {
                     nationalIDErrorLabel.setText("");
+                    flag.replace("nationality", true);
 
                 }
             } else if(textField == phoneNumberTextField){
                 if (phoneNumberTextField.getText().isEmpty()){
+                    System.out.println("phone empty");
                     phoneNumberErrorLabel.setText("Yêu cầu nhập thông tin");
                     phoneNumberErrorLabel.setTextFill(Color.RED);
+                    flag.replace("phoneNumber", false);
+
                 } else {
-                    phoneNumberErrorLabel.setText("");
+                    if(phoneNumberTextField.getText().length() != 10){
+                        phoneNumberErrorLabel.setText("Số điện thoại phải có 10 số");
+                        phoneNumberErrorLabel.setTextFill(Color.RED);
+                        flag.replace("phoneNumber", false);
+                    }else {
+                        phoneNumberErrorLabel.setText("");
+                        flag.replace("phoneNumber", true);
+                    }
 
                 }
             }
         }
-        List<MenuButton> menuButtons = new ArrayList<>(List.of(genderMenuButton, apartmentMenuButton));
+        List<MenuButton> menuButtons = new ArrayList<>(List.of(genderMenuButton));
         for (MenuButton menuButton : menuButtons){
             if (menuButton == genderMenuButton){
-                if (Objects.equals(menuButton.getText(), "Giới tính")){
+                if (Objects.equals(menuButton.getText(), "Gender")){
                     genderErrorLabel.setTextFill(Color.RED);
                     genderErrorLabel.setText("Giới tính không hợp lệ");
-                    genderErrorLabel.setText("");
+                    flag.replace("gender", false);
 
                 }
-            } else {
-                if(Objects.equals(menuButton.getText(), "Chọn căn hộ")){
-                    apartmentErrorLabel.setText("Căn hộ không hợp lệ");
-                    apartmentErrorLabel.setTextFill(Color.RED);
-                }
                 else {
-                    apartmentErrorLabel.setText("");
+                    genderErrorLabel.setText("");
+                    flag.replace("gender", true);
+
                 }
             }
         }

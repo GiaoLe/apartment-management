@@ -61,7 +61,7 @@
                   <TableColumn fx:id="floorColumn" prefWidth="114.33332824707031" text="Tầng" />
                   <TableColumn fx:id="totalColumn" prefWidth="150.0" text="Tổng số căn hộ" />
                   <TableColumn fx:id="availableColumn" prefWidth="191.0" text="Căn hộ trống" />
-                  <TableColumn fx:id="nAvailableColumn" prefWidth="206.0" text="Căn hộ " />
+                  <TableColumn fx:id="nAvailableColumn" prefWidth="206.0" text="Căn hộ đang bảo trì" />
                   <TableColumn fx:id="occupiedColumn" prefWidth="188.0" text="Căn hộ đang được sở hữu" />
                   <TableColumn fx:id="residentsColumn" prefWidth="182.0" text="Tổng số dân cư" />
                </columns>
@@ -275,7 +275,10 @@
                                        <styleClass>
                                           <String fx:value="btn-design" />
                                           <String fx:value="input-design" />
-                                       </styleClass></MenuButton>
+                                       </styleClass>
+                                       <items>
+                                          <MenuItem fx:id="pickHost" mnemonicParsing="false" text="Chọn chủ căn hộ" />
+                                       </items></MenuButton>
                                  </children>
                                  <padding>
                                     <Insets left="50.0" />

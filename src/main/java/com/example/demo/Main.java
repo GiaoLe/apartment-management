@@ -17,7 +17,6 @@ public class Main extends Application {
 
     public void start(Stage stage) {
         SceneManager.setStage(stage);
-        SceneManager.switchScene(Scene.MENU);
-        AdminService adminService = new AdminService(new AdminRepository());
+        SceneManager.switchScene(Scene.LOGIN);
     }
 }

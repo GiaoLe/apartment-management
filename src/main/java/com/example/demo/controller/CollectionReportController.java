@@ -34,16 +34,16 @@ public class CollectionReportController {
     public TableView<ApartmentCollection> collectionReportTableView;
     public TableColumn<ApartmentCollection, String> apartmentIDCol;
     public TableColumn<ApartmentCollection, String> hostNameCol;
-    public TableColumn<ApartmentCollection, Integer> totalResCol;
+    public TableColumn<ApartmentCollection, String> paymentDateCol;
     public TableColumn<ApartmentCollection, Double> amountTableColumn;
     public TableColumn<ApartmentCollection, String> isPaidTableColumn;
     public TableColumn<ApartmentCollection, Date> deadlinePayment;
     public TableColumn<Apartment, String> apartmentIDCol1;
     public TableView<Apartment> donateApartmentTableView;
+    public Button deleteAppsCollect;
     public TableColumn<Apartment, String> hostNameCol1;
     public TableColumn<Apartment, String> takePartCol;
     public TableColumn<Apartment, Integer> totalResCol1;
-    public Button takePartButton;
     public TextField searchTextField;
     public MenuItem amountItem;
     public MenuItem apartmentIDItem;
@@ -77,10 +77,20 @@ public class CollectionReportController {
     public MenuButton monthMenu;
     private ApartmentCollection apartmentCollectionToPay;
     private final ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
-
+    public Button addApartment;
+    public Button takePart;
     public void initializeData(Collection collection) {
         selectedCollection = collection;
-        reportNameLabel.setText("Collection's Report: " + collection.getName());
+
+        if (selectedCollection.getType() == CollectionType.DONATION){
+            addApartment.setVisible(true);
+            deleteAppsCollect.setVisible(false);
+        }
+        else {
+            addApartment.setVisible(false);
+            deleteAppsCollect.setVisible(true);
+        }
+        reportNameLabel.setText("Báo cáo: " + collection.getName());
         selectedItem(new ArrayList<>(List.of(amountItem, apartmentIDItem, hostNameItem, isPaidItem, deadlinePaymentItem)), residentMenuButton);
         selectedItem(new ArrayList<>(List.of(falseItem, trueItem)), isPaidMenuButton);
 
@@ -111,10 +121,17 @@ public class CollectionReportController {
         if (!flag){
             infoLabel.setVisible(false);
             collectionReportTableView.setItems(FXCollections.observableList(collection.getApartmentCollections()));
+            System.out.println(collection.getApartmentCollections());
             apartmentIDCol.setCellValueFactory(cellData ->  new SimpleObjectProperty<>(cellData.getValue().getApartment().getId()));
             deadlinePayment.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDeadlinePayment()));
-            hostNameCol.setCellValueFactory(cellData -> cellData.getValue().getApartment() == null ? new SimpleObjectProperty<>("Unknown") : new SimpleObjectProperty<>(cellData.getValue().getApartment().getHost().getFirstName()));
-            totalResCol.setCellValueFactory(cellData ->  new SimpleObjectProperty<>(cellData.getValue().getApartment().getResidents().size()));
+            hostNameCol.setCellValueFactory(cellData -> cellData.getValue().getApartment().getHost() == null ? new SimpleObjectProperty<>("Unknown") : new SimpleObjectProperty<>(cellData.getValue().getApartment().getHost().getFirstName()));
+            paymentDateCol.setCellValueFactory(cellData -> {
+                if (cellData.getValue().getState() == ApartmentCollectionState.PAID){
+                    return new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getPaymentDate()));
+                } else {
+                    return new SimpleObjectProperty<>("Unkown");
+                }
+            });
             amountTableColumn.setCellValueFactory(cellData -> {
                 ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
                 double apartmentArea = apartmentService.findByID(cellData.getValue().getApartment().getId()).getArea();
@@ -148,9 +165,6 @@ public class CollectionReportController {
             infoLabel.setVisible(true);
             collectionReportTableView.setVisible(false);
         }
-        takePartButton.setOnMouseClicked(e -> {
-            handleTakePart(collection);
-        });
         residentMenuButton.showingProperty().addListener(e -> {
             if (residentMenuButton.getText().equals("Đã trả")){
                 List<ApartmentCollection> filterList = new ArrayList<>();
@@ -209,14 +223,19 @@ public class CollectionReportController {
         dialogContainer.setVisible(false);
         dialogBox.setVisible(false);
         searchTextField.clear();
-        updateTable();
+        updateTable(selectedCollection);
     }
-    public void updateTable(){
-        collectionReportTableView.setItems(FXCollections.observableList(apartmentCollectionService.findAll()));
+    public void updateTable(Collection collection){
         apartmentIDCol.setCellValueFactory(cellData ->  new SimpleObjectProperty<>(cellData.getValue().getApartment().getId()));
         deadlinePayment.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDeadlinePayment()));
         hostNameCol.setCellValueFactory(cellData -> cellData.getValue().getApartment() == null ? new SimpleObjectProperty<>("Unknown") : new SimpleObjectProperty<>(cellData.getValue().getApartment().getHost().getFirstName()));
-        totalResCol.setCellValueFactory(cellData ->  new SimpleObjectProperty<>(cellData.getValue().getApartment().getResidents().size()));
+        paymentDateCol.setCellValueFactory(cellData -> {
+                    if (cellData.getValue().getState() == ApartmentCollectionState.PAID) {
+                        return new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getPaymentDate()));
+                    } else {
+                        return new SimpleObjectProperty<>("Unkown");
+                    }
+                });
         amountTableColumn.setCellValueFactory(cellData -> {
             ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
             double apartmentArea = apartmentService.findByID(cellData.getValue().getApartment().getId()).getArea();
@@ -245,6 +264,15 @@ public class CollectionReportController {
                 }
             }
         });
+        Collection data = null;
+        for (Collection collection1 : collectionService.findAll()){
+            if (Objects.equals(collection1.getId(), collection.getId())){
+                data = collection1;
+            }
+        }
+        assert data != null;
+        collectionReportTableView.setItems(FXCollections.observableList(data.getApartmentCollections()));
+
     }
     public void handleCloseDialog(){
         dialogContainer.setVisible(false);
@@ -279,10 +307,11 @@ public class CollectionReportController {
                     monthMenu.getItems().clear();
                     monthMenu.setText("Chọn tháng");
                     for (ApartmentCollection apartmentCollection1 : apartmentCollectionList){
-                        if(!Objects.equals(yearMenu.getText(), "Chọn năm")){
+                        if(!Objects.equals(yearMenu.getText(), "Chọn năm") && Objects.equals(apartmentCollection1.getCollection().getName(), selectedCollection.getName())){
                             if (apartmentCollection1.getDeadlinePayment().getYear() == Integer.parseInt(yearMenu.getText()) - 1900){
                                 Calendar calendarForMonth = Calendar.getInstance();
                                 calendarForMonth.set(Calendar.MONTH, apartmentCollection1.getDeadlinePayment().getMonth());
+                                System.out.println(apartmentCollection1);
                                 dateObservableMap.put(String.valueOf(calendarForMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())), apartmentCollection1.getDeadlinePayment().getMonth());
                                 monthMenu.getItems().add(new MenuItem(String.valueOf(calendarForMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()))));
                                 monthMenu.textProperty().addListener(e1 -> {
@@ -313,7 +342,13 @@ public class CollectionReportController {
     public void updateTable(ObservableList<ApartmentCollection> observableList, Collection collection){
         collectionReportTableView.setItems(observableList);
         apartmentIDCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getId()));
-        totalResCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApartment().getResidents().size()));
+        paymentDateCol.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getState() == ApartmentCollectionState.PAID) {
+                return new SimpleObjectProperty<>(String.valueOf(cellData.getValue().getPaymentDate()));
+            } else {
+                return new SimpleObjectProperty<>("Unkown");
+            }
+        });
         isPaidTableColumn.setCellValueFactory(cellData -> cellData.getValue().getState() == ApartmentCollectionState.PAID? new SimpleObjectProperty<>("Đã trả") : new SimpleObjectProperty<>("Chưa trả"));
         amountTableColumn.setCellValueFactory(cellData -> {
             ApartmentService apartmentService = new ApartmentService(new ApartmentRepository());
@@ -418,11 +453,6 @@ public class CollectionReportController {
     }
 
     public void addPaymenButtonOnAction() {
-//        apartmentCollection = collectionReportTableView.getSelectionModel().getSelectedItem();
-//        apartmentCollection.setPaid(true);
-//        ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
-//        apartmentCollectionService.merge(apartmentCollection);
-//        collectionReportTableView.refresh();
         dialogContainer.setVisible(true);
         dialogBox.setVisible(true);
 
@@ -471,13 +501,13 @@ public class CollectionReportController {
             }
                 });
     }
-    public void handleTakePart(Collection collection){
+    public void handleTakePart(){
         Apartment apartment = donateApartmentTableView.getSelectionModel().getSelectedItem();
         ApartmentCollectionService apartmentCollectionService = new ApartmentCollectionService(new ApartmentCollectionRepository());
-        Date date = collection.getApartmentCollections().getFirst().getDeadlinePayment();
-        apartmentCollectionService.persist(new ApartmentCollection(apartment, collection, date));
+        Date date = selectedCollection.getApartmentCollections().getFirst().getDeadlinePayment();
+        apartmentCollectionService.persist(new ApartmentCollection(apartment, selectedCollection, date));
         if (!addDonateAppFlag){
-            for (ApartmentCollection apartmentCollection1 : collection.getApartmentCollections()){
+            for (ApartmentCollection apartmentCollection1 : selectedCollection.getApartmentCollections()){
                 if (apartmentCollection1.getApartment() == null){
                     System.out.println(true);
                     apartmentCollectionService.remove(apartmentCollection1);
@@ -486,6 +516,21 @@ public class CollectionReportController {
             }
         }
         handleListApartmentToDonate();
-
+    }
+    public void toggleDonateTableView(){
+        if (selectedCollection.getType() == CollectionType.DONATION){
+            collectionReportTableView.setVisible(false);
+            donateApartmentTableView.setVisible(true);
+            markAsPaidButton.setVisible(false);
+            takePart.setVisible(true);
+            addApartment.setVisible(false);
+            handleListApartmentToDonate();
+        }
+    }
+    public void handleDeleteAppsCollect() {
+        ApartmentCollection apartmentCollection1 = collectionReportTableView.getSelectionModel().getSelectedItem();
+        apartmentCollectionService.remove(apartmentCollection1);
+        List<ApartmentCollection> apartmentCollectionList = null;
+        updateTable(selectedCollection);
     }
 }

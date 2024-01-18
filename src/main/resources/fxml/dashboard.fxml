@@ -29,7 +29,6 @@
               <items>
                 <MenuItem fx:id="menuItem1" mnemonicParsing="false" text="Thông tin căn hộ" />
                 <MenuItem fx:id="menuItem2" mnemonicParsing="false" text="Thống kê doanh thu" />
-                  <MenuItem fx:id="revenueStatic" mnemonicParsing="false" text="Revenue Static" />
               </items>
                <font>
                   <Font size="21.0" />
@@ -37,14 +36,14 @@
             </MenuButton>
             <AnchorPane fx:id="feeContainer" layoutY="72.0" prefHeight="780.0" prefWidth="1157.0" visible="false">
                <children>
-                  <TableView fx:id="feeTableView" layoutX="14.0" layoutY="86.0" prefHeight="496.0" prefWidth="1039.0" stylesheets="@../styles/TableView.css">
+                  <TableView fx:id="feeTableView" layoutX="14.0" layoutY="125.0" prefHeight="496.0" prefWidth="1039.0" stylesheets="@../styles/TableView.css">
                     <columns>
                       <TableColumn fx:id="monthCol" prefWidth="150.0" text="Tháng" />
                         <TableColumn fx:id="expCol" prefWidth="184.0" text="Số tiền phải thu" />
                         <TableColumn fx:id="curCol" prefWidth="212.0" text="Số tiền thu được" />
                         <TableColumn fx:id="paidCol" prefWidth="161.0" text="Căn hộ đã nộp phí" />
                         <TableColumn fx:id="unpaidCol" prefWidth="164.0" text="Căn hộ chưa nộp phí" />
-                        <TableColumn fx:id="totalResCol" prefWidth="167.0" text="Total Resident" />
+                        <TableColumn fx:id="totalResCol" prefWidth="167.0" text="Tổng số căn hộ" />
                     </columns>
                   </TableView>
                   <MenuButton fx:id="typeFeeButton" layoutX="345.0" layoutY="14.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="302.0" style="-fx-border-color: black; -fx-border-radius: 14;" styleClass="input-design" text="Chọn loại phí">
@@ -62,6 +61,7 @@
                         <Font size="21.0" />
                      </font>
                   </MenuButton>
+                  <MenuButton fx:id="yearMenu" disable="true" layoutX="14.0" layoutY="74.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="134.0" style="-fx-border-color: black; -fx-border-radius: 14px;" styleClass="input-design" text="Chọn năm" />
                </children>
             </AnchorPane>
          </children>
